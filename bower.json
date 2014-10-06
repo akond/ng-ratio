@@ -1,0 +1,20 @@
+{
+  "name": "ratio",
+  "version": "0.0.0",
+  "authors": [
+    "Akond of Swat <akond@gate.net>"
+  ],
+  "description": "ratio for a trip",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.26"
+  }
+}
