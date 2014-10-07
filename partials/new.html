@@ -1,2 +1,5 @@
 <h2>New trip</h2>
-{{message}}
+<form ng-submit="addTrip()">
+  Title: <input ng-model="title" ng-required="true" ng-trim>
+  <button>Add</button>
+</form>
