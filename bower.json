@@ -16,10 +16,12 @@
   ],
   "dependencies": {
     "angular": "~1.2.26",
+    "angular-route": "~1.2.26",
     "angular-local-storage": "~0.1.0",
     "closurelibrary": "*",
     "bootstrap": "~3.2.0",
     "angular-bootstrap": "*",
+    "ng-slider-menu": "~0.0.1",
     "node-uuid": "~1.4.1"
   }
 }

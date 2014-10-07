@@ -7,6 +7,23 @@
 </head>
 <body>
 <div class="container" ng-controller="StorageCtrl as storage">
+		<slide-menu name="main">
+		<ul>
+			<li><a href="#/">Trips</a></li>
+			<li><a href="#/new">Add new</a></li>
+			<!--
+			<li>Options<ul>
+				<li><a href="#/">Trips</a></li>
+				<li><a href="#/new">Add new</a></li>
+			</ul>
+			</li>
+		-->
+		</ul>
+		</slide-menu>
+	<div class="container">
+		<ng-view></ng-view>
+	</div>
+
     <h2>Trips</h2>
     <div class="text-right">
         <a class="btn btn-success" href="#">Add new</a>
