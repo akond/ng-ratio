@@ -1,5 +1,6 @@
 goog.require('goog.array');
 
+angular.module('storage', ['LocalStorageModule']);
 angular.module('storage').controller('StorageCtrl', StorageController);
 
 StorageController.$inject = ['$scope', 'localStorageService', '$rootScope'];

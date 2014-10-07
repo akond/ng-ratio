@@ -1,5 +1,8 @@
 PATH(BOWER,/bower_components)
 PATH(JS,js)
+PATH(CONTROLLER,JS/controller)
+PATH(MODEL,JS/model)
+
 
 /------------------------------------------------------------------------------/
 / Imported                                                                     /
@@ -16,13 +19,11 @@ INCLUDE(BOWER/ng-slider-menu/src/js/slide-menu.js)
 /------------------------------------------------------------------------------/
 / These are mine                                                               /
 /------------------------------------------------------------------------------/
-INCLUDE(JS/application.js)
-INCLUDE(JS/application.router.js)
+INCLUDE(JS/application.config.js)
 
-INCLUDE(JS/storage/storage.module.js)
-INCLUDE(JS/storage/storage.controller.js)
+INCLUDE(CONTROLLER/help.controller.js)
+INCLUDE(CONTROLLER/storage.controller.js)
+INCLUDE(CONTROLLER/trips.controller.js)
 
-INCLUDE(JS/help/help.controller.js)
-
-INCLUDE(JS/model/trip.model.js)
-INCLUDE(JS/model/trip-container.model.js)
+INCLUDE(MODEL/trip.model.js)
+INCLUDE(MODEL/trip-container.model.js)
