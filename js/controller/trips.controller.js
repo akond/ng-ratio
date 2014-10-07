@@ -27,7 +27,7 @@ function StorageController($scope, localStorage, $rootScope, $location, confirm)
 	}
 
 	$scope.removeTrip = function (trip) {
-		if (confirm('Are you sure?')) {
+		if (confirm('Are you sure to remove this trip?')) {
 			//$scope.tripContainer.remove(trip);
 			//this.keepState();
 		}

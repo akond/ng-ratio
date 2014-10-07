@@ -1,9 +1,12 @@
 angular.module('local-storage').config(['$provide', function ($provide) {
   $provide.factory('confirm', ['$modal', function ($modal) {
-      return function () {
+      return function (message) {
         var dialog = $modal.open({
           'templateUrl': 'partials/confirm.html',
           'controller': ['$scope', '$modalInstance', function($scope, $modalInstance) {
+
+            $scope.message = message;
+
             $scope.ok = function(feedback) {
               $modalInstance.close();
             };
