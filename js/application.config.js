@@ -1,4 +1,4 @@
-angular.module('local-storage', ['ngRoute', 'ui.bootstrap', 'mgo-angular-wizard', 'slideMenu', 'help', 'trips', 'test']);
+angular.module('local-storage', ['ngRoute', 'ui.bootstrap', 'mgo-angular-wizard', 'slideMenu', 'help', 'trips']);
 
 angular.module('local-storage').config(['$routeProvider',
   function($routeProvider) {

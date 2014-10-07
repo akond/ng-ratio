@@ -1,5 +1,5 @@
 COMP = $(M4) resource-list/resource-list.m4
-M4 = m4 -P
+M4 = $(firstword $(shell which gm4 m4)) -P
 JS = js
 EMPTY =
 SPACE = $(EMPTY) $(EMPTY)
