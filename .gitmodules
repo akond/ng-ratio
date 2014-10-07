@@ -1,0 +1,3 @@
+[submodule "resource-list"]
+	path = resource-list
+	url = git://github.com/akond/m4-resource-list.git

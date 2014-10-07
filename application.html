@@ -1,16 +1,7 @@
 <html ng-app="local-storage">
 <head>
-	<script type="text/javascript" src="/js/jquery/dist/jquery.min.js"></script>
-	<script type="text/javascript" src="/js/closurelibrary/closure/goog/base.js"></script>
-	<script type="text/javascript" src="/js/angularjs/angular.js"></script>
-	<script type="text/javascript" src="/js/angular-checklist-model/checklist-model.js"></script>
-	<script type="text/javascript" src="/js/ngScrollTo/ng-scrollto.js"></script>
-	<script type="text/javascript" src="/js/angular-local-storage/dist/angular-local-storage.js"></script>
-	<script type="text/javascript" src="/js/node-uuid/uuid.js"></script>
-	<?php foreach ($javascript_files as $file): ?>
-	<script type="text/javascript" src="/<?php echo $file ?>"></script>
-	<?php endforeach; ?>
-
+	foreach(file,(JAVASCRIPTS),<script src="file"></script>
+	)
 	<link rel="stylesheet" type="text/css" href="/js/bootstrap/dist/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="/styles.css">
 </head>

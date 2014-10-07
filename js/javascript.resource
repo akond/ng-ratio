@@ -1,0 +1,11 @@
+INCLUDE(jquery/dist/jquery.min.js)
+INCLUDE(closurelibrary/closure/goog/base.js)
+INCLUDE(angularjs/angular.js)
+INCLUDE(angular-local-storage/dist/angular-local-storage.js)
+INCLUDE(node-uuid/uuid.js)
+
+INCLUDE(application.js)
+INCLUDE(storage/storage.module.js)
+INCLUDE(storage/storage.controller.js)
+INCLUDE(model/trip.model.js)
+INCLUDE(model/trip-container.model.js)
