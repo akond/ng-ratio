@@ -3,11 +3,13 @@ M4 = m4 -P
 JS = js
 EMPTY =
 SPACE = $(EMPTY) $(EMPTY)
-COMA = ,
+COMMA = ,
 
-index.html: $(JS)/javascript.resource application.html
-	$(M4) -D JAVASCRIPTS="$(subst $(SPACE),$(COMA),$(strip $(shell $(COMP) $<)))" etc/foreach.m4 application.html > $@
+resources = $(subst $(SPACE),$(COMMA),$(strip $(shell $(COMP) $1)))
 
 
-build:
-	
+build: index.html
+
+
+index.html: $(JS)/javascript.resource css/css.resource application.html
+	$(M4) -D JAVASCRIPTS="$(call resources,$<)" -D STYLES="$(call resources,css/css.resource)" etc/foreach.m4 application.html > $@

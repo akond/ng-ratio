@@ -1,9 +1,9 @@
 <html ng-app="local-storage">
 <head>
-	foreach(file,(JAVASCRIPTS),<script src="file"></script>
+	foreach(file,(JAVASCRIPTS),<script type="text/javascript" src="file"></script>
 	)
-	<link rel="stylesheet" type="text/css" href="/js/bootstrap/dist/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="/styles.css">
+	foreach(file,(STYLES),<link rel="stylesheet" type="text/css" href="file">
+	)
 </head>
 <body>
 <div class="container" ng-controller="StorageCtrl as storage">

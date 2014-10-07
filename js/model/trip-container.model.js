@@ -22,6 +22,10 @@ TripContainer.prototype.export = function () {
 };
 
 TripContainer.prototype.import = function (trips) {
+	if (goog.isNull (trips)) {
+		return this;
+	}
+	
 	goog.array.forEach(trips, $.proxy(function (data) {
 		var trip = Trip.createFrom(data);
 		this.trips [trip.id] = trip;
