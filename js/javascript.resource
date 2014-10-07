@@ -31,7 +31,7 @@ INCLUDE(JS/application.config.js)
 INCLUDE(CONTROLLER/help.controller.js)
 INCLUDE(CONTROLLER/storage.controller.js)
 INCLUDE(CONTROLLER/trips.controller.js)
-INCLUDE(CONTROLLER/test.controller.js)
+//INCLUDE(CONTROLLER/test.controller.js)
 
 INCLUDE(SERVICE/confirm.service.js)
 
