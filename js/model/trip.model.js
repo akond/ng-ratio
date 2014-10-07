@@ -11,7 +11,7 @@ Trip.createFrom = function (data) {
 }
 
 Trip.prototype.test = function () {
-	console.log('test ' + this.id);
+	
 }
 
 Trip.prototype.dateRange = function () {
