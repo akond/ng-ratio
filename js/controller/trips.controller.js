@@ -1,11 +1,11 @@
 goog.require('goog.array');
 
 angular.module('trips', ['LocalStorageModule']);
-angular.module('trips').controller('TripsCtrl', StorageController);
+angular.module('trips').controller('TripCtrl', TripController);
 
-StorageController.$inject = ['$scope', 'localStorageService', '$rootScope', '$location', 'confirm'];
+TripController.$inject = ['$scope', 'localStorageService', '$rootScope', '$location', 'confirm', 'WizardHandler'];
 
-function StorageController($scope, localStorage, $rootScope, $location, confirm) {
+function TripController($scope, localStorage, $rootScope, $location, confirm, WizardHandler) {
 	'use strict';
 
 	$scope.tripContainer = TripContainer.createFrom(localStorage.get('trips'));
@@ -14,15 +14,16 @@ function StorageController($scope, localStorage, $rootScope, $location, confirm)
 		trip.test();
 	});
 
+	$scope.trip = new Trip();
+
 	$scope.trips = function () {
 		return $scope.tripContainer.export();
 	}
 
 	$scope.addTrip = function () {
-		$scope.tripContainer.add(new Trip($scope.title));
+		$scope.tripContainer.add(this.trip);
 		$scope.keepState();
-		$scope.title = undefined;
-
+		this.trip = new Trip();
 		$location.path("/");
 	}
 

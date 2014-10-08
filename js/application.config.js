@@ -5,11 +5,11 @@ angular.module('local-storage').config(['$routeProvider',
     $routeProvider.
       when('/', {
         templateUrl: 'partials/trips.html',
-        controller: 'TripsCtrl'
+        controller: 'TripCtrl'
       }).
       when('/new', {
         templateUrl: 'partials/new.html',
-        controller: 'TripsCtrl'
+        controller: 'TripCtrl'
       }).
       when('/help', {
         templateUrl: 'partials/help.html',
