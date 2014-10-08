@@ -1,3 +1,4 @@
+LESS = lessc
 COMP = $(M4) resource-list/resource-list.m4
 M4 = $(firstword $(shell which gm4 m4)) -P
 JS = js
@@ -8,8 +9,12 @@ COMMA = ,
 resources = $(subst $(SPACE),$(COMMA),$(strip $(shell $(COMP) $1)))
 
 
-build: index.html
+build: index.html css/angular-wizard.css
 
 
-index.html: $(JS)/javascript.resource css/css.resource application.html
-	$(M4) -D JAVASCRIPTS="$(call resources,$<)" -D STYLES="$(call resources,css/css.resource)" etc/foreach.m4 application.html > $@
+index.html: $(JS)/javascript.resource css/css.resource partials/application.html
+	$(M4) -D JAVASCRIPTS="$(call resources,$<)" -D STYLES="$(call resources,css/css.resource)" etc/foreach.m4 partials/application.html > $@
+
+
+css/angular-wizard.css: css/angular-wizard.less
+	$(LESS) $< > $@
