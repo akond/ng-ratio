@@ -15,7 +15,7 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 			$scope.editMode = true;
 	} else {
 			$scope.Trip = new Trip('new');
-			$scope.Trip.id = 'new';
+			$scope.Trip.plans.push (new Plan ())
 	}
 
 	$scope.addTen = function () {
@@ -33,12 +33,15 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 			tripRepository.add (goog.object.clone (this.Trip));
 		}
 
-
 		$location.path("/");
 	};
 
 	$scope.editTrip = function (editableTrip) {
 		$location.path("/edit/" + editableTrip.id);
+	};
+
+	$scope.addPlan = function () {
+			$scope.Trip.plans.push (new Plan());
 	};
 
 	$scope.removeTrip = function (trip) {

@@ -33,13 +33,17 @@ INCLUDE(BOWER/Lorem.js/lorem.js)
 /------------------------------------------------------------------------------/
 INCLUDE(JS/application.config.js)
 
-INCLUDE(CONTROLLER/help.controller.js)
-INCLUDE(CONTROLLER/storage.controller.js)
+-- Контроллеры
 INCLUDE(CONTROLLER/trips.controller.js)
+INCLUDE(CONTROLLER/help.controller.js)
 //INCLUDE(CONTROLLER/test.controller.js)
 
+-- Сервисы
 INCLUDE(SERVICE/confirm.service.js)
 
+-- Модели
 INCLUDE(MODEL/trip.model.js)
+INCLUDE(MODEL/plan.model.js)
 
+-- Репозитории
 INCLUDE(REPOSITORY/trip.repository.js)
