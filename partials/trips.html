@@ -1,4 +1,5 @@
 <h2>Trips</h2>
+<a class="btn btn-default" ng-click="addTen()">Add 10 records</a>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -19,7 +20,7 @@
             {{ trip.dateRange() }}
         </td>
         <td>
-            <a class="btn btn-info" ng-click="">Edit</a>
+            <a class="btn btn-info" ng-click="editTrip(trip)">Edit</a>
             <a class="btn btn-danger" ng-click="removeTrip(trip)">Remove</a>
         </td>
     </tr>

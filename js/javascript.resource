@@ -22,6 +22,7 @@ INCLUDE(BOWER/node-uuid/uuid.js)
 INCLUDE(BOWER/ng-slider-menu/src/js/slide-menu.js)
 INCLUDE(BOWER/angular-wizard/dist/angular-wizard.js)
 INCLUDE(BOWER/lodash/dist/lodash.min.js)
+INCLUDE(BOWER/Lorem.js/lorem.js)
 
 
 /------------------------------------------------------------------------------/

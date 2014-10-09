@@ -10,13 +10,31 @@ function TripController($scope, tripRepository, $rootScope, $location, confirm, 
 
 	$scope.trips = goog.object.getValues (tripRepository.findAll ());
 
-	$scope.trip = new Trip();
+	//var tripTemplate = new Trip('new');
+	$scope.trip = new Trip('new');
+
+	$scope.addTen = function () {
+		goog.array.forEach (goog.array.range (7), angular.bind($scope, function () {
+			var trip = new Trip (Lorem.getSentence());
+			tripRepository.add (trip);
+			this.trips.push(trip);
+		}));
+	};
 
 	$scope.addTrip = function () {
-		tripRepository.add (this.trip);
-		this.trips [this.trip.id] = this.trip;
-		this.trip = new Trip();
+		var clone = goog.object.clone (this.trip);
+		tripRepository.add (clone);
+		//this.trips (this.trip);
+
 		$location.path("/");
+	};
+
+	$scope.editTrip = function (trip) {
+
+		$scope.trip = trip;
+
+		this.trip = trip;
+		$location.path("/new");
 	};
 
 	$scope.removeTrip = function (trip) {

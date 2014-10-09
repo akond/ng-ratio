@@ -23,3 +23,5 @@ angular.module('ng-ratio').config(['$routeProvider',
         redirectTo: '/help'
       });
   }]);
+
+Lorem.settings.sentence.max = 5;
