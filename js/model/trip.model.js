@@ -1,6 +1,8 @@
 function Trip(title) {
-	this.title = title;
 	this.id = uuid.v4();
+	this.title = title;
+	this.from = null;
+	this.to = null;
 }
 
 Trip.createFrom = function (data) {
@@ -11,7 +13,7 @@ Trip.createFrom = function (data) {
 }
 
 Trip.prototype.test = function () {
-	
+
 }
 
 Trip.prototype.dateRange = function () {

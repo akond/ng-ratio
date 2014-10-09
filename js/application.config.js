@@ -1,6 +1,6 @@
-angular.module('local-storage', ['ngRoute', 'ui.bootstrap', 'mgo-angular-wizard', 'slideMenu', 'help', 'trips']);
+angular.module('ng-ratio', ['ngRoute', 'ui.bootstrap', 'mgo-angular-wizard', 'slideMenu', 'help', 'trips']);
 
-angular.module('local-storage').config(['$routeProvider',
+angular.module('ng-ratio').config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {

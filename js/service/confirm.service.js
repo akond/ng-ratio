@@ -1,4 +1,4 @@
-angular.module('local-storage').config(['$provide', function ($provide) {
+angular.module('ng-ratio').config(['$provide', function ($provide) {
   $provide.factory('confirm', ['$modal', function ($modal) {
       return function (message) {
         var dialog = $modal.open({
@@ -17,10 +17,7 @@ angular.module('local-storage').config(['$provide', function ($provide) {
           }],
         });
 
-        dialog.result.then(function () {
-          // ok function
-          alert ('yes')
-        });
+        return dialog.result;
       }
   }]);
 }]);

@@ -2,6 +2,7 @@ PATH(BOWER,/bower_components)
 PATH(JS,js)
 PATH(CONTROLLER,JS/controller)
 PATH(SERVICE,JS/service)
+PATH(REPOSITORY,JS/service)
 PATH(MODEL,JS/model)
 
 
@@ -36,4 +37,5 @@ INCLUDE(CONTROLLER/trips.controller.js)
 INCLUDE(SERVICE/confirm.service.js)
 
 INCLUDE(MODEL/trip.model.js)
-INCLUDE(MODEL/trip-container.model.js)
+
+INCLUDE(REPOSITORY/trip.repository.js)
