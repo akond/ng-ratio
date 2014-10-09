@@ -17,7 +17,8 @@
             {{trip.title}}
         </td>
         <td>
-            {{ trip.dateRange() }}
+            {{ trip.from | date}} -
+            {{ trip.to | date }}
         </td>
         <td>
             <a class="btn btn-info" ng-click="editTrip(trip)">Edit</a>

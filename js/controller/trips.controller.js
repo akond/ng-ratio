@@ -27,8 +27,12 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 	};
 
 	$scope.addTrip = function () {
-		var clone = goog.object.clone (this.Trip);
-		tripRepository.add (clone);
+		if (this.editMode) {
+			tripRepository.add (this.Trip);
+		} else {
+			tripRepository.add (goog.object.clone (this.Trip));
+		}
+
 
 		$location.path("/");
 	};

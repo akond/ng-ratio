@@ -1,5 +1,6 @@
 goog.require('goog.object');
 goog.require('goog.array');
+goog.require('goog.asserts');
 
 angular.module('ng-ratio').factory('tripRepository', ['localStorageService', function (localStorage) {
   "use strict";
@@ -16,6 +17,8 @@ angular.module('ng-ratio').factory('tripRepository', ['localStorageService', fun
   };
 
   var addTrip = function (trip) {
+    goog.asserts.assert (trip.id != '');
+
     var container = restore ();
     container [trip.id] = trip;
     save (container);
@@ -45,7 +48,6 @@ angular.module('ng-ratio').factory('tripRepository', ['localStorageService', fun
       return trip;
     });
   };
-
 
 
   return {

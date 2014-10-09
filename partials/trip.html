@@ -1,21 +1,39 @@
-<h2>New trip</h2>
+<h2>Свойства похода</h2>
 
 <wizard on-finish="addTrip()" edit-mode="editMode">
 
   <wz-step title="Start">
-    <h3>Название</h3>
     <ng-form name="part1">
-      <input ng-model="Trip.title" ng-required="true">
+      <div class="form-group">
+        <label for="title">Название</label>
+        <input id="title" ng-model="Trip.title" ng-required="true" class="form-control" placeholder="Название">
+      </div>
     </ng-form>
     <p>
       <a class="btn btn-primary" wz-next="" ng-disabled="part1.$invalid">Next</a>
     </p>
-
   </wz-step>
+
   <wz-step>
-    <p>
-      <a class="btn btn-primary" wz-next="">Next</a>
-    </p>
+    <ng-form name="part2">
+      <div class="row">
+        <div class="col-md-1">
+          From:
+        </div>
+        <div class="col-md-4">
+          <datepicker ng-model="Trip.from" min-date="minDate" ng-required="true" show-weeks="true" class="well well-sm"></datepicker>
+        </div>
+        <div class="col-md-1">
+          To:
+        </div>
+        <div class="col-md-4">
+          <datepicker ng-model="Trip.to" min-date="minDate" ng-required="true" show-weeks="true" class="well well-sm"></datepicker>
+        </div>
+      </div>
+      <div class="clearfix">
+        <a class="btn btn-primary" wz-next="" ng-disabled="part2.$invalid">Next</a>
+      </div>
+    </ng-form>
   </wz-step>
 
 </wizard>
