@@ -4,11 +4,15 @@ angular.module('ng-ratio').config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: 'partials/trips.html',
+        templateUrl: 'partials/trip-list.html',
         controller: 'TripCtrl'
       }).
       when('/new', {
-        templateUrl: 'partials/new.html',
+        templateUrl: 'partials/trip.html',
+        controller: 'TripCtrl'
+      }).
+      when('/edit/:id', {
+        templateUrl: 'partials/trip.html',
         controller: 'TripCtrl'
       }).
       when('/help', {

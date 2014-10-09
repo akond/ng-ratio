@@ -20,7 +20,10 @@ INCLUDE(BOWER/angular-bootstrap/ui-bootstrap-tpls.js)
 INCLUDE(BOWER/angular-local-storage/dist/angular-local-storage.js)
 INCLUDE(BOWER/node-uuid/uuid.js)
 INCLUDE(BOWER/ng-slider-menu/src/js/slide-menu.js)
+
+-- https://github.com/mgonto/angular-wizard
 INCLUDE(BOWER/angular-wizard/dist/angular-wizard.js)
+
 INCLUDE(BOWER/lodash/dist/lodash.min.js)
 INCLUDE(BOWER/Lorem.js/lorem.js)
 

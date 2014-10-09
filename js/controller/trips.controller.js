@@ -3,15 +3,20 @@ goog.require('goog.array');
 angular.module('trips', ['LocalStorageModule']);
 angular.module('trips').controller('TripCtrl', TripController);
 
-TripController.$inject = ['$scope', 'tripRepository', '$rootScope', '$location', 'confirm', 'WizardHandler'];
+TripController.$inject = ['$scope', '$route', 'tripRepository', '$rootScope', '$location', 'confirm', 'WizardHandler'];
 
-function TripController($scope, tripRepository, $rootScope, $location, confirm, WizardHandler) {
+function TripController($scope, $route, tripRepository, $rootScope, $location, confirm, WizardHandler) {
 	'use strict';
 
 	$scope.trips = goog.object.getValues (tripRepository.findAll ());
 
-	//var tripTemplate = new Trip('new');
-	$scope.trip = new Trip('new');
+	if (goog.isDef ($route.current.params.id)) {
+			$scope.Trip = tripRepository.find ($route.current.params.id);
+			$scope.editMode = true;
+	} else {
+			$scope.Trip = new Trip('new');
+			$scope.Trip.id = 'new';
+	}
 
 	$scope.addTen = function () {
 		goog.array.forEach (goog.array.range (7), angular.bind($scope, function () {
@@ -22,19 +27,14 @@ function TripController($scope, tripRepository, $rootScope, $location, confirm, 
 	};
 
 	$scope.addTrip = function () {
-		var clone = goog.object.clone (this.trip);
+		var clone = goog.object.clone (this.Trip);
 		tripRepository.add (clone);
-		//this.trips (this.trip);
 
 		$location.path("/");
 	};
 
-	$scope.editTrip = function (trip) {
-
-		$scope.trip = trip;
-
-		this.trip = trip;
-		$location.path("/new");
+	$scope.editTrip = function (editableTrip) {
+		$location.path("/edit/" + editableTrip.id);
 	};
 
 	$scope.removeTrip = function (trip) {

@@ -1,11 +1,11 @@
 <h2>New trip</h2>
 
-<wizard on-finish="addTrip()">
-  
+<wizard on-finish="addTrip()" edit-mode="editMode">
+
   <wz-step title="Start">
     <h3>Название</h3>
     <ng-form name="part1">
-      <input ng-model="trip.title" ng-required="true">
+      <input ng-model="Trip.title" ng-required="true">
     </ng-form>
     <p>
       <a class="btn btn-primary" wz-next="" ng-disabled="part1.$invalid">Next</a>

@@ -7,6 +7,10 @@ angular.module('ng-ratio').factory('tripRepository', ['localStorageService', fun
   var KEY = 'trips';
 
 
+  var find = function (id) {
+    return restore () [id];
+  };
+
   var findAll = function () {
     return goog.object.getValues(restore ());
   };
@@ -45,6 +49,7 @@ angular.module('ng-ratio').factory('tripRepository', ['localStorageService', fun
 
 
   return {
+    find: find,
     findAll: findAll,
     add: addTrip,
     remove: removeTrip
