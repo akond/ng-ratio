@@ -18,6 +18,6 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
         });
 
         return dialog.result;
-      }
+      };
   }]);
 }]);

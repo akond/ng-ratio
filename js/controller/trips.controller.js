@@ -14,13 +14,16 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 			$scope.Trip = tripRepository.find ($route.current.params.id);
 			$scope.editMode = true;
 	} else {
-			$scope.Trip = new Trip('new');
-			$scope.Trip.plans.push (new Plan ())
+			$scope.Trip = new Trip();
+			$scope.Trip.plans.push (new Plan ());
 	}
 
 	$scope.addTen = function () {
 		goog.array.forEach (goog.array.range (7), angular.bind($scope, function () {
 			var trip = new Trip (Lorem.getSentence());
+			trip.from = new Date ();
+			trip.to = new Date ();
+			trip.plans.push (new Plan ());
 			tripRepository.add (trip);
 			this.trips.push(trip);
 		}));
@@ -44,12 +47,16 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 			$scope.Trip.plans.push (new Plan());
 	};
 
+	$scope.removePlan = function (index) {
+			$scope.Trip.plans.splice (index, 1);
+	};
+
 	$scope.removeTrip = function (trip) {
 		confirm('Are you sure to remove this trip?').then (angular.bind($scope, function () {
 			tripRepository.remove (trip);
 			this.trips = goog.array.filter (this.trips, function (item) {
 				return item.id !== trip.id;
-			})
+			});
 		}));
 	};
 }

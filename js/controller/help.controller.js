@@ -1,4 +1,4 @@
-angular.module('help', []).controller('HelpCtrl', HelpController);
+angular.module('trips').controller('HelpCtrl', HelpController);
 
 HelpController.$inject = ['$scope'];
 

@@ -55,5 +55,5 @@ angular.module('ng-ratio').factory('tripRepository', ['localStorageService', fun
     findAll: findAll,
     add: addTrip,
     remove: removeTrip
-  }
+  };
 }]);

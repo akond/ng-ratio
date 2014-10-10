@@ -16,22 +16,22 @@ function StorageController($scope, localStorage, $rootScope) {
 
 	this.trips = function () {
 		return $scope.tripContainer.export();
-	}
+	};
 
 	this.addTrip = function () {
 		$scope.tripContainer.add(new Trip($scope.title));
 		this.keepState();
 		$scope.title = undefined;
-	}
+	};
 
 	this.removeTrip = function (trip) {
 		if (confirm('Are you sure?')) {
 			$scope.tripContainer.remove(trip);
 			this.keepState();
 		}
-	}
+	};
 
 	this.keepState = function () {
 		localStorage.set('trips', $scope.tripContainer.export());
-	}
+	};
 }

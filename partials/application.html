@@ -6,26 +6,20 @@
 	)
 </head>
 <body>
-<div class="container">
+	<div class="container">
 		<slide-menu name="main">
 		<ul>
-			<li><a href="#/">Trips</a></li>
-			<li><a href="#/new">Add new</a></li>
+			<li><a href="#/">Походы</a></li>
+			<li><a href="#/new">Новый</a></li>
+			<li><a href="#/settings">Настройки</a></li>
 			<li><a href="#/help">Help</a></li>
-			<li><a href="#/test">Test</a></li>
-			<!--
-			<li>Options<ul>
-				<li><a href="#/">Trips</a></li>
-				<li><a href="#/new">Add new</a></li>
-			</ul>
-			</li>
-		-->
+			DEBUG(<li><a href="#/test">Test</a></li>)
 		</ul>
 		</slide-menu>
-	<div class="container">
-		<ng-view></ng-view>
 	</div>
 
-</div>
+	<div class="container">
+			<ng-view></ng-view>
+	</div>
 </body>
 </html>

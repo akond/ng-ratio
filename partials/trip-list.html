@@ -1,11 +1,12 @@
-<h2>Trips</h2>
+<h2>Походы</h2>
 <a class="btn btn-default" ng-click="addTen()">Add 10 records</a>
 <table class="table table-striped">
     <thead>
         <tr>
             <th></th>
-            <th>Title</th>
-            <th>Date</th>
+            <th>Название</th>
+            <th>Человек</th>
+            <th>Дата</th>
             <th></th>
         </tr>
     </thead>
@@ -14,15 +15,18 @@
             {{$index+1}}
         </td>
         <td>
-            {{trip.title}}
+            <a href="#/plan/{{trip.id}}">{{trip.title}}</a>
+        </td>
+        <td>
+            {{trip.menCount() }}
         </td>
         <td>
             {{ trip.from | date}} -
             {{ trip.to | date }}
         </td>
         <td>
-            <a class="btn btn-info" ng-click="editTrip(trip)">Edit</a>
-            <a class="btn btn-danger" ng-click="removeTrip(trip)">Remove</a>
+            <a class="btn btn-info" ng-click="editTrip(trip)">Свойства</a>
+            <a class="btn btn-danger" ng-click="removeTrip(trip)">Удалить</a>
         </td>
     </tr>
 </table>

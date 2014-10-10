@@ -3,6 +3,11 @@ function Trip(title) {
 	this.title = title;
 	this.from = new Date ();
 	this.to = null;
-	this.plans = new Array();
-
+	this.plans = [];
 }
+
+Trip.prototype.menCount = function (title) {
+	return this.plans.reduce (function (sum, plan) {
+		return sum + parseInt(plan.men);
+	}, 0);
+};

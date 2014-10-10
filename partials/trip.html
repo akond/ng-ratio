@@ -3,65 +3,61 @@
 <wizard on-finish="addTrip()" edit-mode="editMode">
 
   <wz-step title="Название">
-    <ng-form name="part1">
-      <div class="form-group">
-        <label for="title">Название</label>
-        <input id="title" ng-model="Trip.title" ng-required="true" class="form-control" placeholder="Название">
-      </div>
-    </ng-form>
-    <p>
-      <a class="btn btn-primary" wz-next="" ng-disabled="part1.$invalid">Next</a>
-    </p>
-  </wz-step>
-
-  <wz-step title="Даты">
-    <ng-form name="part2">
-      <div class="row">
-        <div class="col-md-1">
-          From:
+    <ng-form name="initial">
+      <div class="form-group row">
+        <div class="col-md-7">
+          <label for="title">Название</label>
+          <input id="title" ng-model="Trip.title" ng-required="true" class="form-control" placeholder="Название">
         </div>
+      </div>
+
+      <div class="row">
         <div class="col-md-4">
+          <label>Первый день похода</label>
           <datepicker ng-model="Trip.from" min-date="minDate" ng-required="true" show-weeks="true" class="well well-sm"></datepicker>
         </div>
-        <div class="col-md-1">
-          To:
-        </div>
         <div class="col-md-4">
+          <label>Последний день похода</label>
           <datepicker ng-model="Trip.to" min-date="minDate" ng-required="true" show-weeks="true" class="well well-sm"></datepicker>
         </div>
       </div>
-      <div class="clearfix">
-        <a class="btn btn-primary" wz-next="" ng-disabled="part2.$invalid">Next</a>
-      </div>
     </ng-form>
+
+    <p class="text-right">
+      <a class="btn btn-primary" wz-next="" ng-disabled="initial.$invalid">Дальше</a>
+    </p>
   </wz-step>
 
   <wz-step title="Калории">
-    <ng-form name="part3">
+    <ng-form name="cal">
       <div class="row" ng-repeat="plan in Trip.plans">
         <ng-form>
           <div class="form-group">
-            <div class="col-md-4">
-              <label for="number">Количество</label>
-              <input id="number" ng-model="Trip.men" ng-required="true" class="form-control" placeholder="Человек">
+            <div class="col-md-3">
+              <label for="number">Расход калорий</label>
+              <input id="number" ng-model="plan.calories" ng-required="true" class="form-control" placeholder="Количество каллорий на человека">
             </div>
-            <div class="col-md-4">
-              <label for="number">Калорий</label>
-              <input id="number" ng-model="Trip.calories" ng-required="true" class="form-control" placeholder="Количество каллорий на человека">
+            <div class="col-md-3">
+              <label for="number">Количество человек</label>
+              <input id="number" ng-model="plan.men" ng-required="true" class="form-control" placeholder="Количество человек в этом плане">
+            </div>
+            <div class="col-md-2">
+              <label style="visibility: hidden;">Удалить</label>
+              <a class="btn btn-danger" style="display: block;" ng-click="removePlan($index)" ng-show="$index">Удалить</a>
             </div>
           </div>
         </ng-form>
       </div>
-      <div class="form-group">
-      </div>
       <div class="row">
         <div class="form-group col-md-2">
+          <label style="visibility: hidden;">Добавить</label>
           <a class="btn btn-default" ng-click="addPlan()">Добавить план</a>
         </div>
       </div>
+    <div class="form-group"></div>
     </ng-form>
-    <p>
-      <a class="btn btn-primary" wz-next="" ng-disabled="part3.$invalid">Next</a>
+    <p class="text-right">
+      <a class="btn btn-primary" wz-next="" ng-disabled="cal.$invalid">Сохранить</a>
     </p>
   </wz-step>
 
