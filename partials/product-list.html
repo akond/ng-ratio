@@ -1,0 +1,39 @@
+<h2>Продукты</h2>
+<a class="btn btn-success" ng-click="edit(Product)">Новый</a>
+<a class="btn btn-default" ng-click="addTen()">Add 10 records</a>
+
+<table class="table table-striped" ng-show="products.length">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Название</th>
+            <th>Название</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tr ng-repeat="product in products">
+        <td>
+            {{$index+1}}
+        </td>
+        <td>
+            <a href="#/product/{{product.id}}">{{product.title}}</a>
+        </td>
+        <td>
+            {{ product.calorificValue }}
+        </td>
+        <td>
+        </td>
+        <td>
+          <a class="btn btn-info" ng-click="edit(product)">Свойства</a>
+          <a class="btn btn-danger" ng-click="remove(product)">Удалить</a>
+        </td>
+    </tr>
+</table>
+
+<div ng-hide="products.length" class="row">
+  <div class="col-md-5 col-md-offset-3">
+    <p>Справочник продуктов пуст.</p>
+    <p>Для добавления списка продуктов нажмите кнопку обновления</p>
+    <p><a class="btn btn-success" ng-click="sync()">Обновить</a></p>
+  </div>
+</div>

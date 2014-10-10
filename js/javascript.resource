@@ -1,3 +1,6 @@
+/------------------------------------------------------------------------------/
+/ Path definitions                                                             /
+/------------------------------------------------------------------------------/
 PATH(BOWER,/bower_components)
 PATH(JS,js)
 PATH(CONTROLLER,JS/controller)
@@ -19,7 +22,6 @@ INCLUDE(BOWER/angular-route/angular-route.js)
 //INCLUDE(BOWER/angular-bootstrap/ui-bootstrap.js)
 INCLUDE(BOWER/angular-bootstrap/ui-bootstrap-tpls.js)
 
-
 INCLUDE(BOWER/angular-local-storage/dist/angular-local-storage.js)
 INCLUDE(BOWER/node-uuid/uuid.js)
 INCLUDE(BOWER/ng-slider-menu/src/js/slide-menu.js)
@@ -39,18 +41,26 @@ INCLUDE(JS/application.config.js)
 
 -- Контроллеры
 INCLUDE(CONTROLLER/trips.controller.js)
+INCLUDE(CONTROLLER/product.controller.js)
 INCLUDE(CONTROLLER/plan.controller.js)
 INCLUDE(CONTROLLER/help.controller.js)
 //INCLUDE(CONTROLLER/test.controller.js)
 
+
 -- Сервисы
 INCLUDE(SERVICE/confirm.service.js)
+INCLUDE(SERVICE/storage.service.js)
+
 
 -- Модели
 INCLUDE(MODEL/trip.model.js)
 INCLUDE(MODEL/plan.model.js)
+INCLUDE(MODEL/product.model.js)
+INCLUDE(MODEL/ration.model.js)
+
 
 -- Репозитории
 INCLUDE(REPOSITORY/trip.repository.js)
+INCLUDE(REPOSITORY/product.repository.js)
 
 INCLUDE(JS/routes.config.js)

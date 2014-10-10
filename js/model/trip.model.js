@@ -4,6 +4,7 @@ function Trip(title) {
 	this.from = new Date ();
 	this.to = null;
 	this.plans = [];
+	this.rations = [];
 }
 
 Trip.prototype.menCount = function (title) {

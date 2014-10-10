@@ -9,9 +9,9 @@ goog.require('goog.date.DateRange.Iterator');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
 
-PlanController.$inject = ['$scope', '$route', 'tripRepository', '$location', 'confirm'];
+PlanController.$inject = ['$scope', '$route', 'tripRepository', 'productRepository', '$location'];
 
-function PlanController($scope, $route, tripRepository, $location, confirm) {
+function PlanController($scope, $route, tripRepository, productRepository, $location) {
 	'use strict';
 
 	var trip = $scope.Trip = tripRepository.find ($route.current.params.id);
@@ -27,4 +27,10 @@ function PlanController($scope, $route, tripRepository, $location, confirm) {
 			return date.date;
 		});
 	})();
+
+	$scope.products = productRepository.findAll ();
+
+	$scope.editProducts = function () {
+		$location.path("/product/");
+	}
 }
