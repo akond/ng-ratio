@@ -23,12 +23,15 @@ function PlanController($scope, $route, tripRepository, productRepository, $loca
 		end = new goog.date.Date (end.getYear(), end.getMonth(), end.getDate ());
 
 		var daterange = new goog.date.DateRange(start, end);
+
 		return goog.array.map(goog.iter.toArray(daterange.iterator()), function (date) {
 			return date.date;
 		});
 	})();
 
 	$scope.products = productRepository.findAll ();
+
+	$scope.calorificTarget = trip.calorificTarget();
 
 	$scope.editProducts = function () {
 		$location.path("/product/");

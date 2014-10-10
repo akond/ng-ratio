@@ -1,5 +1,4 @@
 goog.require('goog.object');
-goog.require('goog.array');
 goog.require('goog.asserts');
 
 angular.module('ng-ratio').factory('tripRepository', ['storage', function (storage) {
@@ -7,13 +6,22 @@ angular.module('ng-ratio').factory('tripRepository', ['storage', function (stora
 
   var KEY = 'trips';
 
-
   var find = function (id) {
     return restore () [id];
   };
 
   var findAll = function () {
     return goog.object.getValues(restore ());
+  };
+
+  var restore = function () {
+    return storage.reconstitute (function () {
+      return new Trip ();
+    }, KEY);
+  };
+
+  var save = function (container) {
+    storage.set (KEY, container);
   };
 
   var addTrip = function (trip) {
@@ -28,16 +36,6 @@ angular.module('ng-ratio').factory('tripRepository', ['storage', function (stora
     var container = restore ();
     delete (container [trip.id]);
     save (container);
-  };
-
-  var save = function (container) {
-    storage.set (KEY, container);
-  };
-
-  var restore = function () {
-    return storage.reconstitute (function () {
-      return new Trip ();
-    }, KEY);
   };
 
   return {

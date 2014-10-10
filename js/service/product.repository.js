@@ -1,5 +1,9 @@
+goog.require('goog.object');
+goog.require('goog.asserts');
+
 angular.module('ng-ratio').factory('productRepository', ['storage', function (storage) {
   "use strict";
+
   var KEY = 'products';
 
   var find = function (id) {
@@ -16,14 +20,16 @@ angular.module('ng-ratio').factory('productRepository', ['storage', function (st
     }, KEY);
   };
 
+  var save = function (container) {
+    storage.set (KEY, container);
+  };
+
   var addProduct = function (product) {
+    goog.asserts.assert (product.id != '');
+
     var products = restore ();
     products [product.id] = product;
     save (products);
-  };
-
-  var save = function (container) {
-    storage.set (KEY, container);
   };
 
   var removeProduct = function (product) {
