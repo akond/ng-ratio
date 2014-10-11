@@ -1,4 +1,4 @@
-<h2>Свойства похода</h2>
+<h2>{{ Trip.title || "Новый поход" }}</h2>
 
 <wizard on-finish="addTrip()" edit-mode="editMode">
 
@@ -35,12 +35,12 @@
         <ng-form>
           <div class="form-group">
             <div class="col-md-3">
-              <label for="number">Расход калорий</label>
-              <input id="number" ng-model="plan.calories" ng-required="true" class="form-control" placeholder="Количество каллорий на человека">
+              <label>Расход калорий</label>
+              <input type="number" min="1" ng-model="plan.calories" ng-required="true" class="form-control" placeholder="Количество каллорий на человека">
             </div>
             <div class="col-md-3">
-              <label for="number">Количество человек</label>
-              <input id="number" ng-model="plan.men" ng-required="true" class="form-control" placeholder="Количество человек в этом плане">
+              <label>Количество человек</label>
+              <input type="number" min="1" ng-model="plan.men" ng-required="true" class="form-control" placeholder="Количество человек в этом плане">
             </div>
             <div class="col-md-2">
               <label style="visibility: hidden;">Удалить</label>
@@ -52,7 +52,7 @@
       <div class="row">
         <div class="form-group col-md-2">
           <label style="visibility: hidden;">Добавить</label>
-          <a class="btn btn-default" ng-click="addPlan()">Добавить план</a>
+          <a class="btn btn-info" ng-click="addPlan()">Добавить план</a>
         </div>
       </div>
     <div class="form-group"></div>

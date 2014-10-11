@@ -12,11 +12,13 @@ function ProductController($scope, $route, productRepository, $location, confirm
 
 	$scope.noProducts = $scope.products.length === 0;
 
-	$scope.Product = new Product();
+	var model = $scope.Product = new Product();
 
 	if (goog.isDef ($route.current.params.id)) {
 		if (productRepository.find ($route.current.params.id)) {
 			$scope.Product = productRepository.find ($route.current.params.id);
+		} else {
+			$scope.Product.id = $route.current.params.id;
 		}
 	}
 
@@ -25,7 +27,11 @@ function ProductController($scope, $route, productRepository, $location, confirm
 	};
 
 	$scope.save = function (product) {
-		productRepository.add (product);
+		goog.object.forEach (product, function (value, key) {
+			goog.object.set (model, key, value);
+		});
+
+		productRepository.add (model);
 		$location.path("/product/");
 	};
 

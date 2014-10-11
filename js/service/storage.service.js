@@ -1,34 +1,53 @@
 angular.module('ng-ratio').config(['$provide', function ($provide) {
-  $provide.factory('storage', ['localStorageService', function (localStorageService) {
-      var set = function (key, value) {
-          localStorageService.set (key, angular.toJson (value));
-      };
+	$provide.factory('storage', ['localStorageService', function (localStorageService) {
+		var keys = function () {
+			return localStorageService.keys();
+		}
 
-      var get = function (key) {
-          var value = localStorageService.get (key);
-          if (value) {
-              return angular.fromJson (value);
-          }
-      };
+		var filterKeys = function (filter) {
+			var r = new RegExp("^" + filter );
+			return goog.array.filter (keys (), function (key) {
+				return r.test (key);
+			})
+		};
 
-      var reconstitute = function (factory, values) {
-        if (goog.typeOf (values) === 'string') {
-          values = get (values);
-        }
+		var set = function (key, value) {
+			localStorageService.set (key, angular.toJson (value));
+		};
 
-        return goog.object.map(values, function (item, key) {
-          var object = factory ();
-          goog.object.forEach (item, function (value, key) {
-            goog.object.set(object, key, value);
-          });
-          return object;
-        });
-      };
+		var remove = function (key) {
+			localStorageService.remove (key);
+		};
 
-      return {
-        set: set,
-        get: get,
-        reconstitute: reconstitute
-      };
-  }]);
+		var get = function (key) {
+			var value = localStorageService.get (key);
+			if (value) {
+				return angular.fromJson (value);
+			}
+		};
+
+		var reconstitute = function (factory, prefix) {
+			var values = goog.array.map (filterKeys (prefix), function (key) {
+				return get (key);
+			});
+
+			return goog.array.toObject(goog.array.map(values, function (item) {
+				var object = factory ();
+				goog.object.forEach (item, function (value, key) {
+					goog.object.set(object, key, value);
+				});
+				return object;
+			}), function (item) {
+				return item.id
+			});
+		};
+
+		return {
+			keys: keys,
+			set: set,
+			get: get,
+			remove: remove,
+			reconstitute: reconstitute
+		};
+	}]);
 }]);

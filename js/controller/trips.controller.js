@@ -19,7 +19,7 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 	}
 
 	$scope.addTen = function () {
-		goog.array.forEach (goog.array.range (7), angular.bind($scope, function () {
+		goog.array.forEach (goog.array.range (3), angular.bind($scope, function () {
 			var trip = new Trip (Lorem.getSentence());
 			trip.from = new Date ();
 			trip.to = new Date ();

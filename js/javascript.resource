@@ -5,7 +5,7 @@ PATH(BOWER,/bower_components)
 PATH(JS,js)
 PATH(CONTROLLER,JS/controller)
 PATH(SERVICE,JS/service)
-PATH(REPOSITORY,JS/service)
+PATH(REPOSITORY,JS/repository)
 PATH(MODEL,JS/model)
 PATH(LOCALE,JS/locale)
 
