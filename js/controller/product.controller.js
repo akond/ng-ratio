@@ -45,9 +45,9 @@ function ProductController($scope, $route, productRepository, $location, confirm
 	};
 
 	$scope.sync = function () {
-		var products = [new Product ('Гречка', 4000), new Product ('Кошачье мясо', 4500)];
+		var products = [new Product ('Гречка', 4000, 100), new Product ('Кошачье мясо', 4500, 70)];
 		goog.array.forEach(products, function (product) {
-			this.save (product)
+			this.save (product);
 		}, this);
 	};
 
@@ -56,6 +56,7 @@ function ProductController($scope, $route, productRepository, $location, confirm
 			var product = new Product ();
 			product.title = Lorem.getSentence();
 			product.calorificValue = parseInt (Math.random(100, 1000)*1000);
+			product.usualPortion = parseInt (Math.random(100, 1000)*1000);
 
 			productRepository.add (product);
 			this.products.push(product);

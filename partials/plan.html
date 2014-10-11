@@ -2,29 +2,55 @@
 
 
 <div class="row">
-  <div class="col-md-6">
-    <div class="row" ng-repeat="day in days" ng-form="test">
-      <h3>{{ day | date }}</h3>
-      <div class="col-md-12">
-          <div>
-            {{ day.calories () }} до {{ calorificTarget }}
-          </div>
-          <h4>Завтрак</h4>
-          <h4>Обед</h4>
-          <h4>Ужин</h4>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
+	<div class="col-md-6">
+		<div class="row" ng-repeat="day in days" ng-form="test">
+			<h3>{{ day.date | date }}</h3>
 
-    <h3>Продукты ({{ products.length}}) <a class="btn btn-success btn-sm pull-right" ng-click="editProducts()">Редактировать</a></h3>
-    <div ng-repeat="product in products">
-      <div class="col-md-10">
-        {{ product.title }}
-      </div>
-      <div class="col-md-2">
-        {{ product.calorificValue }}
-      </div>
-    </div>
-  </div>
+			<div class="row">
+				<div class="col-md-3">
+					{{ day.calories () }} до {{ Trip.calorificTarget() }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-11 col-md-offset-1">
+					<div ng-repeat="meal in day.meals" class="meal row" ng-class="{'bg-info': meal === active}">
+						<div class="col-md-1">
+							<h4 ng-click="activate(meal)">{{ meal.title }}</h4>
+						</div>
+						<div class="rations col-md-8 col-md-offset-2" ng-class="{'bg-warning': !meal.rations.length}" ng-click="activate(meal)">
+							<div ng-repeat="ration in meal.rations" class="row">
+								<div class="col-md-9">
+									{{ productIndex [ration.product].title }}
+									{{ ration.amount }}
+								</div>
+								<div class="col-md-3">
+									<a class="btn btn-sm btn-danger" ng-click="removeRation(ration)">Убрать</a>
+								</div>
+							</div>
+							<div ng-hide="meal.rations.length">
+									Нет продуктов
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-1">
+	</div>
+	<div class="col-md-5">
+		<h3>Продукты ({{ productCount }}) <a class="btn btn-success btn-sm pull-right" ng-click="editProducts()">Редактировать</a></h3>
+		<input ng-model="search.title" type="text" class="form-control">
+		<div ng-repeat="product in products | filter:search:false" class="row">
+			<div class="col-md-2">
+				<a class="btn btn-sm btn-default" ng-click="addRation(product)">Добавить</a>
+			</div>
+			<div class="col-md-8">
+				{{ product.title }}
+			</div>
+			<div class="col-md-2">
+				{{ product.calorificValue }}
+			</div>
+		</div>
+	</div>
 </div>

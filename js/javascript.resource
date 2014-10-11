@@ -44,7 +44,7 @@ INCLUDE(CONTROLLER/trips.controller.js)
 INCLUDE(CONTROLLER/product.controller.js)
 INCLUDE(CONTROLLER/plan.controller.js)
 INCLUDE(CONTROLLER/help.controller.js)
-//INCLUDE(CONTROLLER/test.controller.js)
+INCLUDE(CONTROLLER/test.controller.js)
 
 
 -- Сервисы

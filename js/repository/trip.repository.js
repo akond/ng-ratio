@@ -21,7 +21,7 @@ angular.module('ng-ratio').factory('tripRepository', ['storage', function (stora
     };
 
     var addTrip = function (trip) {
-        goog.asserts.assert (trip.id != '');
+        goog.asserts.assert (trip.id != null);
         storage.set (KEY + "." + trip.id, trip);
     };
 

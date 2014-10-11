@@ -6,19 +6,21 @@ EMPTY =
 SPACE = $(EMPTY) $(EMPTY)
 COMMA = ,
 
+%.css: %.less
+	$(LESS) $< > $@
+
 resources = $(subst $(SPACE),$(COMMA),$(strip $(shell $(COMP) $1)))
 
 
-build: index.html css/angular-wizard.css
+build: index.html css
 
 
 index.html: $(JS)/javascript.resource css/css.resource partials/application.html
 	$(M4) $(if $(NODEBUG),,-D ALLOWDEBUG=1) -D JAVASCRIPTS="$(call resources,$<)" -D STYLES="$(call resources,css/css.resource)" etc/*.m4 partials/application.html > $@
 
 
-css/angular-wizard.css: css/angular-wizard.less
-	$(LESS) $< > $@
+css: css/ng-ration.css css/angular-wizard.css
 
 
 validate:
-		jshint $(shell find js -name '*.js')
+	jshint $(filter-out js/locale/angular-locale_ru-ru.js, $(shell find js -name '*.js'))

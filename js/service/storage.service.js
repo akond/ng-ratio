@@ -2,13 +2,13 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 	$provide.factory('storage', ['localStorageService', function (localStorageService) {
 		var keys = function () {
 			return localStorageService.keys();
-		}
+		};
 
 		var filterKeys = function (filter) {
 			var r = new RegExp("^" + filter );
 			return goog.array.filter (keys (), function (key) {
 				return r.test (key);
-			})
+			});
 		};
 
 		var set = function (key, value) {
@@ -38,15 +38,21 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 				});
 				return object;
 			}), function (item) {
-				return item.id
+				return item.id;
 			});
 		};
+
+		var reset = function () {
+			localStorageService.clearAll();
+		};
+
 
 		return {
 			keys: keys,
 			set: set,
 			get: get,
 			remove: remove,
+			reset: reset,
 			reconstitute: reconstitute
 		};
 	}]);

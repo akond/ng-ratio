@@ -23,6 +23,7 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 			var trip = new Trip (Lorem.getSentence());
 			trip.from = new Date ();
 			trip.to = new Date ();
+			trip.to.setDate (trip.to.getDate () + 1);
 			trip.plans.push (new Plan ());
 			tripRepository.add (trip);
 			this.trips.push(trip);
