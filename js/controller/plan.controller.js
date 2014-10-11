@@ -8,19 +8,21 @@ goog.require('goog.date.DateRange.Iterator');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
 
-PlanController.$inject = ['$scope', '$route', 'tripRepository', 'productRepository', '$location'];
+PlanController.$inject = ['$scope', '$route', 'tripRepository', 'productRepository', '$location', '$filter'];
 
-function PlanController($scope, $route, tripRepository, productRepository, $location) {
+function PlanController($scope, $route, tripRepository, productRepository, $location, $filter) {
 	'use strict';
 
 	var meals = ["Завтрак", "Обед", "Ужин"];
 	var trip = $scope.Trip = tripRepository.find ($route.current.params.id);
 
-	$scope.productIndex = goog.array.toObject (productRepository.findAll (), function (product) {
+	var products = $filter('orderBy')(productRepository.findAll (), 'title');
+
+	$scope.productIndex = goog.array.toObject (products, function (product) {
 		return product.id;
 	});
 
-	$scope.products = productRepository.findAll ();
+	$scope.products = products;
 
 	$scope.productCount = goog.object.getCount ($scope.products);
 
