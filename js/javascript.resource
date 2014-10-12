@@ -2,7 +2,7 @@
 / Path definitions                                                             /
 /------------------------------------------------------------------------------/
 PATH(BOWER,/bower_components)
-PATH(JS,js)
+PATH(JS,/js)
 PATH(CONTROLLER,JS/controller)
 PATH(SERVICE,JS/service)
 PATH(REPOSITORY,JS/repository)

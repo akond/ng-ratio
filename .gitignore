@@ -2,3 +2,5 @@ bower_components
 index.html
 css/angular-wizard.css
 css/ng-ration.css
+css/combined.css
+*.gz
