@@ -49,6 +49,7 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 
 		return {
 			keys: keys,
+			filterKeys: filterKeys,
 			set: set,
 			get: get,
 			remove: remove,

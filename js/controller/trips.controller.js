@@ -25,16 +25,16 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 			trip.to = new Date ();
 			trip.to.setDate (trip.to.getDate () + 1);
 			trip.plans.push (new Plan ());
-			tripRepository.add (trip);
+			tripRepository.save (trip);
 			this.trips.push(trip);
 		}));
 	};
 
 	$scope.addTrip = function () {
 		if (this.editMode) {
-			tripRepository.add (this.Trip);
+			tripRepository.save (this.Trip);
 		} else {
-			tripRepository.add (goog.object.clone (this.Trip));
+			tripRepository.save (goog.object.clone (this.Trip));
 		}
 
 		$location.path("/");

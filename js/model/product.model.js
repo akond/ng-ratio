@@ -6,5 +6,5 @@ function Product(title, calorificValue, usualPortion) {
 }
 
 Product.prototype.calories = function (ration) {
-	return this.calorificValue * ration.amount / 1000;
+	return Math.round(this.calorificValue/100 * ration.amount);
 };

@@ -62,5 +62,6 @@ INCLUDE(MODEL/ration.model.js)
 -- Репозитории
 INCLUDE(REPOSITORY/trip.repository.js)
 INCLUDE(REPOSITORY/product.repository.js)
+INCLUDE(REPOSITORY/ration.repository.js)
 
 INCLUDE(JS/routes.config.js)

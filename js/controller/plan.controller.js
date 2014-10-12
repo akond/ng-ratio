@@ -8,9 +8,9 @@ goog.require('goog.date.DateRange.Iterator');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
 
-PlanController.$inject = ['$scope', '$route', 'tripRepository', 'productRepository', '$location', '$filter'];
+PlanController.$inject = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter'];
 
-function PlanController($scope, $route, tripRepository, productRepository, $location, $filter) {
+function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter) {
 	'use strict';
 
 	var meals = ["Завтрак", "Обед", "Ужин"];
@@ -24,6 +24,17 @@ function PlanController($scope, $route, tripRepository, productRepository, $loca
 
 	$scope.products = products;
 
+	$scope.updateFilter = function () {
+		$scope.filteredProducts = $filter('filter')($scope.products, $scope.search, false);
+		var total = $scope.filteredProducts.length;
+		if (!$scope.displayFilteredOut) {
+			$scope.filteredProducts = $filter('limitTo')($scope.filteredProducts, 20);
+		}
+		$scope.filteredOut = total - $scope.filteredProducts.length;
+	};
+
+	$scope.updateFilter ();
+
 	$scope.productCount = goog.object.getCount ($scope.products);
 
 	$scope.days = (function () {
@@ -34,7 +45,9 @@ function PlanController($scope, $route, tripRepository, productRepository, $loca
 
 		var daterange = new goog.date.DateRange(start, end);
 
-		return goog.array.map(goog.iter.toArray(daterange.iterator()), function (date, dateIndex) {
+		var rations = rationRepository.findAll (trip.id);
+
+		return goog.array.map(goog.iter.toArray(daterange.iterator()), function (date, dayIndex) {
 			return {
 				date: date.date,
 				calories: function () {
@@ -47,7 +60,9 @@ function PlanController($scope, $route, tripRepository, productRepository, $loca
 				meals: goog.array.map(meals, function (meal, mealIndex) {
 					return {
 						title: meals [mealIndex],
-						rations: goog.object.getValueByKeys(trip.rations, dateIndex, mealIndex) || []
+						dayIndex: dayIndex,
+						mealIndex: mealIndex,
+						rations: goog.object.getValueByKeys(trip.rations, dayIndex, mealIndex) || []
 					};
 				})
 			};
@@ -65,7 +80,7 @@ function PlanController($scope, $route, tripRepository, productRepository, $loca
 		$location.path("/product/");
 	};
 
-	$scope.removeRation = function (ration) {
+	$scope.removeRation = function (ration, dayIndex, mealIndex) {
 		goog.array.forEach ($scope.days, function (day) {
 			goog.array.forEach (day.meals, function (meal) {
 				meal.rations = goog.array.filter (meal.rations, function (item) {
@@ -73,6 +88,8 @@ function PlanController($scope, $route, tripRepository, productRepository, $loca
 				});
 			});
 		});
+
+		rationRepository.remove (ration, trip.id, dayIndex, mealIndex);
 	};
 
 	$scope.addRation = function (product) {
@@ -81,5 +98,6 @@ function PlanController($scope, $route, tripRepository, productRepository, $loca
 		ration.amount = product.usualPortion;
 
 		$scope.active.rations.push (ration);
+		rationRepository.save (ration, trip.id, $scope.active.dayIndex, $scope.active.mealIndex);
 	};
 }

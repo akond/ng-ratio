@@ -2,22 +2,30 @@
 
 
 <div class="row">
-	<div class="col-md-6">
-		<div class="row" ng-repeat="day in days" ng-form="test">
+	<div class="col-md-7">
+		<div style="height: 900px; overflow: scroll; overflow-y: scroll;
+overflow-x: hidden;">
+		<div class="row" ng-repeat="day in days" ng-init="dayIndex = $index" ng-form="test">
 			<h3>{{ day.date | date }}</h3>
 
-			<div class="row">
-				<div class="col-md-3">
-					{{ day.calories () }} до {{ Trip.calorificTarget() }}
+			<div class="row panel">
+				<div class="col-md-10 col-md-offset-1">
+					<span class="ration-sofar" title="Набрано">{{ day.calories () }}</span> kcal
+					<span ng-show="day.calories () < Trip.calorificTarget()">
+						+ <span class="ration-lack" title="Не хватает">{{ Trip.calorificTarget() - day.calories () }}</span> &#8594; <span class="ration-fail" title="Требуется">{{ Trip.calorificTarget() }}</span>
+					</span>
+					<span ng-show="day.calories () >= Trip.calorificTarget()">
+						= <span class="ration-ok">{{ Trip.calorificTarget() }}</span> + <span class="ration-ok">{{ day.calories () - Trip.calorificTarget() }}</span>
+					</span>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-11 col-md-offset-1">
-					<div ng-repeat="meal in day.meals" class="ration-meal row" ng-class="{'ration-active': meal === active}">
-						<div class="col-md-2">
+				<div class="col-md-10 col-md-offset-1">
+					<div ng-repeat="meal in day.meals" class="ration-meal row" ng-init="mealIndex = $index" ng-class="{'ration-active': meal === active}">
+						<div class="col-md-1">
 							<h4 ng-click="activate(meal)">{{ meal.title }}</h4>
 						</div>
-						<div class="ration-rations col-md-9 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}" ng-click="activate(meal)">
+						<div class="ration-rations col-md-10 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}" ng-click="activate(meal)">
 							<div ng-repeat="ration in meal.rations" class="row ration-ration" ng-class="{'ration-bordered': !$last}">
 								<div class="col-md-8">
 									{{ productIndex [ration.product].title | limitTo: 30 }}
@@ -26,7 +34,7 @@
 									{{ ration.amount }}
 								</div>
 								<div class="col-md-3">
-									<a class="btn btn-sm btn-danger" ng-click="removeRation(ration)">Убрать</a>
+									<a class="btn btn-sm btn-danger" ng-click="removeRation(ration, dayIndex, mealIndex)">Убрать</a>
 								</div>
 							</div>
 							<div ng-hide="meal.rations.length">
@@ -37,16 +45,17 @@
 				</div>
 			</div>
 		</div>
+		</div>
 	</div>
 	<div class="col-md-1">
 	</div>
 	<div class="col-md-5">
-		<h3>Продукты ({{ productCount }}) <a class="btn btn-success btn-sm pull-right" ng-click="editProducts()">Редактировать</a></h3>
-		<div class="input-group ration-filter">
-			<div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length  }" ng-click="search.title = ''">Фильтр</div>
-			<input ng-model="search.title" type="text" class="form-control">
+		<h3>Продукты<a class="btn btn-success btn-sm pull-right" ng-click="editProducts()">Редактировать</a></h3>
+		<div class="input-group ration-filter panel">
+			<div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length  }" ng-click="search.title = ''; updateFilter()">Поиск</div>
+			<input ng-model="search.title" type="text" class="form-control" ng-change="updateFilter()">
 		</div>
-		<div ng-repeat="product in products | filter:search:false | limitTo: 20" class="row ration-product">
+		<div class="row ration-product" ng-repeat="product in filteredProducts">
 			<div class="col-md-2">
 				<a class="btn btn-sm btn-default" ng-click="addRation(product)">Добавить</a>
 			</div>
@@ -55,6 +64,13 @@
 			</div>
 			<div class="col-md-2">
 				{{ product.calorificValue }}
+			</div>
+		</div>
+
+		<div class="row" ng-show="filteredOut != 0 && !displayFilteredOut">
+			<div class="col-md-12">
+			<p>Не показаны ещё {{ filteredOut }} продуктов.
+			<a class="btn btn-sm btn-link" ng-click="displayFilteredOut = 1; updateFilter()">Показать</a></p>
 			</div>
 		</div>
 	</div>
