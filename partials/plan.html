@@ -41,6 +41,7 @@ overflow-x: hidden;">
 									{{ ration.amount }} г &#8594;
 									<tag name="sofar">{{ productIndex [ration.product].calories (ration) }}</tag>
 									</span>
+									<span ng-hide="ration.amount"><glyph name="ok" color="green"></glyph></span>
 								</div>
 								<div class="col-md-1">
 									<a ng-click="removeRation(ration, dayIndex, mealIndex)" title="Убрать" class="ration-action"><glyph name="remove" color="grey"></glyph></a>
