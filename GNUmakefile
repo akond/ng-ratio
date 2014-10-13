@@ -31,7 +31,7 @@ build: index.html css
 
 
 index.html: $(JS)/javascript.resource css/css.resource partials/application.html
-	$(M4) $(if $(NODEBUG),,-D ALLOWDEBUG=1) -D JAVASCRIPTS="$(call webroot,$<)" -D STYLES="$(call webroot,css/css.resource,)" etc/*.m4 partials/application.html > $@
+	$(M4) $(if $(NODEBUG),,-D ALLOWDEBUG=1) -D JAVASCRIPTS="$(call webroot,$<)" -D STYLES="$(call webroot,css/css.resource,)" etc/m4/*.m4 partials/application.html > $@
 
 
 css: css/ng-ration.css css/angular-wizard.css
@@ -47,3 +47,6 @@ upload: build css/combined.css.gz
 css/combined.css: $(CSSS)
 	cat $(CSSS) | $(CSSCOMP) $@
 
+.PHONY: etc/product-list.csv
+etc/product-list.csv:
+	for i in `seq 1 1000`; do echo -n ',,,,' >> $@; uuidgen >> $@; done

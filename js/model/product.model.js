@@ -1,5 +1,5 @@
-function Product(title, calorificValue, usualPortion) {
-	this.id = uuid.v4();
+function Product(id, title, calorificValue, usualPortion) {
+	this.id = id || uuid.v4();
 	this.title = title || null;
 	this.calorificValue = calorificValue || null;
 	this.usualPortion = usualPortion || null;
