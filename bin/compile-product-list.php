@@ -1,22 +1,32 @@
 <?php
 
-function generateProducts ($file)
+function generateProducts ($files)
 {
-  while ($row = fgetcsv ($file))
-  {
-    $product = array_slice ($row, 0, 5);
-    $id = array_pop ($product);
-    array_unshift ($product, $id);
+    foreach ($files as $file)
+    {
+        $handle = fopen ($file, "r");
+        while ($row = fgetcsv ($handle))
+        {
+            $product = array_slice ($row, 0, 5);
+            if (empty ($product [1]))
+            {
+                continue;
+            }
 
-    yield ($product);
-  }
+            $id = array_pop ($product);
+            array_unshift ($product, $id);
+            $product [2] = (int) $product [2];
+            $product [3] = (int) $product [3];
+            $product [4] = (int) $product [4];
+
+            yield ($product);
+        }
+        fclose ($handle);
+    }
 }
 
-chdir ("..");
-$file = fopen ("etc/product-list.csv", "r");
-$products = array_filter (iterator_to_array (generateProducts ($file)), function ($item)
-{
-  return false == empty ($item [1]);
-});
+$files = $_SERVER['argv'];
+array_shift ($files);
 
+$products = iterator_to_array (generateProducts ($files));
 echo json_encode ($products);

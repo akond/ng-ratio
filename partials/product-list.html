@@ -1,7 +1,7 @@
-<h2>Продукты</h2>
+<h2>Продукты ({{ products.length }})</h2>
 <div class="text-right">
 <a class="btn btn-success" ng-click="edit(Product)">Добавить</a>
-<a class="btn btn-default" ng-click="addTen()">Add 10 records</a>
+<a class="btn btn-default" ng-click="sync()">Синхронизация</a>
 </div>
 
 <div class="input-group ration-filter panel" ng-show="products.length">
@@ -14,7 +14,8 @@
         <tr>
             <th></th>
             <th>Название</th>
-            <th>Название</th>
+            <th>Калорийность</th>
+            <th>Порция</th>
             <th></th>
         </tr>
     </thead>
@@ -25,9 +26,8 @@
         <td>
             <a href="#/product/{{product.id}}" title="Редактировать">{{product.title}}</a>
         </td>
-        <td>
-            {{ product.calorificValue }}
-        </td>
+        <td>{{ product.calorificValue }}</td>
+        <td>{{ product.usualPortion }}</td>
         <td>
         </td>
         <td>

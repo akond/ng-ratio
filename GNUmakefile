@@ -1,5 +1,5 @@
 BIN = bin
-
+PHP = php
 JAVA = java -jar
 COMPRESS=gzip -k -f
 CSSCOMP = $(JAVA) $(BIN)/yuicompressor-2.4.8.jar --type css -o
@@ -27,8 +27,13 @@ JSS := $(call fsroot,$(JS)/javascript.resource)
 	$(COMPRESS) $<
 
 
-build: index.html css
+build: index.html css js
 
+
+js: $(JS)/products.js
+
+$(JS)/products.js: etc/products/*.csv $(BIN)/compile-product-list.php
+	$(PHP) $(BIN)/compile-product-list.php etc/products/*.csv > $@
 
 index.html: $(JS)/javascript.resource css/css.resource partials/application.html
 	$(M4) $(if $(NODEBUG),,-D ALLOWDEBUG=1) -D JAVASCRIPTS="$(call webroot,$<)" -D STYLES="$(call webroot,css/css.resource,)" etc/m4/*.m4 partials/application.html > $@
@@ -47,6 +52,6 @@ upload: build css/combined.css.gz
 css/combined.css: $(CSSS)
 	cat $(CSSS) | $(CSSCOMP) $@
 
-.PHONY: etc/product-list.csv
-etc/product-list.csv:
-	for i in `seq 1 1000`; do echo -n ',,,,' >> $@; uuidgen >> $@; done
+.PHONY: product-id
+product-id:
+	for i in `seq 1 1000`; do echo -n ',,,,' >> etc/products/$(NAME).csv; uuidgen -1 >> etc/products/$(NAME).csv; done

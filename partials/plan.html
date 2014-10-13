@@ -1,6 +1,5 @@
 <h1>{{ Trip.title }}</h1>
 
-
 <div class="row">
 	<div class="col-md-7">
 		<div style="height: 900px; overflow: scroll; overflow-y: scroll;
@@ -10,12 +9,18 @@ overflow-x: hidden;">
 
 			<div class="row panel">
 				<div class="col-md-10 col-md-offset-1">
-					<span class="ration-sofar" title="Набрано">{{ day.calories () }}</span> kcal
+					kcal: <tag name="sofar">{{ day.calories () }}</tag>
 					<span ng-show="day.calories () < Trip.calorificTarget()">
-						+ <span class="ration-lack" title="Не хватает">{{ Trip.calorificTarget() - day.calories () }}</span> &#8594; <span class="ration-fail" title="Требуется">{{ Trip.calorificTarget() }}</span>
+						+
+						<tag name="lack">{{ Trip.calorificTarget() - day.calories () }}</tag>
+						&#8594;
+						<tag name="fail">{{ Trip.calorificTarget() }}</tag>
 					</span>
 					<span ng-show="day.calories () >= Trip.calorificTarget()">
-						= <span class="ration-ok">{{ Trip.calorificTarget() }}</span> + <span class="ration-ok">{{ day.calories () - Trip.calorificTarget() }}</span>
+						=
+						<tag name="ok">{{ Trip.calorificTarget() }}</tag>
+						+
+						<tag name="excess">{{ day.calories () - Trip.calorificTarget() }}</tag>
 					</span>
 				</div>
 			</div>
@@ -24,17 +29,21 @@ overflow-x: hidden;">
 					<div ng-repeat="meal in day.meals" class="ration-meal row" ng-init="mealIndex = $index" ng-class="{'ration-active': meal === active}">
 						<div class="col-md-1">
 							<h4 ng-click="activate(meal)">{{ meal.title }}</h4>
+							{{ meal.percentage() }}%
 						</div>
 						<div class="ration-rations col-md-10 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}" ng-click="activate(meal)">
 							<div ng-repeat="ration in meal.rations" class="row ration-ration" ng-class="{'ration-bordered': !$last}">
-								<div class="col-md-8">
+								<div class="col-md-7">
 									{{ productIndex [ration.product].title | limitTo: 30 }}
 								</div>
-								<div class="col-md-1">
-									{{ ration.amount }}
+								<div class="col-md-4">
+									<span ng-show="ration.amount">
+									{{ ration.amount }} г &#8594;
+									<tag name="sofar">{{ productIndex [ration.product].calories (ration) }}</tag>
+									</span>
 								</div>
-								<div class="col-md-3">
-									<a class="btn btn-sm btn-danger" ng-click="removeRation(ration, dayIndex, mealIndex)">Убрать</a>
+								<div class="col-md-1">
+									<a ng-click="removeRation(ration, dayIndex, mealIndex)" title="Убрать" class="ration-action"><glyph name="remove" color="grey"></glyph></a>
 								</div>
 							</div>
 							<div ng-hide="meal.rations.length">

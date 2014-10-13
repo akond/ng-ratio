@@ -1,5 +1,5 @@
-function Ration() {
+function Ration(amount) {
 	this.id = uuid.v4();
 	this.product = null;
-	this.amount = 0;
+	this.amount = amount || 0;
 }

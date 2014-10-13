@@ -1,11 +1,12 @@
 goog.require('goog.array');
+goog.require('goog.functions');
 
 angular.module('trips');
 angular.module('trips').controller('ProductCtrl', ProductController);
 
-ProductController.$inject = ['$scope', '$route', 'productRepository', '$location', 'confirm'];
+ProductController.$inject = ['$scope', '$http', '$route', 'productRepository', '$location', 'confirm'];
 
-function ProductController($scope, $route, productRepository, $location, confirm) {
+function ProductController($scope, $http, $route, productRepository, $location, confirm) {
 	'use strict';
 
 	$scope.products = goog.object.getValues (productRepository.findAll ());
@@ -45,21 +46,15 @@ function ProductController($scope, $route, productRepository, $location, confirm
 	};
 
 	$scope.sync = function () {
-		var products = [new Product ('Гречка', 4000, 100), new Product ('Кошачье мясо', 4500, 70)];
-		goog.array.forEach(products, function (product) {
-			this.save (product);
-		}, this);
-	};
-
-	$scope.addTen = function () {
-		goog.array.forEach (goog.array.range (7), angular.bind($scope, function () {
-			var product = new Product ();
-			product.title = Lorem.getSentence();
-			product.calorificValue = parseInt (Math.random(100, 1000)*1000);
-			product.usualPortion = parseInt (Math.random(100, 1000)*1000);
-
-			productRepository.add (product);
-			this.products.push(product);
-		}));
+		$http.get('/js/products.js').
+			success(function(data, status, headers, config) {
+				if (goog.typeOf (data) === 'array') {
+					goog.array.forEach (data, function (item) {
+						var params = item;
+						params.unshift (Product);
+						$scope.save (goog.functions.create.apply (null, params));
+					});
+				}
+			});
 	};
 }

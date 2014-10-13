@@ -4,6 +4,7 @@
 PATH(BOWER,/bower_components)
 PATH(JS,/js)
 PATH(CONTROLLER,JS/controller)
+PATH(DIRECTIVE,JS/directive)
 PATH(SERVICE,JS/service)
 PATH(REPOSITORY,JS/repository)
 PATH(MODEL,JS/model)
@@ -45,6 +46,11 @@ INCLUDE(CONTROLLER/product.controller.js)
 INCLUDE(CONTROLLER/plan.controller.js)
 INCLUDE(CONTROLLER/help.controller.js)
 INCLUDE(CONTROLLER/test.controller.js)
+
+
+-- Директивы
+INCLUDE(DIRECTIVE/glyph.directive.js)
+INCLUDE(DIRECTIVE/tag.directive.js)
 
 
 -- Сервисы

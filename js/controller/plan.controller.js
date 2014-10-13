@@ -62,6 +62,9 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 						title: meals [mealIndex],
 						dayIndex: dayIndex,
 						mealIndex: mealIndex,
+						percentage: function () {
+							return 'NYI';
+						},
 						rations: goog.object.getValueByKeys(trip.rations, dayIndex, mealIndex) || []
 					};
 				})
