@@ -6,7 +6,7 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
           defer.resolve (true);
           return defer.promise;
         }
-        
+
         var dialog = $modal.open({
           'templateUrl': 'partials/confirm.html',
           'controller': ['$scope', '$modalInstance', function($scope, $modalInstance) {
@@ -20,7 +20,7 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
             $scope.cancel = function() {
               $modalInstance.dismiss('cancel');
             };
-          }],
+          }]
         });
 
         return dialog.result;

@@ -29,8 +29,8 @@ Trip.prototype.calorificTarget = function () {
 	}, 0);
 };
 
-Trip.prototype.calories = function () {
-	return this.rations.reduce (function (sum, ration) {
-		return sum + parseInt(plan.men) * ration.amount;
-	}, 0);
-};
+// Trip.prototype.calories = function () {
+// 	return this.rations.reduce (function (sum, ration) {
+// 		return sum + parseInt(plan.men) * ration.amount;
+// 	}, 0);
+// };

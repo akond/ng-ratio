@@ -2,7 +2,7 @@ angular.module('trips').directive ('tag', function () {
 	return {
 		restrict: 'E',
 		scope: {
-			name: '@',
+			name: '@'
 		},
 		transclude: true,
 		template: '<span class="ration-tag ration-{{name}}" ng-transclude="yes"></span>',
@@ -13,7 +13,7 @@ angular.module('trips').directive ('tag', function () {
 				lack: 'Не хватает',
 				ok: 'Цель достигнута',
 				excess: 'Излишек',
-				fail: 'Требуется',
+				fail: 'Требуется'
 			}
 			element.attr ('title', titles [scope.name]);
 		}
