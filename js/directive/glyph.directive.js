@@ -6,5 +6,5 @@ angular.module('trips').directive ('glyph', function () {
 			color: '@'
 		},
 		template: '<span class="glyphicon glyphicon-{{name}}" style="color: {{color}}"></span>'
-	}
+	};
 });

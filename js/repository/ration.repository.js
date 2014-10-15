@@ -39,7 +39,7 @@ angular.module('ng-ratio').factory('rationRepository', ['storage', function (sto
                     ration.product = rationData.product;
                     ration.amount = rationData.amount;
                     return ration;
-                })
+                });
             });
         });
 

@@ -8,7 +8,7 @@ goog.require('goog.date.DateRange.Iterator');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
 
-PlanController.$inject = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter'];
+PlanController['$inject'] = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter'];
 
 function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter) {
 	'use strict';

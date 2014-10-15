@@ -4,6 +4,11 @@
 	)
 	foreach(file,(STYLES),<link rel="stylesheet" type="text/css" href="file">
 	)
+	foreach(file,(TEMPLATES),<script type="text/ng-template" id="file">
+	m4_esyscmd`'(cat file)
+</script>
+)
+
 </head>
 <body>
 	<div class="container">
@@ -18,7 +23,7 @@
 	</div>
 
 	<div class="container">
-			<ng-view></ng-view>
+		<ng-view></ng-view>
 	</div>
 </body>
 </html>

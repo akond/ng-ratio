@@ -3,7 +3,7 @@ goog.require('goog.array');
 angular.module('trips', ['LocalStorageModule']);
 angular.module('trips').controller('TripCtrl', TripController);
 
-TripController.$inject = ['$scope', '$route', 'tripRepository', '$rootScope', '$location', 'confirm'];
+TripController['$inject'] = ['$scope', '$route', 'tripRepository', '$rootScope', '$location', 'confirm'];
 
 function TripController($scope, $route, tripRepository, $rootScope, $location, confirm) {
 	'use strict';

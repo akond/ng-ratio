@@ -1,11 +1,12 @@
 {
 	"id": "twig-javascript",
-	"paths": ["vendor/jms/twig-js/src-js"],
-	"mode": "ADVANCED",
+	"paths": [],
+	"mode": "SIMPLE",
 	"level": "VERBOSE",
-	"inputs": ["vendor/jms/twig-js/src-js/export.js", "INPUT"],
+	"inputs": ["join(`", "', m4_translit(INPUTS,` ', `,'))"],
 	"output-wrapper": "(function() {%output%})();\n",
-	"pretty-print": true,
+	"pretty-print": false,
+	"externs": ["//angular.js", "js/externs.js"],
 	"debug": false,
 	"define": {
 		"goog.DEBUG":false

@@ -14,8 +14,9 @@ angular.module('trips').directive ('tag', function () {
 				ok: 'Цель достигнута',
 				excess: 'Излишек',
 				fail: 'Требуется'
-			}
+			};
+
 			element.attr ('title', titles [scope.name]);
 		}
-	}
+	};
 });

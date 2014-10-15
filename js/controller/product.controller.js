@@ -4,30 +4,30 @@ goog.require('goog.functions');
 angular.module('trips');
 angular.module('trips').controller('ProductCtrl', ProductController);
 
-ProductController.$inject = ['$scope', '$http', '$route', 'productRepository', '$location', 'confirm'];
+ProductController['$inject'] = ['$scope', '$http', '$route', 'productRepository', '$location', 'confirm'];
 
 function ProductController($scope, $http, $route, productRepository, $location, confirm) {
 	'use strict';
 
-	$scope.products = goog.object.getValues (productRepository.findAll ());
+	$scope['products'] = goog.object.getValues (productRepository.findAll ());
 
-	$scope.noProducts = $scope.products.length === 0;
+	$scope['noProducts'] = $scope['products'].length === 0;
 
-	var model = $scope.Product = new Product();
+	var model = $scope['Product'] = new Product();
 
 	if (goog.isDef ($route.current.params.id)) {
 		if (productRepository.find ($route.current.params.id)) {
-			$scope.Product = productRepository.find ($route.current.params.id);
+			$scope['Product'] = productRepository.find ($route.current.params.id);
 		} else {
-			$scope.Product.id = $route.current.params.id;
+			$scope['Product'].id = $route.current.params.id;
 		}
 	}
 
-	$scope.edit = function (product) {
+	$scope['edit'] = function (product) {
 		$location.path("/product/" + product.id);
 	};
 
-	$scope.save = function (product) {
+	$scope['save'] = function (product) {
 		goog.object.forEach (product, function (value, key) {
 			goog.object.set (model, key, value);
 		});
@@ -36,7 +36,7 @@ function ProductController($scope, $http, $route, productRepository, $location, 
 		$location.path("/product/");
 	};
 
-	$scope.remove = function (product) {
+	$scope['remove'] = function (product) {
 		confirm('Are you sure to remove this trip?').then (angular.bind($scope, function () {
 			productRepository.remove (product);
 			this.products = goog.array.filter (this.products, function (item) {
@@ -45,7 +45,7 @@ function ProductController($scope, $http, $route, productRepository, $location, 
 		}));
 	};
 
-	$scope.sync = function () {
+	$scope['sync'] = function () {
 		$http.get('/js/products.js').
 			success(function(data, status, headers, config) {
 				if (goog.typeOf (data) === 'array') {
