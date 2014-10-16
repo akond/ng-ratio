@@ -16,13 +16,6 @@ CSSS := $(call fsroot,css/css.resource)
 JSS := $(call fsroot,$(JS)/javascript.resource)
 
 
-%.css: %.less
-	$(LESS) $< > $@
-
-%.css.gz: %.css
-	$(COMPRESS) $<
-
-
 js: $(JS)/products.js
 
 

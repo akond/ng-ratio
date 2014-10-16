@@ -6,7 +6,7 @@ TESTJS = /js/controller/test.controller.js
 releaseroot = $(subst $(SPACE),$3,$(addprefix $2,$(filter $(EXTERNALJS), $(strip $(shell $(COMP) $1)))))
 
 
-release: $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).css.gz $(RELEASE)/$(APPLICATION).js
+release: $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).css.gz $(RELEASE)/$(APPLICATION).js.gz
 
 .DELETE_ON_ERROR: $(RELEASE)/$(APPLICATION).js
 $(RELEASE)/$(APPLICATION).js: compiled-js-config js
