@@ -8,3 +8,10 @@ function Product(id, title, calorificValue, usualPortion) {
 Product.prototype.calories = function (ration) {
 	return Math.round(this.calorificValue/100 * ration.amount);
 };
+
+Product.prototype.createRation = function () {
+	var ration = new Ration ();
+	ration.product = this.id;
+	ration.amount = this.usualPortion;
+	return ration;
+};

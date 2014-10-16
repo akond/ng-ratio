@@ -1,9 +1,5 @@
 goog.require('goog.array');
 goog.require('goog.iter');
-goog.require('goog.date.Date');
-goog.require('goog.date.DateTime');
-goog.require('goog.date.DateRange');
-goog.require('goog.date.DateRange.Iterator');
 
 
 angular.module('trips').controller('PlanCtrl', PlanController);
@@ -13,33 +9,8 @@ PlanController['$inject'] = ['$scope', '$route', 'tripRepository', 'productRepos
 function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter) {
 	'use strict';
 
-	var meals = ["Завтрак", "Обед", "Ужин"];
 	var trip = $scope.Trip = tripRepository.find ($route.current.params.id);
-
 	var products = $filter('orderBy')(productRepository.findAll (), 'title');
-
-	//var dayCalorificPercentage =
-	var days = function () {
-		var start = goog.date.DateTime.fromRfc822String (trip.from);
-		start = new goog.date.Date (start.getYear(), start.getMonth(), start.getDate ());
-		var end = goog.date.DateTime.fromRfc822String (trip.to);
-		end = new goog.date.Date (end.getYear(), end.getMonth(), end.getDate ());
-
-		var daterange = new goog.date.DateRange(start, end);
-
-		var rations = rationRepository.findAll (trip.id);
-
-		return goog.array.map(goog.iter.toArray(daterange.iterator()), function (date, dayIndex) {
-			var day = new Day (date.date);
-
-			goog.array.forEach(meals, function (meal, mealIndex) {
-				var mealRations = goog.object.getValueByKeys(trip.rations, dayIndex, mealIndex) || [];
-				day.addMeal (new Meal (meal, mealRations));
-			});
-
-			return day;
-		});
-	};
 
 	$scope.productIndex = goog.array.toObject (products, function (product) {
 		return product.id;
@@ -57,39 +28,42 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	};
 
 	$scope.updateProductFilter ();
-
 	$scope.productCount = goog.object.getCount ($scope.products);
 
-	$scope.days = days();
+	var layout = new Layout (trip.from, trip.to);
 
-	$scope.activate = function (meal) {
-		$scope.active = meal;
+	$scope.days = layout.days;
+
+	$scope.activateMeal = function (meal) {
+		$scope.activeMeal = meal;
 	};
 
-	$scope.active = $scope.days [0].meals [0];
+	layout.visit (function (meal, dayIndex, mealIndex) {
+		// По умолчанию активен завтрак первого дня
+		if (dayIndex === 0 && mealIndex === 0) {
+			$scope.activateMeal (meal);
+		}
+
+		// восстанавливаем список рационов из репозитория
+		var rations = goog.object.getValueByKeys(trip.rations, dayIndex, mealIndex) || [];
+		goog.array.forEach (rations, function (ration) {
+			meal.addRation (ration);
+		})
+	});
 
 	$scope.editProducts = function () {
 		$location.path("/product/");
 	};
 
-	$scope.removeRation = function (ration, dayIndex, mealIndex) {
-		goog.array.forEach ($scope.days, function (day) {
-			goog.array.forEach (day.meals, function (meal) {
-				meal.rations = goog.array.filter (meal.rations, function (item) {
-					return item !== ration;
-				});
-			});
-		});
-
-		rationRepository.remove (ration, trip.id, dayIndex, mealIndex);
+	$scope.removeRation = function (ration) {
+		$scope.activeMeal.removeRation (ration);
+		rationRepository.remove (ration, trip.id);
 	};
 
-	$scope.addRation = function (product) {
-		var ration = new Ration ();
-		ration.product = product.id;
-		ration.amount = product.usualPortion;
+	$scope.addRation = function (ration) {
+		$scope.activeMeal.addRation (ration);
 
-		$scope.active.rations.push (ration);
-		rationRepository.save (ration, trip.id, $scope.active.dayIndex, $scope.active.mealIndex);
+		var index = layout.findMealIndex ($scope.activeMeal);
+		rationRepository.save (ration, trip.id, index);
 	};
 }

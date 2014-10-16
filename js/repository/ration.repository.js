@@ -46,25 +46,22 @@ angular.module('ng-ratio').factory('rationRepository', ['storage', function (sto
         return days;
     };
 
-    var saveRation = function (ration, tripId, day, meal) {
+    var saveRation = function (ration, tripId, index) {
         goog.asserts.assert (tripId != null);
-        goog.asserts.assertNumber (day);
-        goog.asserts.assertNumber (meal);
+        goog.asserts.assertArray (index);
         goog.asserts.assert (ration.id != null);
 
         var key = [KEY, tripId, ration.id].join (".");
         storage.set (key, {
             ration: ration,
-            day: day,
-            meal: meal
+            day: index [0],
+            meal: index [1]
         });
     };
 
-    var removeRation = function (ration, tripId, day, meal) {
-        goog.asserts.assert (tripId != null);
-        goog.asserts.assertNumber (day);
-        goog.asserts.assertNumber (meal);
+    var removeRation = function (ration, tripId) {
         goog.asserts.assert (ration.id != null);
+        goog.asserts.assert (tripId != null);
 
         var key = [KEY, tripId, ration.id].join (".");
         storage.remove (key);

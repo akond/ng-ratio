@@ -26,13 +26,13 @@ overflow-x: hidden;">
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<div ng-repeat="meal in day.meals" class="ration-meal row" ng-init="mealIndex = $index" ng-class="{'ration-active': meal === active}">
+					<div ng-repeat="meal in day.meals" class="ration-meal row" ng-init="mealIndex = $index" ng-class="{'ration-active': meal === activeMeal}">
 						<div class="col-md-1">
-							<h4 ng-click="activate(meal)">{{ meal.title }}</h4>
+							<h4 ng-click="activateMeal(meal)">{{ meal.title }}</h4>
 							<tag name="percent" ng-show="0 < day.calories(productIndex)">
 							{{ meal.calories(productIndex) / day.calories(productIndex) * 100 | number: 0}}%</tag>
 						</div>
-						<div class="ration-rations col-md-10 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}" ng-click="activate(meal)">
+						<div class="ration-rations col-md-10 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}" ng-click="activateMeal(meal)">
 							<div ng-repeat="ration in meal.rations" class="row ration-ration" ng-class="{'ration-bordered': !$last}">
 								<div class="col-md-7">
 									{{ productIndex [ration.product].title | limitTo: 30 }}
@@ -68,7 +68,7 @@ overflow-x: hidden;">
 		</div>
 		<div class="row ration-product" ng-repeat="product in filteredProducts">
 			<div class="col-md-2">
-				<a class="btn btn-sm btn-default" ng-click="addRation(product)">Добавить</a>
+				<a class="btn btn-sm btn-default" ng-click="addRation(product.createRation())">Добавить</a>
 			</div>
 			<div class="col-md-8">
 				{{ product.title }}
@@ -81,7 +81,7 @@ overflow-x: hidden;">
 		<div class="row" ng-show="filteredOut != 0 && !displayFilteredOut">
 			<div class="col-md-12">
 			<p>Не показаны ещё {{ filteredOut }} продуктов.
-			<a class="btn btn-sm btn-link" ng-click="displayFilteredOut = 1; updateFilter()">Показать</a></p>
+			<a class="btn btn-sm btn-link" ng-click="displayFilteredOut = 1; updateProductFilter()">Показать</a></p>
 			</div>
 		</div>
 	</div>
