@@ -9,6 +9,7 @@ angular.module('trips').directive ('tag', function () {
 
 		link: function (scope, element, attrs) {
 			var titles = {
+				percent: 'От всего дня',
 				sofar: 'Набрано',
 				lack: 'Не хватает',
 				ok: 'Цель достигнута',

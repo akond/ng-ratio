@@ -63,6 +63,8 @@ INCLUDE(MODEL/trip.model.js)
 INCLUDE(MODEL/plan.model.js)
 INCLUDE(MODEL/product.model.js)
 INCLUDE(MODEL/ration.model.js)
+INCLUDE(MODEL/day.model.js)
+INCLUDE(MODEL/meal.model.js)
 
 
 -- Репозитории

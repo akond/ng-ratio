@@ -9,18 +9,18 @@ overflow-x: hidden;">
 
 			<div class="row panel">
 				<div class="col-md-10 col-md-offset-1">
-					kcal: <tag name="sofar">{{ day.calories () }}</tag>
-					<span ng-show="day.calories () < Trip.calorificTarget()">
+					kcal: <tag name="sofar">{{ day.calories (productIndex) }}</tag>
+					<span ng-show="day.calories (productIndex) < Trip.calorificTarget()">
 						+
-						<tag name="lack">{{ Trip.calorificTarget() - day.calories () }}</tag>
+						<tag name="lack">{{ Trip.calorificTarget() - day.calories (productIndex) }}</tag>
 						&#8594;
 						<tag name="fail">{{ Trip.calorificTarget() }}</tag>
 					</span>
-					<span ng-show="day.calories () >= Trip.calorificTarget()">
+					<span ng-show="day.calories (productIndex) >= Trip.calorificTarget()">
 						=
 						<tag name="ok">{{ Trip.calorificTarget() }}</tag>
 						+
-						<tag name="excess">{{ day.calories () - Trip.calorificTarget() }}</tag>
+						<tag name="excess">{{ day.calories (productIndex) - Trip.calorificTarget() }}</tag>
 					</span>
 				</div>
 			</div>
@@ -29,7 +29,8 @@ overflow-x: hidden;">
 					<div ng-repeat="meal in day.meals" class="ration-meal row" ng-init="mealIndex = $index" ng-class="{'ration-active': meal === active}">
 						<div class="col-md-1">
 							<h4 ng-click="activate(meal)">{{ meal.title }}</h4>
-							{{ meal.percentage() }}%
+							<tag name="percent" ng-show="0 < day.calories(productIndex)">
+							{{ meal.calories(productIndex) / day.calories(productIndex) * 100 | number: 0}}%</tag>
 						</div>
 						<div class="ration-rations col-md-10 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}" ng-click="activate(meal)">
 							<div ng-repeat="ration in meal.rations" class="row ration-ration" ng-class="{'ration-bordered': !$last}">
@@ -63,7 +64,7 @@ overflow-x: hidden;">
 		<h3>Продукты<a class="btn btn-success btn-sm pull-right" ng-click="editProducts()">Редактировать</a></h3>
 		<div class="input-group ration-filter panel">
 			<div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length  }" ng-click="search.title = ''; updateFilter()">Поиск</div>
-			<input ng-model="search.title" type="text" class="form-control" ng-change="updateFilter()">
+			<input ng-model="search.title" type="text" class="form-control" ng-change="updateProductFilter()">
 		</div>
 		<div class="row ration-product" ng-repeat="product in filteredProducts">
 			<div class="col-md-2">

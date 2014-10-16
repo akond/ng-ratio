@@ -18,26 +18,8 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 
 	var products = $filter('orderBy')(productRepository.findAll (), 'title');
 
-	$scope.productIndex = goog.array.toObject (products, function (product) {
-		return product.id;
-	});
-
-	$scope.products = products;
-
-	$scope.updateFilter = function () {
-		$scope.filteredProducts = $filter('filter')($scope.products, $scope.search, false);
-		var total = $scope.filteredProducts.length;
-		if (!$scope.displayFilteredOut) {
-			$scope.filteredProducts = $filter('limitTo')($scope.filteredProducts, 20);
-		}
-		$scope.filteredOut = total - $scope.filteredProducts.length;
-	};
-
-	$scope.updateFilter ();
-
-	$scope.productCount = goog.object.getCount ($scope.products);
-
-	$scope.days = (function () {
+	//var dayCalorificPercentage =
+	var days = function () {
 		var start = goog.date.DateTime.fromRfc822String (trip.from);
 		start = new goog.date.Date (start.getYear(), start.getMonth(), start.getDate ());
 		var end = goog.date.DateTime.fromRfc822String (trip.to);
@@ -48,30 +30,37 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		var rations = rationRepository.findAll (trip.id);
 
 		return goog.array.map(goog.iter.toArray(daterange.iterator()), function (date, dayIndex) {
-			return {
-				date: date.date,
-				calories: function () {
-					return goog.array.reduce (this.meals, function (sum, meal) {
-						return sum + goog.array.reduce (meal.rations, function (sum, ration) {
-							return sum + $scope.productIndex [ration.product].calories (ration);
-						}, 0);
-					}, 0);
-				},
-				meals: goog.array.map(meals, function (meal, mealIndex) {
-					return {
-						title: meals [mealIndex],
-						dayIndex: dayIndex,
-						mealIndex: mealIndex,
-						percentage: function () {
-							return 'NYI';
-						},
-						rations: goog.object.getValueByKeys(trip.rations, dayIndex, mealIndex) || []
-					};
-				})
-			};
-		});
-	})();
+			var day = new Day (date.date);
 
+			goog.array.forEach(meals, function (meal, mealIndex) {
+				var mealRations = goog.object.getValueByKeys(trip.rations, dayIndex, mealIndex) || [];
+				day.addMeal (new Meal (meal, mealRations));
+			});
+
+			return day;
+		});
+	};
+
+	$scope.productIndex = goog.array.toObject (products, function (product) {
+		return product.id;
+	});
+
+	$scope.products = products;
+
+	$scope.updateProductFilter = function () {
+		$scope.filteredProducts = $filter('filter')($scope.products, $scope.search, false);
+		var total = $scope.filteredProducts.length;
+		if (!$scope.displayFilteredOut) {
+			$scope.filteredProducts = $filter('limitTo')($scope.filteredProducts, 20);
+		}
+		$scope.filteredOut = total - $scope.filteredProducts.length;
+	};
+
+	$scope.updateProductFilter ();
+
+	$scope.productCount = goog.object.getCount ($scope.products);
+
+	$scope.days = days();
 
 	$scope.activate = function (meal) {
 		$scope.active = meal;
