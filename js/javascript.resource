@@ -32,7 +32,6 @@ INCLUDE(BOWER/angular-wizard/dist/angular-wizard.js)
 INCLUDE(BOWER/angular-daterangepicker/js/angular-daterangepicker.js)
 
 INCLUDE(BOWER/lodash/dist/lodash.min.js)
-INCLUDE(BOWER/Lorem.js/lorem.js)
 
 
 /------------------------------------------------------------------------------/

@@ -18,18 +18,6 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 			$scope.Trip.plans.push (new Plan ());
 	}
 
-	$scope.addTen = function () {
-		goog.array.forEach (goog.array.range (3), angular.bind($scope, function () {
-			var trip = new Trip (Lorem.getSentence());
-			trip.from = new Date ();
-			trip.to = new Date ();
-			trip.to.setDate (trip.to.getDate () + 1);
-			trip.plans.push (new Plan ());
-			tripRepository.save (trip);
-			this.trips.push(trip);
-		}));
-	};
-
 	$scope.addTrip = function () {
 		if (this.editMode) {
 			tripRepository.save (this.Trip);

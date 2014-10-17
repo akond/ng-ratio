@@ -24,7 +24,6 @@
     "angular-bootstrap": "*",
     "ng-slider-menu": "~0.0.1",
     "node-uuid": "~1.4.1",
-    "Lorem.js": "~1.0.2",
     "angular-daterangepicker": "~0.1.9"
   }
 }
