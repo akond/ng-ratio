@@ -1,9 +1,9 @@
 goog.require('goog.array');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
-PlanController['$inject'] = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter'];
+PlanController['$inject'] = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter', 'resize'];
 
-function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter) {
+function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter, resize) {
 	'use strict';
 
 	var trip = $scope.Trip = tripRepository.find ($route.current.params.id);
@@ -12,6 +12,24 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	$scope.productIndex = goog.array.toObject (products, function (product) {
 		return product.id;
 	});
+
+	var resizeLayout = function (height) {
+		var layout = $('#layout');
+
+		var newHeight = height - layout.offset ().top - 5;
+		layout.add('#products').css({
+			height: newHeight + 'px',
+		});
+	};
+
+	resizeLayout ($(window).height ());
+	resize.register (function () {
+		resizeLayout (resize.getSize ().height);
+	});
+
+	$scope.$on("$destroy", function(){
+        resize.unregister ();
+    });
 
 	$scope.products = products;
 

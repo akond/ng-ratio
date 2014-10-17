@@ -55,6 +55,7 @@ INCLUDE(DIRECTIVE/tag.directive.js)
 -- Сервисы
 INCLUDE(SERVICE/confirm.service.js)
 INCLUDE(SERVICE/storage.service.js)
+INCLUDE(SERVICE/resize.service.js)
 
 
 -- Модели
@@ -71,7 +72,5 @@ INCLUDE(MODEL/layout.model.js)
 INCLUDE(REPOSITORY/trip.repository.js)
 INCLUDE(REPOSITORY/product.repository.js)
 INCLUDE(REPOSITORY/ration.repository.js)
-
-INCLUDE(JS/standalone.js)
 
 INCLUDE(JS/routes.config.js)
