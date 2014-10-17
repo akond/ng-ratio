@@ -2,6 +2,7 @@ goog.require('goog.date.Date');
 goog.require('goog.date.DateTime');
 goog.require('goog.date.DateRange');
 goog.require('goog.date.DateRange.Iterator');
+goog.require('goog.iter');
 
 function Layout(from, to) {
 	var meals = ["Завтрак", "Обед", "Ужин"];

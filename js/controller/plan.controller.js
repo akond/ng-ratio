@@ -1,9 +1,6 @@
 goog.require('goog.array');
-goog.require('goog.iter');
-
 
 angular.module('trips').controller('PlanCtrl', PlanController);
-
 PlanController['$inject'] = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter'];
 
 function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter) {
@@ -61,7 +58,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	};
 
 	$scope.addRation = function (ration) {
-		$scope.activeMeal.addRation (ration);
+		ration = $scope.activeMeal.addRation (ration);
 
 		var index = layout.findMealIndex ($scope.activeMeal);
 		rationRepository.save (ration, trip.id, index);

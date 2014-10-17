@@ -14,5 +14,21 @@ Meal.prototype.removeRation = function (ration) {
 };
 
 Meal.prototype.addRation = function (ration) {
+	var similarRation = this.findSimilarRation (ration);
+	if (similarRation) {
+		similarRation.amount += ration.amount;
+		return similarRation;
+	}
 	goog.array.insert (this.rations, ration);
+	return ration;
+};
+
+Meal.prototype.findSimilarRation = function (ration) {
+	var similarRation;
+	goog.array.forEach (this.rations, function (runningRation) {
+		if (runningRation.product === ration.product) {
+			similarRation = runningRation;
+		}
+	});
+	return similarRation;
 };
