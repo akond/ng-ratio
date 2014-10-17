@@ -2,8 +2,7 @@
 
 <div class="row">
 	<div class="col-md-7">
-		<div style="height: 900px; overflow: scroll; overflow-y: scroll;
-overflow-x: hidden;">
+		<div id="layout" class="ration-maxheight">
 		<div class="row" ng-repeat="day in days" ng-init="dayIndex = $index" ng-form="test">
 			<h3>{{ day.date | date }}</h3>
 
@@ -60,7 +59,7 @@ overflow-x: hidden;">
 	</div>
 	<div class="col-md-1">
 	</div>
-	<div class="col-md-5">
+	<div id="products" class="col-md-5 ration-maxheight">
 		<h3>Продукты<a class="btn btn-success btn-sm pull-right" ng-click="editProducts()">Редактировать</a></h3>
 		<div class="input-group ration-filter panel">
 			<div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length  }" ng-click="search.title = ''; updateFilter()">Поиск</div>
