@@ -33,7 +33,10 @@
 						</div>
 						<div class="ration-rations col-md-10 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}" ng-click="activateMeal(meal)">
 							<div ng-repeat="ration in meal.rations" class="row ration-ration" ng-class="{'ration-bordered': !$last}">
-								<div class="col-md-7">
+								<div class="col-md-2">
+									<a ng-click="removeRation(ration, dayIndex, mealIndex)" title="Убрать" class="ration-action"><glyph name="remove"></glyph></a>
+								</div>
+								<div class="col-md-6">
 									{{ productIndex [ration.product].title | limitTo: 30 }}
 								</div>
 								<div class="col-md-4">
@@ -42,9 +45,9 @@
 									<tag name="sofar">{{ productIndex [ration.product].calories (ration) }}</tag>
 									</span>
 									<span ng-hide="ration.amount"><glyph name="ok" color="green"></glyph></span>
-								</div>
-								<div class="col-md-1">
-									<a ng-click="removeRation(ration, dayIndex, mealIndex)" title="Убрать" class="ration-action"><glyph name="remove" color="grey"></glyph></a>
+									
+									<a href="" class="pull-right"><glyph name="chevron-right"></glyph></a>
+
 								</div>
 							</div>
 							<div ng-hide="meal.rations.length">

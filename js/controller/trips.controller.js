@@ -25,7 +25,7 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 			tripRepository.save (goog.object.clone (this.Trip));
 		}
 
-		$location.path("/");
+		$location.path("/plan/" + this.Trip.id);
 	};
 
 	$scope.editTrip = function (editableTrip) {
