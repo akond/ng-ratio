@@ -9,9 +9,9 @@ ProductController['$inject'] = ['$scope', '$http', '$route', 'productRepository'
 function ProductController($scope, $http, $route, productRepository, $location, confirm) {
 	'use strict';
 
-	$scope['products'] = goog.object.getValues (productRepository.findAll ());
+	$scope.products = goog.object.getValues (productRepository.findAll ());
 
-	$scope['noProducts'] = $scope['products'].length === 0;
+	$scope.noProducts = $scope['products'].length === 0;
 
 	var model = $scope['Product'] = new Product();
 
@@ -23,11 +23,11 @@ function ProductController($scope, $http, $route, productRepository, $location, 
 		}
 	}
 
-	$scope['edit'] = function (product) {
+	$scope.edit = function (product) {
 		$location.path("/product/" + product.id);
 	};
 
-	$scope['save'] = function (product) {
+	$scope.save = function (product) {
 		goog.object.forEach (product, function (value, key) {
 			goog.object.set (model, key, value);
 		});
@@ -36,7 +36,7 @@ function ProductController($scope, $http, $route, productRepository, $location, 
 		$location.path("/product/");
 	};
 
-	$scope['remove'] = function (product) {
+	$scope.remove = function (product) {
 		confirm('Are you sure to remove this trip?').then (angular.bind($scope, function () {
 			productRepository.remove (product);
 			this.products = goog.array.filter (this.products, function (item) {
@@ -45,9 +45,11 @@ function ProductController($scope, $http, $route, productRepository, $location, 
 		}));
 	};
 
-	$scope['sync'] = function () {
-		$http.get('/js/products.js').
-			success(function(data, status, headers, config) {
+	$scope.sync = function () {
+		$http({
+			url: '/js/products.js',
+			cache: false
+		}).success(function(data, status, headers, config) {
 				if (goog.typeOf (data) === 'array') {
 					goog.array.forEach (data, function (item) {
 						var params = item;
