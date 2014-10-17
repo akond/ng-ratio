@@ -56,6 +56,7 @@ INCLUDE(DIRECTIVE/tag.directive.js)
 INCLUDE(SERVICE/confirm.service.js)
 INCLUDE(SERVICE/storage.service.js)
 INCLUDE(SERVICE/resize.service.js)
+INCLUDE(SERVICE/common-filters.service.js)
 
 
 -- Модели

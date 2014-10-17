@@ -7,7 +7,7 @@
 
 <div class="input-group ration-filter panel" ng-show="products.length">
     <div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length  }" ng-click="search.title = '';">Поиск</div>
-    <input ng-model="search.title" type="text" class="form-control">
+    <input ng-model="search.title" type="text" class="form-control" ng-change="updateProductFilter()">
 </div>
 
 <table class="table table-striped" ng-show="products.length">
@@ -20,7 +20,7 @@
             <th></th>
         </tr>
     </thead>
-    <tr ng-repeat="product in products | filter:search:false">
+    <tr ng-repeat="product in filteredProducts">
         <td>
             {{$index+1}}
         </td>

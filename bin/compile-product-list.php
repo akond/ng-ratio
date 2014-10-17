@@ -5,21 +5,40 @@ function generateProducts ($files)
     foreach ($files as $file)
     {
         $handle = fopen ($file, "r");
+        $group = '';
         while ($row = fgetcsv ($handle))
         {
-            $product = array_slice ($row, 0, 5);
-            if (empty ($product [1]))
+            if (count ($row) < 6)
+            {
+                $row [] = '';
+            }
+            list ($title, $cal, $weight, $flag, $id, $keywords) = $row;
+
+            if ('group' == $title)
+            {
+                $group = $cal;
+                continue;
+            }
+
+            if (empty ($cal))
             {
                 continue;
             }
 
-            $id = array_pop ($product);
-            array_unshift ($product, $id);
-            $product [2] = (int) $product [2];
-            $product [3] = (int) $product [3];
-            $product [4] = (int) $product [4];
+            $cal = (int) $cal;
+            $weight = (int) $weight;
+            $flag = (int) $flag;
 
-            yield ($product);
+            if (false == empty ($group))
+            {
+                if ($keywords)
+                {
+                    $keywords .= ' ';
+                }
+                $keywords .= $group;
+            }
+
+            yield ([$id, $title, $cal, $weight, $flag, $keywords]);
         }
         fclose ($handle);
     }

@@ -1,8 +1,9 @@
-function Product(id, title, calorificValue, usualPortion) {
+function Product(id, title, calorificValue, usualPortion, flag, keywords) {
 	this.id = id || uuid.v4();
 	this.title = title || null;
 	this.calorificValue = calorificValue || null;
 	this.usualPortion = usualPortion || null;
+	this.keywords = keywords || '';
 }
 
 Product.prototype.calories = function (ration) {

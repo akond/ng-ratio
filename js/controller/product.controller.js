@@ -4,12 +4,18 @@ goog.require('goog.functions');
 angular.module('trips');
 angular.module('trips').controller('ProductCtrl', ProductController);
 
-ProductController['$inject'] = ['$scope', '$http', '$route', 'productRepository', '$location', 'confirm'];
+ProductController['$inject'] = ['$scope', '$http', '$route', '$filter', 'productRepository', '$location', 'confirm', 'productFilter'];
 
-function ProductController($scope, $http, $route, productRepository, $location, confirm) {
+function ProductController($scope, $http, $route, $filter, productRepository, $location, confirm, productFilter) {
 	'use strict';
 
 	$scope.products = goog.object.getValues (productRepository.findAll ());
+
+	$scope.updateProductFilter = function () {
+		$scope.filteredProducts = $filter('filter')($scope.products, productFilter ($scope.search || {title: ""}), false);
+	};
+
+	$scope.updateProductFilter ();
 
 	$scope.noProducts = $scope['products'].length === 0;
 
@@ -47,13 +53,14 @@ function ProductController($scope, $http, $route, productRepository, $location, 
 
 	$scope.sync = function () {
 		$http({
-			url: '/js/products.js',
+			url: '/js/products.js?' + Math.random(),
 			cache: false
 		}).success(function(data, status, headers, config) {
 				if (goog.typeOf (data) === 'array') {
 					goog.array.forEach (data, function (item) {
 						var params = item;
 						params.unshift (Product);
+
 						$scope.save (goog.functions.create.apply (null, params));
 					});
 				}

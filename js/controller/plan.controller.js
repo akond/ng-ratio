@@ -1,9 +1,9 @@
 goog.require('goog.array');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
-PlanController['$inject'] = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter', 'resize'];
+PlanController['$inject'] = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter', 'resize', 'productFilter'];
 
-function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter, resize) {
+function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter, resize, productFilter) {
 	'use strict';
 
 	var trip = $scope.Trip = tripRepository.find ($route.current.params.id);
@@ -27,14 +27,15 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		resizeLayout (resize.getSize ().height);
 	});
 
-	$scope.$on("$destroy", function(){
+	$scope.$on("$destroy", function() {
         resize.unregister ();
     });
 
 	$scope.products = products;
 
 	$scope.updateProductFilter = function () {
-		$scope.filteredProducts = $filter('filter')($scope.products, $scope.search, false);
+		$scope.filteredProducts = $filter('filter')($scope.products, productFilter ($scope.search || {title: ""}), false);
+
 		var total = $scope.filteredProducts.length;
 		if (!$scope.displayFilteredOut) {
 			$scope.filteredProducts = $filter('limitTo')($scope.filteredProducts, 20);
