@@ -17,6 +17,10 @@ angular.module('ng-ratio').config(['$routeProvider',
         templateUrl: 'partials/plan.html',
         controller: 'PlanCtrl'
       }).
+      when('/report/:id', {
+        templateUrl: 'partials/report.html',
+        controller: 'ReportCtrl'
+      }).
       when('/product', {
         templateUrl: 'partials/product-list.html',
         controller: 'ProductCtrl'

@@ -2,7 +2,10 @@
 / Path definitions                                                             /
 /------------------------------------------------------------------------------/
 PATH(BOWER,/bower_components)
+
 PATH(JS,/js)
+
+PATH(SETTINGS,JS/config)
 PATH(CONTROLLER,JS/controller)
 PATH(DIRECTIVE,JS/directive)
 PATH(SERVICE,JS/service)
@@ -37,12 +40,14 @@ INCLUDE(BOWER/lodash/dist/lodash.min.js)
 /------------------------------------------------------------------------------/
 / These are mine                                                               /
 /------------------------------------------------------------------------------/
-INCLUDE(JS/application.config.js)
+INCLUDE(SETTINGS/application.config.js)
+INCLUDE(SETTINGS/routes.config.js)
 
 -- Контроллеры
 INCLUDE(CONTROLLER/trips.controller.js)
 INCLUDE(CONTROLLER/product.controller.js)
 INCLUDE(CONTROLLER/plan.controller.js)
+INCLUDE(CONTROLLER/report.controller.js)
 INCLUDE(CONTROLLER/help.controller.js)
 INCLUDE(CONTROLLER/test.controller.js)
 
@@ -73,5 +78,3 @@ INCLUDE(MODEL/layout.model.js)
 INCLUDE(REPOSITORY/trip.repository.js)
 INCLUDE(REPOSITORY/product.repository.js)
 INCLUDE(REPOSITORY/ration.repository.js)
-
-INCLUDE(JS/routes.config.js)

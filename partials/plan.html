@@ -1,11 +1,10 @@
 <h1>{{ Trip.title }}
 	<div class="btn-group pull-right hidden-print">
-		<label class="btn btn-default" ng-model="mode" btn-radio="1" uncheckable>Редактирование</label>
-		<label class="btn btn-default" ng-model="mode" btn-radio="2" uncheckable>Отчёт закупок</label>
+		<a class="btn btn-default" href="#/report/{{ Trip.id }}">Отчёт закупок</a>
 	</div>
 </h1>
 
-<div class="row hidden-print" ng-show="mode == 1">
+<div class="row hidden-print">
 	<div class="col-md-12 panel">
 		Прогресс:
 		<a ng-repeat="day in days" ng-click="scrollToDay ($index)" class="ration-action">
@@ -14,7 +13,7 @@
 	</div>
 </div>
 
-<div class="row" ng-show="mode == 1">
+<div class="row">
 	<div class="col-md-7">
 		<div id="layout" class="ration-maxheight" style="position: relative;">
 			<h3 id="day-{{ $index }}" ng-repeat-start="day in days" ng-init="dayIndex = $index">{{ day.date | date }}</h3>
@@ -99,10 +98,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
-<div class="row" ng-show="mode == 2">
-	<div class="col-md-12">
-		test
 	</div>
 </div>

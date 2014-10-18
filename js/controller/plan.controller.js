@@ -1,7 +1,7 @@
 goog.require('goog.array');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
-PlanController['$inject'] = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter', 'resize', 'productFilter'];
+PlanController.$inject = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter', 'resize', 'productFilter'];
 
 function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter, resize, productFilter) {
 	'use strict';
@@ -11,7 +11,6 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	var rations = rationRepository.findAllBucket (tripId)
 	var products = $filter('orderBy')(productRepository.findAll (), 'title');
 
-	$scope.mode = 1;
 	$scope.productIndex = goog.array.toObject (products, function (product) {
 		return product.id;
 	});
