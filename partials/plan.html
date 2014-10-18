@@ -62,28 +62,30 @@
 	</div>
 	<div class="col-md-1">
 	</div>
-	<div id="products" class="col-md-5 ration-maxheight">
-		<h3>Продукты<a class="btn btn-success btn-sm pull-right" ng-click="editProducts()">Редактировать</a></h3>
+	<div class="col-md-5">
+		<h3>Продукты</h3>
 		<div class="input-group ration-filter panel">
 			<div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length  }" ng-click="search.title = ''; updateFilter()">Поиск</div>
 			<input ng-model="search.title" type="text" class="form-control" ng-change="updateProductFilter()">
 		</div>
-		<div class="row ration-product" ng-repeat="product in filteredProducts">
-			<div class="col-md-2">
-				<a class="btn btn-sm btn-default" ng-click="addRation(product.createRation())">Добавить</a>
+		<div id="products" class="ration-maxheight">
+			<div class="row ration-product" ng-repeat="product in filteredProducts">
+				<div class="col-md-2">
+					<a class="btn btn-sm btn-default" ng-click="addRation(product.createRation())">Добавить</a>
+				</div>
+				<div class="col-md-8">
+					{{ product.title }}
+				</div>
+				<div class="col-md-2">
+					{{ product.calorificValue }}
+				</div>
 			</div>
-			<div class="col-md-8">
-				{{ product.title }}
-			</div>
-			<div class="col-md-2">
-				{{ product.calorificValue }}
-			</div>
-		</div>
 
-		<div class="row" ng-show="filteredOut != 0 && !displayFilteredOut">
-			<div class="col-md-12">
-			<p>Не показаны ещё {{ filteredOut }} продуктов.
-			<a class="btn btn-sm btn-link" ng-click="displayFilteredOut = 1; updateProductFilter()">Показать</a></p>
+			<div class="row" ng-show="filteredOut != 0 && !displayFilteredOut">
+				<div class="col-md-12">
+				<p>Не показаны ещё {{ filteredOut }} продуктов.
+				<a class="btn btn-sm btn-link" ng-click="displayFilteredOut = 1; updateProductFilter()">Показать</a></p>
+				</div>
 			</div>
 		</div>
 	</div>
