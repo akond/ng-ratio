@@ -6,7 +6,9 @@ PlanController['$inject'] = ['$scope', '$route', 'tripRepository', 'productRepos
 function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter, resize, productFilter) {
 	'use strict';
 
-	var trip = $scope.Trip = tripRepository.find ($route.current.params.id);
+	var tripId = $route.current.params.id;
+	var trip = $scope.Trip = tripRepository.find (tripId);
+	var rations = rationRepository.findAllBucket (tripId)
 	var products = $filter('orderBy')(productRepository.findAll (), 'title');
 
 	$scope.productIndex = goog.array.toObject (products, function (product) {
@@ -54,6 +56,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		$scope.activeMeal = meal;
 	};
 
+	// восстанавливаем рационы для похода
 	layout.visit (function (meal, dayIndex, mealIndex) {
 		// По умолчанию активен завтрак первого дня
 		if (dayIndex === 0 && mealIndex === 0) {
@@ -61,8 +64,8 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		}
 
 		// восстанавливаем список рационов из репозитория
-		var rations = goog.object.getValueByKeys(trip.rations, dayIndex, mealIndex) || [];
-		goog.array.forEach (rations, function (ration) {
+		var mealRations = goog.object.getValueByKeys(rations, dayIndex, mealIndex) || [];
+		goog.array.forEach (mealRations, function (ration) {
 			meal.addRation (ration);
 		})
 	});

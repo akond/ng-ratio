@@ -19,6 +19,8 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 	}
 
 	$scope.addTrip = function () {
+		this.Trip.validate ();
+
 		if (this.editMode) {
 			tripRepository.save (this.Trip);
 		} else {

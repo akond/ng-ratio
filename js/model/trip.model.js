@@ -2,6 +2,10 @@ function Trip(title) {
 	this.id = uuid.v4();
 	this.title = title;
 	this.from = new Date ();
+	this.from.setHours (0);
+	this.from.setMinutes (0);
+	this.from.setSeconds (0);
+
 	this.to = null;
 
 	/**
@@ -16,6 +20,14 @@ function Trip(title) {
 	 */
 	this.rations = [];
 }
+
+Trip.prototype.validate = function () {
+	if (this.to < this.from) {
+		var save = this.from;
+		this.from = this.to;
+		this.to = save;
+	}
+};
 
 Trip.prototype.menCount = function (title) {
 	return this.plans.reduce (function (sum, plan) {
