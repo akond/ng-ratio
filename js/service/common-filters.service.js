@@ -17,6 +17,11 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 				if (goog.string.caseInsensitiveContains(product.keywords, search.title)) {
 					return true;
 				}
+
+				if (goog.string.caseInsensitiveContains(product.group, search.title)) {
+					return true;
+				}
+				
 				return false;
 			}
 		};

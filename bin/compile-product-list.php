@@ -29,16 +29,16 @@ function generateProducts ($files)
             $weight = (int) $weight;
             $flag = (int) $flag;
 
-            if (false == empty ($group))
-            {
-                if ($keywords)
-                {
-                    $keywords .= ' ';
-                }
-                $keywords .= $group;
-            }
+            // if (false == empty ($group))
+            // {
+            //     if ($keywords)
+            //     {
+            //         $keywords .= ' ';
+            //     }
+            //     $keywords .= $group;
+            // }
 
-            yield ([$id, $title, $cal, $weight, $flag, $keywords]);
+            yield ([$id, $title, $group, $cal, $weight, $keywords]);
         }
         fclose ($handle);
     }

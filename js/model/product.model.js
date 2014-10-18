@@ -1,6 +1,7 @@
-function Product(id, title, calorificValue, usualPortion, flag, keywords) {
+function Product(id, title, group, calorificValue, usualPortion, keywords) {
 	this.id = id || uuid.v4();
-	this.title = title || null;
+	this.title = title || '';
+	this.group = group || '';
 	this.calorificValue = calorificValue || null;
 	this.usualPortion = usualPortion || null;
 	this.keywords = keywords || '';

@@ -57,10 +57,8 @@ function ProductController($scope, $http, $route, $filter, productRepository, $l
 			cache: false
 		}).success(function(data, status, headers, config) {
 				if (goog.typeOf (data) === 'array') {
-					goog.array.forEach (data, function (item) {
-						var params = item;
+					goog.array.forEach (data, function (params) {
 						params.unshift (Product);
-
 						$scope.save (goog.functions.create.apply (null, params));
 					});
 				}
