@@ -1,11 +1,23 @@
-<h1>{{ Trip.title }}</h1>
+<h1>{{ Trip.title }}
+	<div class="btn-group pull-right hidden-print">
+		<label class="btn btn-default" ng-model="mode" btn-radio="1" uncheckable>Редактирование</label>
+		<label class="btn btn-default" ng-model="mode" btn-radio="2" uncheckable>Отчёт закупок</label>
+	</div>
+</h1>
 
-<div class="row">
+<div class="row hidden-print" ng-show="mode == 1">
+	<div class="col-md-12 panel">
+		Прогресс:
+		<a ng-repeat="day in days" ng-click="scrollToDay ($index)" class="ration-action">
+			<tag name="{{ day.calories (productIndex) >= Trip.calorificTarget() ? 'ok' : 'fail'}}" >{{ day.date | date : format='d' }}</tag>
+		</a>
+	</div>
+</div>
+
+<div class="row" ng-show="mode == 1">
 	<div class="col-md-7">
-		<div id="layout" class="ration-maxheight">
-		<div class="row" ng-repeat="day in days" ng-init="dayIndex = $index" ng-form="test">
-			<h3>{{ day.date | date }}</h3>
-
+		<div id="layout" class="ration-maxheight" style="position: relative;">
+			<h3 id="day-{{ $index }}" ng-repeat-start="day in days" ng-init="dayIndex = $index">{{ day.date | date }}</h3>
 			<div class="row panel">
 				<div class="col-md-10 col-md-offset-1">
 					kcal: <tag name="sofar">{{ day.calories (productIndex) }}</tag>
@@ -23,7 +35,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" ng-repeat-end>
 				<div class="col-md-10 col-md-offset-1">
 					<div ng-repeat="meal in day.meals" class="ration-meal row" ng-init="mealIndex = $index" ng-class="{'ration-active': meal === activeMeal}">
 						<div class="col-md-1">
@@ -58,14 +70,13 @@
 				</div>
 			</div>
 		</div>
-		</div>
 	</div>
 	<div class="col-md-1">
 	</div>
 	<div class="col-md-5">
 		<h3>Продукты</h3>
 		<div class="input-group ration-filter panel">
-			<div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length  }" ng-click="search.title = ''; updateFilter()">Поиск</div>
+			<div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length  }" ng-click="search.title = ''; updateProductFilter()">Поиск</div>
 			<input ng-model="search.title" type="text" class="form-control" ng-change="updateProductFilter()">
 		</div>
 		<div id="products" class="ration-maxheight">
@@ -88,5 +99,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+<div class="row" ng-show="mode == 2">
+	<div class="col-md-12">
+		test
 	</div>
 </div>

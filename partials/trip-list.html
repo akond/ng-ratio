@@ -1,32 +1,41 @@
 <h2>Походы</h2>
-<a class="btn btn-success" href="#/new">Новый</a>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Название</th>
-            <th>Человек</th>
-            <th>Дата</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tr ng-repeat="trip in trips">
-        <td>
-            {{$index+1}}
-        </td>
-        <td>
-            <a href="#/plan/{{trip.id}}">{{trip.title}}</a>
-        </td>
-        <td>
-            {{trip.menCount() }}
-        </td>
-        <td>
-            {{ trip.from | date}} -
-            {{ trip.to | date }}
-        </td>
-        <td>
-            <a class="btn btn-info" ng-click="editTrip(trip)">Свойства</a>
-            <a class="btn btn-danger" ng-click="removeTrip(trip)">Удалить</a>
-        </td>
-    </tr>
+
+<div class="row">
+	<a class="btn btn-success pull-right" href="#/new">Создать новый</a>
+</div>
+<table class="table table-striped" ng-show="trips">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Название</th>
+			<th>Человек</th>
+			<th>Дата</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tr ng-repeat="trip in trips">
+		<td>
+			{{$index+1}}
+		</td>
+		<td>
+			<a href="#/plan/{{trip.id}}">{{trip.title}}</a>
+		</td>
+		<td>
+			{{trip.menCount() }}
+		</td>
+		<td>
+			{{ trip.from | date}} -
+			{{ trip.to | date }}
+		</td>
+		<td>
+			<a class="btn btn-info" ng-click="editTrip(trip)">Свойства</a>
+			<a class="btn btn-danger" ng-click="removeTrip(trip)">Удалить</a>
+		</td>
+	</tr>
 </table>
+<div class="row" ng-hide="trips">
+	<div class="col-md-6 col-md-offset-3 bg-warning ration-warning-area">
+		<p>У вас пока нет походов для планирования</p>
+		<p>Попробуйте добавить один.</p>
+	</div>
+</div>

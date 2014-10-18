@@ -11,9 +11,18 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	var rations = rationRepository.findAllBucket (tripId)
 	var products = $filter('orderBy')(productRepository.findAll (), 'title');
 
+	$scope.mode = 1;
 	$scope.productIndex = goog.array.toObject (products, function (product) {
 		return product.id;
 	});
+
+	$scope.scrollToDay = function(day){
+		var speed = 400;
+		$('#layout').animate({
+			scrollTop: $('#layout').scrollTop () + $('#day-'+day).position().top
+		}, speed);
+		return false;
+	};
 
 	var resizeLayout = function (screenHeight) {
 		$('#layout').css({
@@ -30,8 +39,8 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	});
 
 	$scope.$on("$destroy", function() {
-        resize.unregister ();
-    });
+		resize.unregister ();
+	});
 
 	$scope.products = products;
 
