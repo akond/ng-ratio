@@ -9,4 +9,18 @@ function ReportController($scope, $route, tripRepository, productRepository, rat
 	var tripId = $route.current.params.id;
 
 	var trip = $scope.Trip = tripRepository.find (tripId);
+
+	var products = $scope.products = productRepository.getIndex ();
+
+	var groups = goog.array.bucket (rationRepository.findAll (tripId), function (ration) {
+		return products [ration.product].group;
+	});
+
+	$scope.groups = goog.object.map (groups, function (rations, title) {
+		var meal = new Meal (title, []);
+		goog.array.forEach (rations, function (ration) {
+			this.addRation (ration);
+		}, meal);
+		return meal;
+	});
 }

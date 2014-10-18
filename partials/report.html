@@ -1,11 +1,21 @@
-<h1>{{ Trip.title }}
+<h1>{{ Trip.title }} (Закупка)
 	<div class="btn-group pull-right hidden-print">
 		<a class="btn btn-default" href="#/plan/{{ Trip.id }}">Редактирование</a>
 	</div>
 </h1>
 
-<div class="row">
-	<div class="col-md-12">
-		test
+<div ng-repeat="meal in groups">
+	<div class="row">
+		<div class="col-md-12">
+			<h2>{{ meal.title }}</h2>
+		</div>
+	</div>
+	<div class="row" ng-repeat="ration in meal.rations">
+		<div class="col-md-10 col-xs-10">
+			<p>{{ products [ration.product].title }}</p>
+		</div>
+		<div class="col-md-2  col-xs-2">
+			<p>{{ ration.amount }} г</p>
+		</div>
 	</div>
 </div>

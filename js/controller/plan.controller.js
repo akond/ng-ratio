@@ -11,9 +11,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	var rations = rationRepository.findAllBucket (tripId)
 	var products = $filter('orderBy')(productRepository.findAll (), 'title');
 
-	$scope.productIndex = goog.array.toObject (products, function (product) {
-		return product.id;
-	});
+	$scope.productIndex = productRepository.getIndex ();
 
 	$scope.scrollToDay = function(day){
 		var speed = 400;

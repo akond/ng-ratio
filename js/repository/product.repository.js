@@ -14,6 +14,12 @@ angular.module('ng-ratio').factory('productRepository', ['storage', function (st
 		return goog.object.getValues(restore (KEY));
 	};
 
+	var getIndex = function () {
+		return goog.array.toObject (findAll (), function (product) {
+			return product.id;
+		});
+	}
+
 	var restore = function (key) {
 		return storage.reconstitute (function () {
 			return new Product ();
@@ -32,6 +38,7 @@ angular.module('ng-ratio').factory('productRepository', ['storage', function (st
 	return {
 		find: find,
 		findAll: findAll,
+		getIndex: getIndex,
 		add: addProduct,
 		remove: removeProduct
 	};
