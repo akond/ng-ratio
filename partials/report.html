@@ -6,16 +6,23 @@
 
 <div ng-repeat="meal in groups">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-9 col-xs-9 ration-underlined">
 			<h2>{{ meal.title }}</h2>
 		</div>
 	</div>
-	<div class="row" ng-repeat="ration in meal.rations">
-		<div class="col-md-10 col-xs-10">
-			<p>{{ products [ration.product].title }}</p>
+	<div ng-repeat="ration in meal.rations" class="row">
+		<div class="col-md-1 col-xs-1 ration-underlined">
+			<a ng-click="checked = !checked">
+				<glyph ng-hide="checked" name="unchecked"></glyph>
+				<glyph ng-show="checked" name="ok"></glyph>
+			</a>
+			&nbsp;
 		</div>
-		<div class="col-md-2  col-xs-2">
-			<p>{{ ration.amount }} г</p>
+		<div class="col-md-6 col-xs-6 ration-underlined">
+			{{ products [ration.product].title }}
+		</div>
+		<div class="col-md-2 col-xs-2 ration-underlined">
+			{{ ration.amount }} г
 		</div>
 	</div>
 </div>
