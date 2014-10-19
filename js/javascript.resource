@@ -50,7 +50,7 @@ INCLUDE(CONTROLLER/product.controller.js)
 INCLUDE(CONTROLLER/plan.controller.js)
 INCLUDE(CONTROLLER/report.controller.js)
 INCLUDE(CONTROLLER/help.controller.js)
-INCLUDE(CONTROLLER/test.controller.js)
+INCLUDE(DEBUG(CONTROLLER/test.controller.js))
 
 
 -- Директивы
