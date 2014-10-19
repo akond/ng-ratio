@@ -1,9 +1,9 @@
 goog.require('goog.array');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
-PlanController.$inject = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter', 'resize', 'productFilter'];
+PlanController.$inject = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter', 'resize', 'productFilter', 'ngDialog'];
 
-function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter, resize, productFilter) {
+function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter, resize, productFilter, ngDialog) {
 	'use strict';
 
 	var tripId = $route.current.params.id;
@@ -94,4 +94,32 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		var index = layout.findMealIndex ($scope.activeMeal);
 		rationRepository.save (ration, trip.id, index);
 	};
+
+	$scope.editRation = function (ration, mode) {
+		var editableRation = angular.copy(ration);
+		if (mode === 2) {
+			editableRation.amount = $scope.productIndex [ration.product].calorificValue * editableRation.amount / 100;
+		}
+		var dialog = ngDialog.open({
+			template: 'partials/ration.html',
+			controller: ['$scope', function ($scope) {
+				$scope.Ration = editableRation;
+
+				$scope.mode = mode;
+			}]
+		});
+
+		dialog.closePromise.then (function (result) {
+			if (result.value === true) {
+				if (mode === 1) {
+					ration.amount = editableRation.amount;
+				} else {
+					ration.amount = editableRation.amount * 100 / $scope.productIndex [ration.product].calorificValue;
+				}
+				
+				var index = layout.findMealIndex ($scope.activeMeal);
+				rationRepository.save (ration, trip.id, index);
+			}
+		})
+	}
 }

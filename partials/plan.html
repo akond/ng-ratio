@@ -52,8 +52,8 @@
 								</div>
 								<div class="col-md-5">
 									<span ng-show="ration.amount">
-									{{ ration.amount }} г &#8594;
-									<tag name="sofar">{{ productIndex [ration.product].calories (ration) }}</tag>
+									<a class="ration-action ration-text" ng-click="editRation(ration, 1)">{{ ration.amount | number:0}} г</a> &#8594;
+									<a class="ration-action" ng-click="editRation(ration, 2)"><tag name="sofar">{{ productIndex [ration.product].calories (ration) | number: 0}}</tag></a>
 									</span>
 									<span ng-hide="ration.amount"><glyph name="ok" color="green"></glyph></span>
 

@@ -35,7 +35,7 @@ function ProductController($scope, $http, $route, $filter, productRepository, $l
 				$scope.products [product.id] = editableProduct;
 				$scope.updateProductFilter ();
 			}
-		})
+		});
 	};
 
 	var saveProduct = function (product) {
