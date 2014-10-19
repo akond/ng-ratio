@@ -81,7 +81,10 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	};
 
 	$scope.removeRation = function (ration) {
-		$scope.activeMeal.removeRation (ration);
+		var meal = layout.findRationMeal(ration);
+		if (meal) {
+			meal.removeRation (ration);
+		}
 		rationRepository.remove (ration, trip.id);
 	};
 

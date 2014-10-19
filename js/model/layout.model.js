@@ -26,6 +26,16 @@ Layout.prototype.addDay = function (day) {
 	this.days.push (day);
 };
 
+Layout.prototype.findRationMeal = function (ration) {
+	var result;
+	this.visit (function (meal, dayIndex, mealIndex) {
+		if (meal.containsRation (ration)) {
+			result = meal;
+		}
+	});
+	return result;
+};
+
 Layout.prototype.findMealIndex = function (meal) {
 	var result = [];
 	this.visit (function (a, dayIndex, mealIndex) {

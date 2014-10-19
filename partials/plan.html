@@ -38,19 +38,19 @@
 				<div class="col-md-10 col-md-offset-1">
 					<div ng-repeat="meal in day.meals" class="ration-meal row" ng-init="mealIndex = $index" ng-class="{'ration-active': meal === activeMeal}">
 						<div class="col-md-1">
-							<h4 ng-click="activateMeal(meal)">{{ meal.title }}</h4>
+							<h4 ng-click="activateMeal(meal);">{{ meal.title }}</h4>
 							<tag name="percent" ng-show="0 < day.calories(productIndex)">
 							{{ meal.calories(productIndex) / day.calories(productIndex) * 100 | number: 0}}%</tag>
 						</div>
-						<div class="ration-rations col-md-10 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}" ng-click="activateMeal(meal)">
+						<div class="ration-rations col-md-10 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}" ng-click="activateMeal(meal);">
 							<div ng-repeat="ration in meal.rations" class="row ration-ration" ng-class="{'ration-bordered': !$last}">
-								<div class="col-md-2">
-									<a ng-click="removeRation(ration, dayIndex, mealIndex)" title="Убрать" class="ration-action"><glyph name="remove"></glyph></a>
+								<div class="col-md-1">
+									<a ng-click="removeRation(ration, dayIndex, mealIndex)" title="Убрать" class="pull-left ration-action" style="margin-right: 10px;margin-top: 2px;"><glyph name="remove"></glyph></a>
 								</div>
 								<div class="col-md-6">
 									{{ productIndex [ration.product].title | limitTo: 30 }}
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-5">
 									<span ng-show="ration.amount">
 									{{ ration.amount }} г &#8594;
 									<tag name="sofar">{{ productIndex [ration.product].calories (ration) }}</tag>

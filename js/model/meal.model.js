@@ -32,3 +32,6 @@ Meal.prototype.findSimilarRation = function (ration) {
 	});
 	return similarRation;
 };
+Meal.prototype.containsRation = function (ration) {
+	return goog.array.contains (this.rations, ration);
+};
