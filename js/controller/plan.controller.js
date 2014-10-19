@@ -23,10 +23,10 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 
 	var resizeLayout = function (screenHeight) {
 		$('#layout').css({
-			height: screenHeight - $('#layout').offset ().top - 5 + 'px',
+			height: screenHeight - $('#layout').offset ().top - 5 + 'px'
 		});
 		$('#products').css({
-			height: screenHeight - $('#products').offset ().top - 5 + 'px',
+			height: screenHeight - $('#products').offset ().top - 5 + 'px'
 		});
 	};
 

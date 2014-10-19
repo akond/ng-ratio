@@ -6,7 +6,8 @@
 	"inputs": ["join(`", "', m4_translit(INPUTS,` ', `,'))"],
 	"output-wrapper": "(function() {%output%})();\n",
 	"pretty-print": false,
-	"externs": ["//angular.js", "js/externs.js"],
+	"closure-library": "bower_components/closurelibrary/closure/goog/",
+	"externs": ["//angular.js", "//jquery-1.7.js", "js/externs.js"],
 	"debug": false,
 	"define": {
 		"goog.DEBUG":false
