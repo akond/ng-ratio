@@ -1,16 +1,16 @@
-<h2>Продукты ({{ products.length }})</h2>
+<h2>Продукты ({{ productCount }})</h2>
 <div class="text-right">
 <a class="btn btn-success" ng-click="edit(Product)">Добавить</a>
 <a class="btn btn-default" ng-click="sync()">Синхронизация
     <glyph name="download"></glyph></a>
 </div>
 
-<div class="input-group ration-filter panel" ng-show="products.length">
+<div class="input-group ration-filter panel" ng-show="productCount">
     <div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length  }" ng-click="search.title = '';">Поиск</div>
     <input ng-model="search.title" type="text" class="form-control" ng-change="updateProductFilter()">
 </div>
 
-<table class="table table-striped" ng-show="products.length">
+<table class="table table-striped" ng-show="productCount">
     <thead>
         <tr>
             <th></th>
@@ -25,7 +25,7 @@
             {{$index+1}}
         </td>
         <td>
-            <a href="#/product/{{product.id}}" title="Редактировать">{{product.title}}</a>
+            <a ng-click="edit(product)" class="ration-action" title="Редактировать">{{product.title}}</a>
         </td>
         <td>{{ product.calorificValue }}</td>
         <td>{{ product.usualPortion }}</td>
@@ -38,7 +38,7 @@
     </tr>
 </table>
 
-<div ng-hide="products.length" class="row">
+<div ng-hide="productCount" class="row">
   <div class="col-md-5 col-md-offset-3">
     <p>Справочник продуктов пуст.</p>
     <p>Для добавления списка продуктов нажмите кнопку обновления</p>

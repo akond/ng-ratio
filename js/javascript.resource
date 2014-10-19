@@ -22,7 +22,7 @@ INCLUDE(BOWER/closurelibrary/closure/goog/base.js)
 INCLUDE(BOWER/angular/angular.js)
 INCLUDE(LOCALE/angular-locale_ru-ru.js)
 
-INCLUDE(BOWER/angular-route/angular-route.js)
+INCLUDE(BOWER/angular-route/angular-route.min.js)
 //INCLUDE(BOWER/angular-bootstrap/ui-bootstrap.js)
 INCLUDE(BOWER/angular-bootstrap/ui-bootstrap-tpls.js)
 
@@ -31,8 +31,9 @@ INCLUDE(BOWER/node-uuid/uuid.js)
 INCLUDE(BOWER/ng-slider-menu/src/js/slide-menu.js)
 
 -- https://github.com/mgonto/angular-wizard
-INCLUDE(BOWER/angular-wizard/dist/angular-wizard.js)
-INCLUDE(BOWER/angular-daterangepicker/js/angular-daterangepicker.js)
+INCLUDE(BOWER/angular-wizard/dist/angular-wizard.min.js)
+INCLUDE(BOWER/angular-daterangepicker/js/angular-daterangepicker.min.js)
+INCLUDE(BOWER/ngDialog/js/ngDialog.min.js)
 
 INCLUDE(BOWER/lodash/dist/lodash.min.js)
 

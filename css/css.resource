@@ -8,6 +8,9 @@ PATH(CSS,/css)
 //INCLUDE(BOWER/closurelibrary/closure/goog/css/dialog.css)
 INCLUDE(BOWER/bootstrap/dist/css/bootstrap.css)
 INCLUDE(BOWER/ng-slider-menu/src/css/slide-menu.css)
+INCLUDE(BOWER/ngDialog/css/ngDialog.css)
+INCLUDE(BOWER/ngDialog/css/ngDialog-theme-default.css)
+
 
 /------------------------------------------------------------------------------/
 / My styles                                                                    /
