@@ -81,7 +81,7 @@
 		<div id="products" class="ration-maxheight">
 			<div class="row ration-product" ng-repeat="product in filteredProducts">
 				<div class="col-md-2">
-					<a class="btn btn-sm btn-default" ng-click="addRation(product.createRation())">Добавить</a>
+					<a class="btn btn-sm btn-default" ng-click="addRation(product.createRation(), $event)" title="+Alt - с указанием веса, +Ctrl - с указанием калорийности">Добавить</a>
 				</div>
 				<div class="col-md-8">
 					{{ product.title }}

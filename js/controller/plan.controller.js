@@ -88,7 +88,31 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		rationRepository.remove (ration, trip.id);
 	};
 
-	$scope.addRation = function (ration) {
+	$scope.addRation = function (ration, event) {
+		if (event.altKey) {
+			var promise = $scope.editRation (ration, 1);
+			promise.then (function (result) {
+				if (!result.value) {
+					return;
+				}
+
+				$scope.activeMeal.addRation (ration);
+			})
+			return;
+		}
+
+		if (event.ctrlKey) {
+			var promise = $scope.editRation (ration, 2);
+			promise.then (function (result) {
+				if (!result.value) {
+					return;
+				}
+
+				$scope.activeMeal.addRation (ration);
+			})
+			return;
+		}
+
 		ration = $scope.activeMeal.addRation (ration);
 
 		var index = layout.findMealIndex ($scope.activeMeal);
@@ -106,6 +130,12 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 				$scope.Ration = editableRation;
 
 				$scope.mode = mode;
+
+				$scope.keypress = function ($event) {
+					if ($event.charCode === 13) {
+						dialog.close (true);
+					}
+				}
 			}]
 		});
 
@@ -116,10 +146,12 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 				} else {
 					ration.amount = editableRation.amount * 100 / $scope.productIndex [ration.product].calorificValue;
 				}
-				
+
 				var index = layout.findMealIndex ($scope.activeMeal);
 				rationRepository.save (ration, trip.id, index);
 			}
-		})
+		});
+
+		return dialog.closePromise;
 	}
 }

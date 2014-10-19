@@ -1,15 +1,13 @@
-<ng-form name="initial">
-  <div class="form-group row">
-    <div class="col-md-6">
-      <label for="amount" ng-show="mode==1">Размер порции в граммах</label>
-      <label for="amount" ng-show="mode == 2">Размер порции в каллориях</label>
-      <input id="amount" type="number" ng-model="Ration.amount" ng-required="true" class="form-control" placeholder="Размер порции">
-    </div>
-  </div>
+<div class="form-group row">
+	<div class="col-md-6">
+		<label for="amount" ng-show="mode==1">Размер порции в граммах</label>
+		<label for="amount" ng-show="mode == 2">Размер порции в каллориях</label>
+		<input id="amount" type="number" ng-model="Ration.amount" ng-required="true" class="form-control" placeholder="Размер порции" ng-keypress="keypress($event)">
+	</div>
+</div>
 
-  <div class="form-group row">
-    <div class="col-md-6">
-      <a class="btn btn-primary" ng-disabled="initial.$invalid" ng-click="closeThisDialog(true)">Сохранить</a>
-    </div>
-  </div>
-</ng-form>
+<div class="form-group row">
+	<div class="col-md-6">
+		<a class="btn btn-primary" ng-disabled="initial.$invalid" ng-click="closeThisDialog(true)">Сохранить</a>
+	</div>
+</div>
