@@ -39,6 +39,8 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		resize.unregister ();
 	});
 
+	$scope.basket = new Basket ();
+
 	$scope.products = products;
 
 	$scope.updateProductFilter = function () {
@@ -80,43 +82,72 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		$location.path("/product/");
 	};
 
-	$scope.removeRation = function (ration) {
+	$scope.removeRation = function ($event, ration) {
 		var meal = layout.findRationMeal(ration);
 		if (meal) {
 			meal.removeRation (ration);
 		}
 		rationRepository.remove (ration, trip.id);
+
+		if ($event.altKey) {
+			$scope.basket.addRation (ration);
+		}
+	};
+
+	$scope.addRationAndRemove = function (ration, event) {
+		var result = $scope.addRation (ration, event);
+
+		if (result === true) {
+			$scope.basket.removeRation (ration);
+			return;
+		}
+
+		if (goog.isObject (result)) {
+			result.then(function (result) {
+				if (result.value === true) {
+					$scope.basket.removeRation (ration);
+				}
+			});
+		}
 	};
 
 	$scope.addRation = function (ration, event) {
+		var saveRation  = function () {
+			ration = $scope.activeMeal.addRation (ration);
+
+			var index = layout.findMealIndex ($scope.activeMeal);
+			rationRepository.save (ration, trip.id, index);
+			return true;
+		};
+
 		if (event.altKey) {
 			var promise = $scope.editRation (ration, 1);
 			promise.then (function (result) {
-				if (!result.value) {
+				if (result.value !== true) {
 					return;
 				}
 
-				$scope.activeMeal.addRation (ration);
-			})
-			return;
+				return saveRation (ration);
+			});
+
+			return promise;
 		}
 
 		if (event.ctrlKey) {
 			var promise = $scope.editRation (ration, 2);
 			promise.then (function (result) {
-				if (!result.value) {
+				if (result.value !== true) {
 					return;
 				}
 
-				$scope.activeMeal.addRation (ration);
-			})
-			return;
+				return saveRation (ration);
+			});
+
+			return promise;
 		}
 
-		ration = $scope.activeMeal.addRation (ration);
 
-		var index = layout.findMealIndex ($scope.activeMeal);
-		rationRepository.save (ration, trip.id, index);
+		return saveRation (ration);
 	};
 
 	$scope.editRation = function (ration, mode) {

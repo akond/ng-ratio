@@ -28,8 +28,9 @@
 			{{ trip.to | date }}
 		</td>
 		<td>
-			<a class="btn btn-info" ng-click="editTrip(trip)">Свойства</a>
-			<a class="btn btn-danger" ng-click="removeTrip(trip)">Удалить</a>
+			<a class="btn btn-default" ng-click="" title="Сделать копию похода">Копировать</a>
+			<a class="btn btn-info" ng-click="editTrip(trip)" title="Редактировать параметры похода">Свойства</a>
+			<a class="btn btn-danger" ng-click="removeTrip(trip)" title="Удалить поход">Удалить</a>
 		</td>
 	</tr>
 </table>

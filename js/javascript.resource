@@ -73,6 +73,7 @@ INCLUDE(MODEL/ration.model.js)
 INCLUDE(MODEL/day.model.js)
 INCLUDE(MODEL/meal.model.js)
 INCLUDE(MODEL/layout.model.js)
+INCLUDE(MODEL/basket.model.js)
 
 
 -- Репозитории
