@@ -10,7 +10,9 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 				goog.events.listen(vsm, goog.events.EventType.RESIZE, handler);
 			},
 			getSize: function () {
-				return vsm.getSize ();
+				if (goog.isDefAndNotNull (vsm)) {
+					return vsm.getSize ();
+				}
 			},
 			unregister: function () {
 				vsm = null;

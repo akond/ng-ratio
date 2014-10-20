@@ -3,31 +3,37 @@ goog.require('goog.array');
 angular.module('trips', ['LocalStorageModule']);
 angular.module('trips').controller('TripCtrl', TripController);
 
-TripController.$inject = ['$scope', '$route', 'tripRepository', '$rootScope', '$location', 'confirm'];
+TripController.$inject = ['$scope', '$route', 'tripRepository', 'rationRepository', '$location', 'confirm'];
 
-function TripController($scope, $route, tripRepository, $rootScope, $location, confirm) {
+function TripController($scope, $route, tripRepository, rationRepository, $location, confirm) {
 	'use strict';
 
-	$scope.trips = goog.object.getValues (tripRepository.findAll ());
+	var refreshTripList = function () {
+		$scope.trips = goog.object.getValues (tripRepository.findAll ());
+	}
+
+	refreshTripList ();
 
 	if (goog.isDef ($route.current.params.id)) {
-			$scope.Trip = tripRepository.find ($route.current.params.id);
-			$scope.editMode = true;
+		$scope.Trip = tripRepository.find ($route.current.params.id);
+		$scope.editMode = true;
 	} else {
-			$scope.Trip = new Trip();
-			$scope.Trip.plans.push (new Plan ());
+		$scope.Trip = new Trip();
+		$scope.Trip.plans.push (new Plan ());
 	}
 
 	$scope.addTrip = function () {
-		this.Trip.validate ();
+		var trip = this.Trip;
+
+		trip.validate ();
 
 		if (this.editMode) {
-			tripRepository.save (this.Trip);
+			tripRepository.save (trip);
 		} else {
-			tripRepository.save (goog.object.clone (this.Trip));
+			tripRepository.save (goog.object.clone (trip));
 		}
 
-		$location.path("/plan/" + this.Trip.id);
+		$location.path("/plan/" + trip.id);
 	};
 
 	$scope.editTrip = function (editableTrip) {
@@ -49,5 +55,17 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 				return item.id !== trip.id;
 			});
 		}));
+	};
+
+	$scope.cloneTrip = function (trip) {
+		var tripClone = trip.clone();
+		tripRepository.save (tripClone);
+
+		goog.array.forEach(rationRepository.findAll (trip.id), function (ration) {
+			var index = rationRepository.findIndex (trip.id, ration.id);
+			rationRepository.save (ration.clone (), tripClone.id, index);
+		}, this);
+
+		refreshTripList ();
 	};
 }

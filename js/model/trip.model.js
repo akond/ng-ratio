@@ -50,3 +50,10 @@ Trip.prototype.weight = function () {
 Trip.prototype.multiplyAmount = function (amount) {
 	return amount * this.calorificTarget() / 2500;
 };
+
+Trip.prototype.clone = function () {
+	var clone = angular.copy (this);
+	clone.id = uuid.v4();
+	clone.title = '[Копия] ' + clone.title;
+	return clone;
+};

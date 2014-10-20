@@ -32,7 +32,10 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 
 	resizeLayout ($(window).height ());
 	resize.register (function () {
-		resizeLayout (resize.getSize ().height);
+		var size = resize.getSize ();
+		if (goog.isDef (size)) {
+			resizeLayout (size.height);
+		}
 	});
 
 	$scope.$on("$destroy", function() {
