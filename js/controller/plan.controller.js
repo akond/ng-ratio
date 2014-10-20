@@ -89,7 +89,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		}
 		rationRepository.remove (ration, trip.id);
 
-		if ($event.altKey) {
+		if ($event.altKey || $event.ctrlKey) {
 			$scope.basket.addRation (ration);
 		}
 	};

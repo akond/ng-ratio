@@ -64,8 +64,9 @@ function ProductController($scope, $http, $route, $filter, productRepository, $l
 				if (goog.typeOf (data) === 'array') {
 					goog.array.forEach (data, function (params) {
 						params.unshift (Product);
-						$scope.save (goog.functions.create.apply (null, params));
+						saveProduct (goog.functions.create.apply (null, params));
 					});
+					$location.path("/product/");
 				}
 			});
 	};
