@@ -26,6 +26,14 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 			}
 		};
 
+		var setObjectData = function (object, data) {
+			goog.object.forEach (data, function (value, key) {
+				goog.object.set(object, key, value);
+			});
+
+			return object;
+		};
+
 		var reconstitute = function (factory, prefix) {
 			var values = goog.array.map (filterKeys (prefix), function (key) {
 				return get (key);
@@ -33,10 +41,7 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 
 			return goog.array.toObject(goog.array.map(values, function (item) {
 				var object = factory ();
-				goog.object.forEach (item, function (value, key) {
-					goog.object.set(object, key, value);
-				});
-				return object;
+				return setObjectData (object, item);
 			}), function (item) {
 				return item.id;
 			});
@@ -46,7 +51,6 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 			localStorageService.clearAll();
 		};
 
-
 		return {
 			keys: keys,
 			filterKeys: filterKeys,
@@ -54,7 +58,8 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 			get: get,
 			remove: remove,
 			reset: reset,
-			reconstitute: reconstitute
+			reconstitute: reconstitute,
+			setObjectData: setObjectData
 		};
 	}]);
 }]);

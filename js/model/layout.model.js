@@ -20,7 +20,7 @@ function Layout(from, to) {
 			return new Meal (meal);
 		}));
 	});
-};
+}
 
 Layout.prototype.addDay = function (day) {
 	this.days.push (day);
@@ -51,7 +51,7 @@ Layout.prototype.weight = function () {
 	var weight = 0;
 	this.visit (function (meal) {
 		weight += meal.weight ();
-	})
+	});
 	return weight;
 };
 

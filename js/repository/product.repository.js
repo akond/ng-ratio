@@ -18,7 +18,7 @@ angular.module('ng-ratio').factory('productRepository', ['storage', function (st
 		return goog.array.toObject (findAll (), function (product) {
 			return product.id;
 		});
-	}
+	};
 
 	var restore = function (key) {
 		return storage.reconstitute (function () {
@@ -27,7 +27,7 @@ angular.module('ng-ratio').factory('productRepository', ['storage', function (st
 	};
 
 	var addProduct = function (product) {
-		goog.asserts.assert (product.id != null);
+		goog.asserts.assert (!goog.string.isEmptyString(product.id));
 		storage.set (KEY + "." + product.id, product);
 	};
 

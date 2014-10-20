@@ -4,16 +4,14 @@
 	</div>
 </h1>
 
-<div class="row hidden-print">
-	<div class="col-md-12 panel">
-		<div class="pull-right">
-			Масса: <tag name="weight" >{{ layout.weight() | number : 0 }}</tag> г
-		</div>
-		<div>
-			Прогресс по дням: <a ng-repeat="day in days" ng-click="scrollToDay ($index)" class="ration-action">
-				<tag name="{{ day.calories (productIndex) >= Trip.calorificTarget() ? 'ok' : 'fail'}}" >{{ day.date | date : format='d' }}</tag>
-			</a>
-		</div>
+<div class="row hidden-print panel">
+	<div class="col-md-5">
+		<a ng-repeat="day in days" ng-click="scrollToDay ($index)" class="ration-action" style="line-height: 24px;">
+			<tag name="{{ day.calories (productIndex) >= Trip.calorificTarget() ? 'ok' : 'fail'}}">{{ day.date | date : format='d MMM' }}</tag>
+		</a>
+	</div>
+	<div class="col-md-2 text-right">
+		<tag name="weight" >{{ layout.weight() | number : 0 }}</tag> г
 	</div>
 </div>
 

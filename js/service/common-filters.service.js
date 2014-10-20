@@ -4,7 +4,7 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 	$provide.factory('productFilter', ['$q', function ($q) {
 		return function (search) {
 			return function (product) {
-				var noFilter = search.title == null;
+				var noFilter = goog.string.isEmptyString(search.title);
 				if (noFilter) {
 					// если фильтра нет, то показываем все
 					return true;
@@ -21,9 +21,9 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 				if (goog.string.caseInsensitiveContains(product.group, search.title)) {
 					return true;
 				}
-				
+
 				return false;
-			}
+			};
 		};
 	}]);
 }]);

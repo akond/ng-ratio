@@ -18,7 +18,7 @@ function ProductController($scope, $http, $route, $filter, productRepository, $l
 
 	$scope.updateProductFilter ();
 
-	$scope.noProducts = $scope['products'].length === 0;
+	$scope.noProducts = $scope.products.length === 0;
 
 	$scope.edit = function (product) {
 		var editableProduct = productRepository.find (product.id);

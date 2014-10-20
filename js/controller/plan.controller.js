@@ -8,7 +8,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 
 	var tripId = $route.current.params.id;
 	var trip = $scope.Trip = tripRepository.find (tripId);
-	var rations = rationRepository.findAllBucket (tripId)
+	var rations = rationRepository.findAllBucket (tripId);
 	var products = $filter('orderBy')(productRepository.findAll (), 'title');
 
 	$scope.productIndex = productRepository.getIndex ();
@@ -76,7 +76,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		var mealRations = goog.object.getValueByKeys(rations, dayIndex, mealIndex) || [];
 		goog.array.forEach (mealRations, function (ration) {
 			meal.addRation (ration);
-		})
+		});
 	});
 
 	$scope.editProducts = function () {
@@ -96,7 +96,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	};
 
 	$scope.addRationAndRemove = function (ration, event) {
-		var result = $scope.addRation (ration, event);
+		var result = $scope.addRation (ration, event, false);
 
 		if (result === true) {
 			$scope.basket.removeRation (ration);
@@ -112,17 +112,25 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		}
 	};
 
-	$scope.addRation = function (ration, event) {
-		var saveRation  = function () {
-			ration = $scope.activeMeal.addRation (ration);
+	var saveRation  = function (ration) {
+		ration = $scope.activeMeal.addRation (ration);
 
-			var index = layout.findMealIndex ($scope.activeMeal);
-			rationRepository.save (ration, trip.id, index);
-			return true;
-		};
+		var index = layout.findMealIndex ($scope.activeMeal);
+		rationRepository.save (ration, trip.id, index);
+		return true;
+	};
 
+	$scope.addRation = function (ration, event, multiply) {
+		multiply = multiply || true;
+
+		if (multiply) {
+			console.log ($scope.Trip.plans);
+			ration.amount = ration.amount * $scope.Trip.menCount();
+		}
+
+		var promise;
 		if (event.altKey) {
-			var promise = $scope.editRation (ration, 1);
+			promise = $scope.editRation (ration, 1);
 			promise.then (function (result) {
 				if (result.value !== true) {
 					return;
@@ -135,7 +143,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		}
 
 		if (event.ctrlKey) {
-			var promise = $scope.editRation (ration, 2);
+			promise = $scope.editRation (ration, 2);
 			promise.then (function (result) {
 				if (result.value !== true) {
 					return;
@@ -167,7 +175,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 					if ($event.charCode === 13) {
 						dialog.close (true);
 					}
-				}
+				};
 			}]
 		});
 
@@ -185,5 +193,5 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		});
 
 		return dialog.closePromise;
-	}
+	};
 }

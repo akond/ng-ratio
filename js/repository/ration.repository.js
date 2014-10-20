@@ -67,9 +67,9 @@ angular.module('ng-ratio').factory('rationRepository', ['storage', function (sto
 	};
 
 	var saveRation = function (ration, tripId, index) {
-		goog.asserts.assert (tripId != null);
+		goog.asserts.assert (!goog.string.isEmptyString(tripId));
 		goog.asserts.assertArray (index);
-		goog.asserts.assert (ration.id != null);
+		goog.asserts.assert (!goog.string.isEmptyString(ration.id));
 
 		var key = [KEY, tripId, ration.id].join (".");
 		storage.set (key, {
@@ -80,8 +80,8 @@ angular.module('ng-ratio').factory('rationRepository', ['storage', function (sto
 	};
 
 	var removeRation = function (ration, tripId) {
-		goog.asserts.assert (ration.id != null);
-		goog.asserts.assert (tripId != null);
+		goog.asserts.assert (!goog.string.isEmptyString(ration.id));
+		goog.asserts.assert (!goog.string.isEmptyString(tripId));
 
 		var key = [KEY, tripId, ration.id].join (".");
 		storage.remove (key);

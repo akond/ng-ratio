@@ -1,4 +1,5 @@
 goog.require('goog.object');
+goog.require('goog.array');
 goog.require('goog.asserts');
 
 angular.module('ng-ratio').factory('tripRepository', ['storage', 'rationRepository', function (storage, rationRepository) {
@@ -19,15 +20,17 @@ angular.module('ng-ratio').factory('tripRepository', ['storage', 'rationReposito
 			return new Trip ();
 		}, key);
 
-		// goog.object.forEach (trips, function (trip) {
-		// 	trip.rations = rationRepository.findAll (trip.id);
-		// });
-
+		 goog.object.forEach (trips, function (trip) {
+			trip.plans = goog.array.map(trip.plans, function (plan) {
+				return storage.setObjectData(new Plan (), plan);
+			})
+		 })
+		
 		return trips;
 	};
 
 	var saveTrip = function (trip) {
-		goog.asserts.assert (trip.id != null);
+		goog.asserts.assert (!goog.string.isEmptyString(trip.id));
 
 		// Рационы сохраняются в другом репозитории
 		trip.rations = [];

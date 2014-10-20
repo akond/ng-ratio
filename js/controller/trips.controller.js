@@ -3,7 +3,7 @@ goog.require('goog.array');
 angular.module('trips', ['LocalStorageModule']);
 angular.module('trips').controller('TripCtrl', TripController);
 
-TripController['$inject'] = ['$scope', '$route', 'tripRepository', '$rootScope', '$location', 'confirm'];
+TripController.$inject = ['$scope', '$route', 'tripRepository', '$rootScope', '$location', 'confirm'];
 
 function TripController($scope, $route, tripRepository, $rootScope, $location, confirm) {
 	'use strict';
@@ -35,15 +35,15 @@ function TripController($scope, $route, tripRepository, $rootScope, $location, c
 	};
 
 	$scope.addPlan = function () {
-			$scope.Trip.plans.push (new Plan());
+		$scope.Trip.plans.push (new Plan());
 	};
 
 	$scope.removePlan = function (index) {
-			$scope.Trip.plans.splice (index, 1);
+		$scope.Trip.plans.splice (index, 1);
 	};
 
 	$scope.removeTrip = function (trip) {
-		confirm('Are you sure to remove this trip?').then (angular.bind($scope, function () {
+		confirm('Удалить поход?').then (angular.bind($scope, function () {
 			tripRepository.remove (trip);
 			this.trips = goog.array.filter (this.trips, function (item) {
 				return item.id !== trip.id;
