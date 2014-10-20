@@ -59,6 +59,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	var layout = new Layout (trip.from, trip.to);
 
 	$scope.days = layout.days;
+	$scope.layout = layout;
 
 	$scope.activateMeal = function (meal) {
 		$scope.activeMeal = meal;

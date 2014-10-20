@@ -12,3 +12,9 @@ Day.prototype.calories = function (productIndex) {
 		return sum + meal.calories (productIndex);
 	}, 0);
 };
+
+Day.prototype.weight = function () {
+	return goog.array.reduce (this.meals, function (sum, meal) {
+		return sum + meal.weight ();
+	}, 0);
+};

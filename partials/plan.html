@@ -6,10 +6,14 @@
 
 <div class="row hidden-print">
 	<div class="col-md-12 panel">
-		Прогресс:
-		<a ng-repeat="day in days" ng-click="scrollToDay ($index)" class="ration-action">
-			<tag name="{{ day.calories (productIndex) >= Trip.calorificTarget() ? 'ok' : 'fail'}}" >{{ day.date | date : format='d' }}</tag>
-		</a>
+		<div class="pull-right">
+			Масса: <tag name="weight" >{{ layout.weight() | number : 0 }}</tag> г
+		</div>
+		<div>
+			Прогресс по дням: <a ng-repeat="day in days" ng-click="scrollToDay ($index)" class="ration-action">
+				<tag name="{{ day.calories (productIndex) >= Trip.calorificTarget() ? 'ok' : 'fail'}}" >{{ day.date | date : format='d' }}</tag>
+			</a>
+		</div>
 	</div>
 </div>
 
@@ -19,19 +23,22 @@
 			<h3 id="day-{{ $index }}" ng-repeat-start="day in days" ng-init="dayIndex = $index">{{ day.date | date }}</h3>
 			<div class="row panel">
 				<div class="col-md-10 col-md-offset-1">
-					kcal: <tag name="sofar">{{ day.calories (productIndex) }}</tag>
+					kcal: <tag name="sofar">{{ day.calories (productIndex) | number : 0}}</tag>
 					<span ng-show="day.calories (productIndex) < Trip.calorificTarget()">
 						+
-						<tag name="lack">{{ Trip.calorificTarget() - day.calories (productIndex) }}</tag>
+						<tag name="lack">{{ Trip.calorificTarget() - day.calories (productIndex) | number : 0 }}</tag>
 						&#8594;
-						<tag name="fail">{{ Trip.calorificTarget() }}</tag>
+						<tag name="fail">{{ Trip.calorificTarget() | number : 0 }}</tag>
 					</span>
 					<span ng-show="day.calories (productIndex) >= Trip.calorificTarget()">
 						=
-						<tag name="ok">{{ Trip.calorificTarget() }}</tag>
+						<tag name="ok">{{ Trip.calorificTarget() | number : 0 }}</tag>
 						+
-						<tag name="excess">{{ day.calories (productIndex) - Trip.calorificTarget() }}</tag>
+						<tag name="excess">{{ day.calories (productIndex) - Trip.calorificTarget() | number : 0 }}</tag>
 					</span>
+					<div class="pull-right">
+						<tag name="weight">{{ day.weight () | number : 0}}</tag> г
+					</div>
 				</div>
 			</div>
 			<div class="row" ng-repeat-end>

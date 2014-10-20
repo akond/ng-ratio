@@ -47,6 +47,14 @@ Layout.prototype.findMealIndex = function (meal) {
 	return result;
 };
 
+Layout.prototype.weight = function () {
+	var weight = 0;
+	this.visit (function (meal) {
+		weight += meal.weight ();
+	})
+	return weight;
+};
+
 Layout.prototype.visit = function (visitor) {
 	goog.array.forEach(this.days, function (day, dayIndex) {
 		goog.array.forEach (day.meals, function (meal, mealIndex) {
