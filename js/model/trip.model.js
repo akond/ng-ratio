@@ -46,3 +46,7 @@ Trip.prototype.weight = function () {
 		return sum + ration.amount;
 	}, 0);
 };
+
+Trip.prototype.multiplyAmount = function (amount) {
+	return amount * this.calorificTarget() / 2500;
+};

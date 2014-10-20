@@ -124,7 +124,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		multiply = multiply || true;
 
 		if (multiply) {
-			ration.amount = ration.amount * $scope.Trip.menCount();
+			ration.amount = $scope.Trip.multiplyAmount (ration.amount);
 		}
 
 		var promise;
