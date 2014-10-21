@@ -1,16 +1,25 @@
 RELEASE = release
 APPLICATION = ng-ratio
 EXTERNALJS = /bower% /js/locale/angular-locale_ru-ru.js
+ALREADYINCLUDEDJS = /bower_components/closurelibrary/closure/goog/base.js /bower_components/jquery/dist/jquery.min.js
 TESTJS = /js/controller/test.controller.js
 
 releaseroot = $(subst $(SPACE),$3,$(addprefix $2,$(filter $(EXTERNALJS), $(strip $(shell $(COMP) $1)))))
 
 
-release: nodebug $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).css.gz $(RELEASE)/$(APPLICATION).js.gz
+release: nodebug $(RELEASE)/$(APPLICATION).html
 
 
 nodebug:
 	$(eval NODEBUG:=1)
+
+
+$(RELEASE)/$(APPLICATION).html: partials/application.html $(RELEASE)/combined.js.gz $(RELEASE)/$(APPLICATION).js.gz $(RELEASE)/$(APPLICATION).css.gz
+	$(PREPROC) \
+	-D JAVASCRIPTS="$(RELEASE)/combined.js,$(APPLICATION).js" \
+	-D STYLES="$(APPLICATION).css" \
+	-D TEMPLATES="$(call commaseparated,$(filter-out partials/application.html,$(wildcard partials/*)))" \
+	partials/application.html > $@
 
 
 .DELETE_ON_ERROR: $(RELEASE)/$(APPLICATION).js
@@ -24,13 +33,9 @@ compiled-js-config: etc/m4/plovr.m4 $(RESOURCE.JS) $(JSS)
 	$(call test_file_not_blank,$@)
 
 
+$(RELEASE)/combined.js:
+	cat $(addprefix .,$(filter-out $(ALREADYINCLUDEDJS),$(filter $(EXTERNALJS),$(call resources,$(RESOURCE.JS))))) > $@
+
+
 $(RELEASE)/$(APPLICATION).css: $(CSSS) css
 	cat $(CSSS) | $(CSSCOMP) $@
-
-
-$(RELEASE)/$(APPLICATION).html: partials/application.html
-	$(PREPROC) \
-	-D JAVASCRIPTS="$(call commaseparated,$(filter $(EXTERNALJS),$(call resources,$(RESOURCE.JS)))),$(APPLICATION).js" \
-	-D STYLES="$(APPLICATION).css" \
-	-D TEMPLATES="$(call commaseparated,$(filter-out partials/application.html,$(wildcard partials/*)))" \
-	partials/application.html > $@
