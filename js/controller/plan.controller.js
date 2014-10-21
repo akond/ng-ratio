@@ -11,7 +11,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	var rations = rationRepository.findAllBucket (tripId);
 	var products = $filter('orderBy')(productRepository.findAll (), 'title');
 
-	$scope.productIndex = productRepository.getIndex ();
+	var productIndex = $scope.productIndex = productRepository.getIndex ();
 
 	$scope.scrollToDay = function(day){
 		var speed = 400;
@@ -124,7 +124,6 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		multiply = multiply || true;
 
 		if (multiply) {
-			console.log ($scope.Trip.plans);
 			ration.amount = ration.amount * $scope.Trip.menCount();
 		}
 
@@ -160,16 +159,29 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	};
 
 	$scope.editRation = function (ration, mode) {
-		var editableRation = angular.copy(ration);
-		if (mode === 2) {
-			editableRation.amount = $scope.productIndex [ration.product].calorificValue * editableRation.amount / 100;
-		}
 		var dialog = ngDialog.open({
 			template: 'partials/ration.html',
 			controller: ['$scope', function ($scope) {
-				$scope.Ration = editableRation;
+				$scope.amount = ration.amount;
+				$scope.calorificValue = productIndex [ration.product].calorificValue;
+				$scope.gramm = Math.round(ration.amount);
+				$scope.cal = Math.round(ration.amount * $scope.calorificValue / 100);
 
-				$scope.mode = mode;
+				$scope.recalc = function (mode, value) {
+					if ($scope.mode) {
+						return;
+					}
+					$scope.mode = mode;
+					$scope.amount = value;
+					$scope.gramm = Math.round($scope.amount);
+					$scope.cal = Math.round($scope.amount * $scope.calorificValue / 100);
+
+					setTimeout(function () {
+						$scope.mode = 0;
+					}, 0)
+
+					return;
+				};
 
 				$scope.keypress = function ($event) {
 					if ($event.charCode === 13) {
@@ -180,13 +192,8 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		});
 
 		dialog.closePromise.then (function (result) {
-			if (result.value === true) {
-				if (mode === 1) {
-					ration.amount = editableRation.amount;
-				} else {
-					ration.amount = editableRation.amount * 100 / $scope.productIndex [ration.product].calorificValue;
-				}
-
+			if (angular.isNumber(result.value)) {
+				ration.amount = result.value;
 				var index = layout.findMealIndex ($scope.activeMeal);
 				rationRepository.save (ration, trip.id, index);
 			}

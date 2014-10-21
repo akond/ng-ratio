@@ -1,3 +1,13 @@
+<style media="print,screen" type="text/css">
+	body {
+		-webkit-print-color-adjust: exact;
+	}
+	.grey {
+		background-color: #eee !important;
+		-webkit-print-color-adjust: exact;
+	}
+</style>
+
 <h1>{{ Trip.title }} (Закупка)
 	<div class="btn-group pull-right hidden-print">
 		<a class="btn btn-default" href="#/plan/{{ Trip.id }}">Редактирование</a>
@@ -6,23 +16,23 @@
 
 <div ng-repeat="meal in groups">
 	<div class="row">
-		<div class="col-md-9 col-xs-9 ration-underlined">
+		<div class="col-md-7 col-xs-7">
 			<h2>{{ meal.title }}</h2>
 		</div>
 	</div>
-	<div ng-repeat="ration in meal.rations" class="row">
-		<div class="col-md-1 col-xs-1 ration-underlined">
+	<div ng-repeat="ration in meal.rations" class="row" ng-class-odd="'grey'">
+		<div class="col-md-1 col-xs-1">
 			<a ng-click="checked = !checked">
 				<glyph ng-hide="checked" name="unchecked"></glyph>
 				<glyph ng-show="checked" name="ok"></glyph>
 			</a>
 			&nbsp;
 		</div>
-		<div class="col-md-6 col-xs-6 ration-underlined">
+		<div class="col-md-4 col-xs-4">
 			{{ products [ration.product].title }}
 		</div>
-		<div class="col-md-2 col-xs-2 ration-underlined">
-			{{ ration.amount }} г
+		<div class="col-md-2 col-xs-2 text-right">
+			{{ ration.amount | number:0 }} г
 		</div>
 	</div>
 </div>
