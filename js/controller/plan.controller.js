@@ -87,28 +87,33 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	};
 
 	$scope.removeRation = function ($event, ration) {
+		if ($event.shiftKey) {
+			$scope.basket.addRation (ration.clone ());
+			return;
+		}
+
 		var meal = layout.findRationMeal(ration);
 		if (meal) {
 			meal.removeRation (ration);
 		}
+
 		rationRepository.remove (ration, trip.id);
 
-		if ($event.altKey || $event.ctrlKey) {
+		if ($event.ctrlKey) {
 			$scope.basket.addRation (ration);
 		}
 	};
 
-	$scope.addRationAndRemove = function (ration, event) {
-		var result = $scope.addRation (ration, event, false);
+	$scope.addRationFromBasket = function (ration, event) {
+		var result = $scope.addRation (ration.clone(), event, false);
 
-		if (result === true) {
-			$scope.basket.removeRation (ration);
+		if (event.shiftKey) {
 			return;
 		}
 
 		if (goog.isObject (result)) {
 			result.then(function (result) {
-				if (result.value === true) {
+				if (angular.isNumber(result.value)) {
 					$scope.basket.removeRation (ration);
 				}
 			});
@@ -131,23 +136,11 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		}
 
 		var promise;
-		if (event.altKey) {
-			promise = $scope.editRation (ration, 1);
-			promise.then (function (result) {
-				if (result.value !== true) {
-					return;
-				}
-
-				return saveRation (ration);
-			});
-
-			return promise;
-		}
 
 		if (event.ctrlKey) {
-			promise = $scope.editRation (ration, 2);
+			promise = $scope.editRation (ration);
 			promise.then (function (result) {
-				if (result.value !== true) {
+				if (!angular.isNumber(result.value)) {
 					return;
 				}
 
@@ -156,12 +149,11 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 
 			return promise;
 		}
-
 
 		return saveRation (ration);
 	};
 
-	$scope.editRation = function (ration, mode) {
+	$scope.editRation = function (ration) {
 		var dialog = ngDialog.open({
 			template: 'partials/ration.html',
 			controller: ['$scope', function ($scope) {

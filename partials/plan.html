@@ -57,8 +57,8 @@
 								</div>
 								<div class="col-md-5">
 									<span ng-show="ration.amount">
-									<a class="ration-action ration-text" ng-click="editRation(ration, 1)">{{ ration.amount | number:0}} г</a> &#8594;
-									<a class="ration-action" ng-click="editRation(ration, 2)"><tag name="sofar">{{ productIndex [ration.product].calories (ration) | number: 0}}</tag></a>
+									<a class="ration-action ration-text" ng-click="editRation(ration)">{{ ration.amount | number:0}} г</a> &#8594;
+									<a class="ration-action" ng-click="editRation(ration)"><tag name="sofar">{{ productIndex [ration.product].calories (ration) | number: 0}}</tag></a>
 									</span>
 									<span ng-hide="ration.amount"><glyph name="ok" color="green"></glyph></span>
 								</div>
@@ -105,7 +105,7 @@
 		<h3>Корзина <a class="btn btn-default pull-right" ng-click="inBasket = false" title="">Продукты</a></h3>
 		<div class="row" ng-repeat="ration in basket.rations" ng-show="basket.rations.length">
 			<div class="col-md-2">
-				<a class="btn btn-sm btn-default" ng-click="addRationAndRemove(ration, $event)" title="+Alt - с указанием веса, +Ctrl - с указанием калорийности">Добавить</a>
+				<a class="btn btn-sm btn-default" ng-click="addRationFromBasket(ration, $event)" title="+Alt - с указанием веса, +Ctrl - с указанием калорийности">Добавить</a>
 			</div>
 			<div class="col-md-8">
 				{{ productIndex [ration.product].title }}
