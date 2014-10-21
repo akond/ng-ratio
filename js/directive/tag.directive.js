@@ -15,7 +15,8 @@ angular.module('trips').directive ('tag', function () {
 				lack: 'Не хватает',
 				ok: 'Цель достигнута',
 				excess: 'Излишек',
-				fail: 'Требуется'
+				fail: 'Требуется',
+				cal: 'Калорий'
 			};
 
 			element.attr ('title', titles [scope.name]);

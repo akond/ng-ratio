@@ -1,9 +1,9 @@
 goog.require('goog.array');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
-PlanController.$inject = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter', 'resize', 'productFilter', 'ngDialog'];
+PlanController.$inject = ['$scope', '$route', '$q', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter', 'resize', 'productFilter', 'ngDialog'];
 
-function PlanController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter, resize, productFilter, ngDialog) {
+function PlanController($scope, $route, $q, tripRepository, productRepository, rationRepository, $location, $filter, resize, productFilter, ngDialog) {
 	'use strict';
 
 	var tripId = $route.current.params.id;
@@ -106,52 +106,53 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	};
 
 	$scope.addRationFromBasket = function (ration, event) {
-		var result = $scope.addRation (ration.clone(), event, false);
+		var dontRemove = event.shiftKey;
 
-		if (event.shiftKey) {
-			return;
-		}
+		$scope.addRation (ration.clone(), event, false).then(function () {
+			if (dontRemove) {
+				return;
+			}
 
-		if (goog.isObject (result)) {
-			result.then(function (result) {
-				if (angular.isNumber(result.value)) {
-					$scope.basket.removeRation (ration);
-				}
-			});
-		}
+			$scope.basket.removeRation (ration);
+		});
 	};
 
 	var saveRation  = function (ration) {
-		ration = $scope.activeMeal.addRation (ration);
+		var adjustedRation = $scope.activeMeal.addRation (ration);
 
 		var index = layout.findMealIndex ($scope.activeMeal);
-		rationRepository.save (ration, trip.id, index);
-		return true;
+		rationRepository.save (adjustedRation, trip.id, index);
 	};
 
 	$scope.addRation = function (ration, event, multiply) {
+		var resultPromise = $q.defer();
+
 		multiply = multiply || true;
 
 		if (multiply) {
 			ration.amount = $scope.Trip.multiplyAmount (ration.amount);
 		}
-
-		var promise;
-
-		if (event.ctrlKey) {
-			promise = $scope.editRation (ration);
+		var isEditable = event.ctrlKey;
+		if (isEditable) {
+			var promise = $scope.editRation (ration);
 			promise.then (function (result) {
-				if (!angular.isNumber(result.value)) {
+				if (angular.isNumber(result.value)) {
+					// рацион уже записан к этому моменту
+					resultPromise.resolve ();
 					return;
 				}
-
-				return saveRation (ration);
+				resultPromise.reject ();
+			}, function () {
+				resultPromise.reject ();
 			});
 
-			return promise;
+			return resultPromise.promise;
 		}
 
-		return saveRation (ration);
+		saveRation (ration);
+		resultPromise.resolve();
+
+		return resultPromise.promise;
 	};
 
 	$scope.editRation = function (ration) {
@@ -174,7 +175,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 
 					setTimeout(function () {
 						$scope.mode = 0;
-					}, 0)
+					}, 0);
 
 					return;
 				};
@@ -190,8 +191,7 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 		dialog.closePromise.then (function (result) {
 			if (angular.isNumber(result.value)) {
 				ration.amount = result.value;
-				var index = layout.findMealIndex ($scope.activeMeal);
-				rationRepository.save (ration, trip.id, index);
+				saveRation (ration);
 			}
 		});
 

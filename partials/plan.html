@@ -82,14 +82,15 @@
 		</div>
 		<div id="products" class="ration-maxheight">
 			<div class="row ration-product" ng-repeat="product in filteredProducts">
-				<div class="col-md-2">
-					<a class="btn btn-sm btn-default" ng-click="addRation(product.createRation(), $event)" title="+Alt - с указанием веса, +Ctrl - с указанием калорийности">Добавить</a>
-				</div>
 				<div class="col-md-8">
-					{{ product.title }}
+					<a ng-click="addRation(product.createRation(), $event)" title="+Ctrl - с настройками"><glyph name="chevron-left"></glyph></a>&nbsp;
+					<span title="{{ product.title }}">{{ product.title | limitTo: 33}}</span>
+				</div>
+				<div class="col-md-2 text-right">
+					{{ product.usualPortion | number: 0}} г
 				</div>
 				<div class="col-md-2">
-					{{ product.calorificValue }}
+					<tag name="cal" ng-if="product.calorificValue">{{ product.calorificValue | number: 0}}</tag>
 				</div>
 			</div>
 
@@ -101,17 +102,18 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-5" ng-show="inBasket">
+	<div class="col-md-5 basket" ng-show="inBasket">
 		<h3>Корзина <a class="btn btn-default pull-right" ng-click="inBasket = false" title="">Продукты</a></h3>
 		<div class="row" ng-repeat="ration in basket.rations" ng-show="basket.rations.length">
-			<div class="col-md-2">
-				<a class="btn btn-sm btn-default" ng-click="addRationFromBasket(ration, $event)" title="+Alt - с указанием веса, +Ctrl - с указанием калорийности">Добавить</a>
-			</div>
 			<div class="col-md-8">
+				<a ng-click="addRationFromBasket(ration, $event)" title="+Ctrl - с настройками; +Shift - не удалять"><glyph name="chevron-left"></glyph></a>
 				{{ productIndex [ration.product].title }}
 			</div>
 			<div class="col-md-2">
-				{{ productIndex [ration.product].calorificValue }}
+				{{ ration.amount }} г
+			</div>
+			<div class="col-md-2">
+				<tag name="cal" ng-if="productIndex [ration.product].calorificValue">{{ productIndex [ration.product].calorificValue | number: 0}}</tag>
 			</div>
 		</div>
 
