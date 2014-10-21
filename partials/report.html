@@ -20,7 +20,7 @@
 			<h2>{{ meal.title }}</h2>
 		</div>
 	</div>
-	<div ng-repeat="ration in meal.rations" class="row" ng-class-odd="'grey'">
+	<div ng-repeat="ration in meal.rations" class="row col-md-10 col-xs-10" ng-class-odd="'grey'">
 		<div class="col-md-1 col-xs-1">
 			<a ng-click="checked = !checked">
 				<glyph ng-hide="checked" name="unchecked"></glyph>
@@ -28,7 +28,7 @@
 			</a>
 			&nbsp;
 		</div>
-		<div class="col-md-4 col-xs-4">
+		<div class="col-md-7 col-xs-7">
 			{{ products [ration.product].title }}
 		</div>
 		<div class="col-md-2 col-xs-2 text-right">

@@ -1,6 +1,6 @@
 goog.require('goog.array');
 
-angular.module('trips', ['LocalStorageModule']);
+angular.module('trips', ['LocalStorageModule', 'ui.bootstrap']);
 angular.module('trips').controller('TripCtrl', TripController);
 
 TripController.$inject = ['$scope', '$route', 'tripRepository', 'rationRepository', '$location', 'confirm'];

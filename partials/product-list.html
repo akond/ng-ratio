@@ -2,46 +2,57 @@
 <div class="text-right">
 <a class="btn btn-success" ng-click="edit(Product)">Добавить</a>
 <a class="btn btn-default" ng-click="sync()">Синхронизация
-    <glyph name="download"></glyph></a>
+	<glyph name="download"></glyph></a>
 </div>
 
 <div class="input-group ration-filter panel" ng-show="productCount">
-    <div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length  }" ng-click="search.title = '';">Поиск</div>
-    <input ng-model="search.title" type="text" class="form-control" ng-change="updateProductFilter()">
+	<div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length	}" ng-click="search.title = '';">Поиск</div>
+	<input ng-model="search.title" type="text" class="form-control" ng-change="updateProductFilter()">
 </div>
 
 <table class="table table-striped" ng-show="productCount">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Название</th>
-            <th>Калорийность</th>
-            <th>Порция</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tr ng-repeat="product in filteredProducts">
-        <td>
-            {{$index+1}}
-        </td>
-        <td>
-            <a ng-click="edit(product)" class="ration-action" title="Редактировать">{{product.title}}</a>
-        </td>
-        <td>{{ product.calorificValue }}</td>
-        <td>{{ product.usualPortion }}</td>
-        <td>
-        </td>
-        <td>
-          <a class="btn btn-info" ng-click="edit(product)">Свойства</a>
-          <a class="btn btn-danger" ng-click="remove(product)">Удалить</a>
-        </td>
-    </tr>
+	<thead>
+		<tr>
+			<th></th>
+			<th>Название</th>
+			<th>Калорийность</th>
+			<th>Порция</th>
+			<th>Группа</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tr ng-repeat="product in filteredProducts">
+		<td>
+			{{$index+1}}
+		</td>
+		<td>
+			<a ng-click="edit(product)" class="ration-action" title="Редактировать">{{product.title}}</a>
+		</td>
+		<td>{{ product.calorificValue }}</td>
+		<td>{{ product.usualPortion }}</td>
+		<td>{{ product.group }}</td>
+		<td>
+			<div class="btn-group" dropdown>
+				<button type="button" class="btn btn-default" ng-click="edit(product)" title="Редактировать параметры похода">Свойства</button>
+				<button aria-expanded="true" aria-haspopup="true" type="button" class="btn btn-default dropdown-toggle">
+					<span class="caret"></span>
+					<span class="sr-only">Split button!</span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a ng-click="edit(product)" title="Редактировать параметры продукта" class="ration-action">Редактировать</a></li>
+					<!--li><a ng-click="" class="ration-action" title="Сделать копию похода">Сделать копию</a></li-->
+					<li class="divider"></li>
+					<li><a ng-click="remove(product)" title="Удалить продукт" class="ration-action">Удалить</a></li>
+				</ul>
+			</div>
+		</td>
+	</tr>
 </table>
 
 <div ng-hide="productCount" class="row">
   <div class="col-md-5 col-md-offset-3">
-    <p>Справочник продуктов пуст.</p>
-    <p>Для добавления списка продуктов нажмите кнопку обновления</p>
-    <p><a class="btn btn-success" ng-click="sync()">Обновить</a></p>
+	<p>Справочник продуктов пуст.</p>
+	<p>Для добавления списка продуктов нажмите кнопку обновления</p>
+	<p><a class="btn btn-success" ng-click="sync()">Обновить</a></p>
   </div>
 </div>

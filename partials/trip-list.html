@@ -28,9 +28,19 @@
 			{{ trip.to | date }}
 		</td>
 		<td>
-			<a class="btn btn-default" ng-click="cloneTrip(trip)" title="Сделать копию похода">Копировать</a>
-			<a class="btn btn-info" ng-click="editTrip(trip)" title="Редактировать параметры похода">Свойства</a>
-			<a class="btn btn-danger" ng-click="removeTrip(trip)" title="Удалить поход">Удалить</a>
+			<div class="btn-group" dropdown>
+				<button type="button" class="btn btn-default" ng-click="editTrip(trip)" title="Редактировать параметры похода">Свойства</button>
+				<button aria-expanded="true" aria-haspopup="true" type="button" class="btn btn-default dropdown-toggle">
+					<span class="caret"></span>
+					<span class="sr-only">Split button!</span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a ng-click="editTrip(trip)" title="Редактировать параметры похода" class="ration-action">Редактировать</a></li>
+					<li><a ng-click="cloneTrip(trip)" class="ration-action" title="Сделать копию похода">Сделать копию</a></li>
+					<li class="divider"></li>
+					<li><a ng-click="removeTrip(trip)" title="Удалить поход навсегда" class="ration-action">Удалить</a></li>
+				</ul>
+			</div>
 		</td>
 	</tr>
 </table>
