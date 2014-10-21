@@ -14,10 +14,11 @@ function PlanController($scope, $route, tripRepository, productRepository, ratio
 	var productIndex = $scope.productIndex = productRepository.getIndex ();
 
 	$scope.scrollToDay = function(day){
-		var speed = 400;
+		// сразу выбираем этот день
+		$scope.activateMeal ($scope.days [day].meals [0]);
 		$('#layout').animate({
 			scrollTop: $('#layout').scrollTop () + $('#day-'+day).position().top
-		}, speed);
+		}, 400);
 		return false;
 	};
 
