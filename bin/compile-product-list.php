@@ -20,7 +20,7 @@ function generateProducts ($files)
                 continue;
             }
 
-            if (empty ($cal))
+            if (empty ($cal) && empty ($weight))
             {
                 continue;
             }
@@ -28,15 +28,6 @@ function generateProducts ($files)
             $cal = (int) $cal;
             $weight = (int) $weight;
             $flag = (int) $flag;
-
-            // if (false == empty ($group))
-            // {
-            //     if ($keywords)
-            //     {
-            //         $keywords .= ' ';
-            //     }
-            //     $keywords .= $group;
-            // }
 
             yield ([$id, $title, $group, $cal, $weight, $keywords]);
         }
