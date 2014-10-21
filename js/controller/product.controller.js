@@ -19,9 +19,12 @@ function ProductController($scope, $http, $route, $filter, productRepository, $l
 	$scope.updateProductFilter ();
 
 	$scope.noProducts = $scope.products.length === 0;
+	$scope.newProduct = function () {
+			$scope.edit (new Product ());
+	};
 
 	$scope.edit = function (product) {
-		var editableProduct = productRepository.find (product.id);
+		var editableProduct = angular.copy (product);
 		var dialog = ngDialog.open({
 			template: 'partials/product.html',
 			controller: ['$scope', function ($scope) {
@@ -47,12 +50,15 @@ function ProductController($scope, $http, $route, $filter, productRepository, $l
 		productRepository.add (model);
 	};
 
-	$scope.remove = function (product) {
+	$scope.removeProduct = function (product) {
 		confirm('Are you sure to remove this trip?').then (angular.bind($scope, function () {
 			productRepository.remove (product);
-			this.products = goog.array.filter (this.products, function (item) {
-				return item.id !== product.id;
+
+			$scope.products = goog.object.filter ($scope.products, function (item, key) {
+				return key !== product.id;
 			});
+
+			$scope.updateProductFilter();
 		}));
 	};
 

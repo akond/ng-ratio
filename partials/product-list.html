@@ -1,12 +1,12 @@
 <h2>Продукты ({{ productCount }})</h2>
 <div class="text-right">
-<a class="btn btn-success" ng-click="edit(Product)">Добавить</a>
+<a class="btn btn-success" ng-click="newProduct()">Добавить</a>
 <a class="btn btn-default" ng-click="sync()">Синхронизация
 	<glyph name="download"></glyph></a>
 </div>
 
 <div class="input-group ration-filter panel" ng-show="productCount">
-	<div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length	}" ng-click="search.title = '';">Поиск</div>
+	<div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length	}" ng-click="search.title = ''; updateProductFilter();">Поиск</div>
 	<input ng-model="search.title" type="text" class="form-control" ng-change="updateProductFilter()">
 </div>
 
@@ -42,7 +42,7 @@
 					<li><a ng-click="edit(product)" title="Редактировать параметры продукта" class="ration-action">Редактировать</a></li>
 					<!--li><a ng-click="" class="ration-action" title="Сделать копию похода">Сделать копию</a></li-->
 					<li class="divider"></li>
-					<li><a ng-click="remove(product)" title="Удалить продукт" class="ration-action">Удалить</a></li>
+					<li><a ng-click="removeProduct(product)" title="Удалить продукт" class="ration-action">Удалить</a></li>
 				</ul>
 			</div>
 		</td>
