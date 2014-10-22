@@ -5,14 +5,14 @@ goog.require('goog.asserts');
 angular.module('ng-ratio').factory('tripRepository', ['storage', 'rationRepository', function (storage, rationRepository) {
 	"use strict";
 
-	var KEY = 'trip';
+	var TRIP = 'trip';
 
 	var find = function (id) {
-		return restore (KEY + "." + id)[id];
+		return restore ([TRIP, id])[id];
 	};
 
 	var findAll = function () {
-		return goog.object.getValues(restore (KEY));
+		return goog.object.getValues(restore (TRIP));
 	};
 
 	var restore = function (key) {
@@ -25,7 +25,7 @@ angular.module('ng-ratio').factory('tripRepository', ['storage', 'rationReposito
 				return storage.setObjectData(new Plan (), plan);
 			})
 		 })
-		
+
 		return trips;
 	};
 
@@ -35,7 +35,7 @@ angular.module('ng-ratio').factory('tripRepository', ['storage', 'rationReposito
 		// Рационы сохраняются в другом репозитории
 		trip.rations = [];
 
-		storage.set (KEY + "." + trip.id, trip);
+		storage.set ([TRIP, trip.id], trip);
 	};
 
 	var removeTrip = function (trip) {
@@ -45,7 +45,7 @@ angular.module('ng-ratio').factory('tripRepository', ['storage', 'rationReposito
 		});
 
 		// а в конце и сам поход
-		storage.remove (KEY + "." + trip.id);
+		storage.remove ([TRIP, trip.id]);
 	};
 
 	return {

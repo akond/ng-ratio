@@ -1,26 +1,35 @@
 angular.module('ng-ratio').config(['$provide', function ($provide) {
 	$provide.factory('storage', ['localStorageService', function (localStorageService) {
+
+		var adjustKey = function (key) {
+			if (goog.isArray (key)) {
+				return key.join ('.');
+			}
+
+			return key;
+		}
+
 		var keys = function () {
 			return localStorageService.keys();
 		};
 
 		var filterKeys = function (filter) {
-			var r = new RegExp("^" + filter );
+			var r = new RegExp("^" + adjustKey(filter) );
 			return goog.array.filter (keys (), function (key) {
 				return r.test (key);
 			});
 		};
 
 		var set = function (key, value) {
-			localStorageService.set (key, angular.toJson (value));
+			localStorageService.set (adjustKey(key), angular.toJson (value));
 		};
 
 		var remove = function (key) {
-			localStorageService.remove (key);
+			localStorageService.remove (adjustKey(key));
 		};
 
 		var get = function (key) {
-			var value = localStorageService.get (key);
+			var value = localStorageService.get (adjustKey(key));
 			if (value) {
 				return angular.fromJson (value);
 			}

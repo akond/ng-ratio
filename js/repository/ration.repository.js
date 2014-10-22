@@ -4,29 +4,23 @@ goog.require('goog.asserts');
 angular.module('ng-ratio').factory('rationRepository', ['storage', function (storage) {
 	"use strict";
 
-	var KEY = 'ration';
-
-	var key = function (tripId) {
-		var data = goog.array.toArray (arguments);
-		data.unshift (KEY);
-		return data.join ('.');
-	};
+	var RATION = 'ration';
 
 	var find = function (id) {
-		return restore (key (id))[id];
+		return restore ([RATION, id]) [id];
 	};
 
 	var findAll = function (tripId) {
-		return restore (key (tripId));
+		return restore ([RATION, tripId]);
 	};
 
 	var findIndex = function (tripId, id) {
-		var data = storage.get (key (tripId, id));
+		var data = storage.get ([RATION, tripId, id]);
 		return [data.day, data.meal];
 	};
 
 	var findAllBucket = function (tripId) {
-		return restoreBucket (key (tripId));
+		return restoreBucket ([RATION, tripId]);
 	};
 
 	var restoreBucket = function (key) {
@@ -62,7 +56,7 @@ angular.module('ng-ratio').factory('rationRepository', ['storage', function (sto
 	};
 
 	var restore = function (key) {
-		var rationData = goog.array.map (storage.filterKeys (key), function (key) {
+		var rationData = goog.array.map (storage.filterKeys ([RATION, key]), function (key) {
 			return storage.get (key);
 		});
 
@@ -82,7 +76,7 @@ angular.module('ng-ratio').factory('rationRepository', ['storage', function (sto
 		goog.asserts.assertArray (index);
 		goog.asserts.assert (!goog.string.isEmptyString(ration.id));
 
-		storage.set (key (tripId, ration.id), {
+		storage.set ([RATION, tripId, ration.id], {
 			ration: ration,
 			day: index [0],
 			meal: index [1]
@@ -93,7 +87,7 @@ angular.module('ng-ratio').factory('rationRepository', ['storage', function (sto
 		goog.asserts.assert (!goog.string.isEmptyString(ration.id));
 		goog.asserts.assert (!goog.string.isEmptyString(tripId));
 
-		storage.remove (key (tripId, ration.id));
+		storage.remove ([RATION, tripId, ration.id]);
 	};
 
 	return {
