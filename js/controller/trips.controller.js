@@ -1,6 +1,5 @@
 goog.require('goog.array');
 
-angular.module('trips', ['LocalStorageModule', 'ui.bootstrap']);
 angular.module('trips').controller('TripCtrl', TripController);
 
 TripController.$inject = ['$scope', '$route', 'tripRepository', 'rationRepository', '$location', 'confirm'];
@@ -67,5 +66,9 @@ function TripController($scope, $route, tripRepository, rationRepository, $locat
 		}, this);
 
 		refreshTripList ();
+	};
+
+	$scope.reportTrip = function (trip) {
+		$location.path ('/report/' + trip.id);
 	};
 }

@@ -19,3 +19,7 @@ Basket.prototype.isEmpty = function () {
 Basket.prototype.getCount = function () {
 	return this.rations.length;
 };
+
+Basket.prototype.clear = function () {
+	return goog.array.clear (this.rations);
+};

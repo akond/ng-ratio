@@ -22,7 +22,11 @@ Meal.prototype.removeRation = function (ration) {
 Meal.prototype.addRation = function (ration) {
 	var similarRation = this.findSimilarRation (ration);
 	if (similarRation) {
-		similarRation.amount += ration.amount;
+		if (similarRation === ration) {
+			similarRation.amount = ration.amount;
+		} else {
+			similarRation.amount += ration.amount;
+		}
 		return similarRation;
 	}
 	goog.array.insert (this.rations, ration);

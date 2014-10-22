@@ -14,6 +14,10 @@
 	</div>
 </h1>
 
+<div ng-show="isEmpty()" class="ration-warning-area bg-warning">
+	<p>Здесь пусто.</p>
+	<p>Добавьте продукты в раскладку.</p>
+</div>
 <div ng-repeat="meal in groups">
 	<div class="row">
 		<div class="col-md-7 col-xs-7">

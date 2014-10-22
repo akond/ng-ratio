@@ -1,7 +1,6 @@
 goog.require('goog.array');
 goog.require('goog.functions');
 
-angular.module('trips');
 angular.module('trips').controller('ProductCtrl', ProductController);
 
 ProductController.$inject = ['$scope', '$http', '$route', '$filter', 'productRepository', '$location', 'confirm', 'productFilter', 'ngDialog'];

@@ -56,7 +56,7 @@ angular.module('ng-ratio').factory('rationRepository', ['storage', function (sto
 	};
 
 	var restore = function (key) {
-		var rationData = goog.array.map (storage.filterKeys ([RATION, key]), function (key) {
+		var rationData = goog.array.map (storage.filterKeys (key), function (key) {
 			return storage.get (key);
 		});
 

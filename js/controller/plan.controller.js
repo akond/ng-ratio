@@ -1,9 +1,9 @@
 goog.require('goog.array');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
-PlanController.$inject = ['$scope', '$route', '$q', 'tripRepository', 'productRepository', 'rationRepository', 'basketRepository', '$location', '$filter', 'resize', 'productFilter', 'ngDialog'];
+PlanController.$inject = ['$scope', '$route', '$q', 'tripRepository', 'productRepository', 'rationRepository', 'basketRepository', '$location', '$filter', 'resize', 'productFilter', 'ngDialog', 'confirm'];
 
-function PlanController($scope, $route, $q, tripRepository, productRepository, rationRepository, basketRepository, $location, $filter, resize, productFilter, ngDialog) {
+function PlanController($scope, $route, $q, tripRepository, productRepository, rationRepository, basketRepository, $location, $filter, resize, productFilter, ngDialog, confirm) {
 	'use strict';
 
 	var tripId = $route.current.params.id;
@@ -83,6 +83,10 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		// восстанавливаем список рационов из репозитория
 		var mealRations = goog.object.getValueByKeys(rations, dayIndex, mealIndex) || [];
 		goog.array.forEach (mealRations, function (ration) {
+			if (!goog.isDef(productIndex [ration.product])) {
+				// пропускаем продукты, которых не в индексе. удалены, например.
+				return;
+			}
 			meal.addRation (ration);
 		});
 	});
@@ -101,7 +105,9 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 	};
 
 	$scope.moveRationToBasket = function ($event, ration) {
-		$scope.basket.addRation (ration.clone ());
+		var basketRation = ration.clone ();
+		$scope.basket.addRation (basketRation);
+		basketRepository.add (basketRation);
 
 		var dontDelete = $event.ctrlKey;
 		if (dontDelete) {
@@ -113,12 +119,10 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 			meal.removeRation (ration);
 		}
 		rationRepository.remove (ration, trip.id);
-		basketRepository.add (ration);
 	};
 
 	$scope.addRationFromBasket = function (ration, event) {
 		var dontRemove = event.shiftKey;
-
 		$scope.addRation (ration.clone(), event, false).then(function () {
 			if (dontRemove) {
 				return;
@@ -194,7 +198,7 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 
 				$scope.keypress = function ($event) {
 					if ($event.charCode === 13) {
-						dialog.close (true);
+						dialog.close ($scope.amount);
 					}
 				};
 			}]
@@ -208,5 +212,12 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		});
 
 		return dialog.closePromise;
+	};
+
+	$scope.clearBasket = function () {
+		confirm ('Удалить все продукты?').then(function () {
+			$scope.basket.clear ();
+			basketRepository.clear ();
+		});
 	};
 }

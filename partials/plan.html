@@ -109,6 +109,7 @@
 	<div class="col-md-5 ration-dict" ng-show="inBasket">
 		<div class="ration-panel">
 			<a class="btn btn-default btn-sm" ng-click="inBasket = false" title="">Продукты</a>
+			<a class="btn btn-danger btn-sm" ng-click="clearBasket()" ng-hide="basket.isEmpty()" title="">Очистить</a>
 			<h3>Корзина</h3>
 		</div>
 

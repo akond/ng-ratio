@@ -35,11 +35,18 @@ angular.module('ng-ratio').factory('basketRepository', ['storage', function (sto
 		storage.remove ([BASKET, product.id]);
 	};
 
+	var clear = function () {
+		goog.array.forEach (storage.filterKeys (BASKET), function (key) {
+			storage.remove (key);
+		}, this);
+	};
+
 	return {
 		find: find,
 		findAll: findAll,
 		getIndex: getIndex,
 		add: addRation,
-		remove: removeRation
+		remove: removeRation,
+		clear: clear
 	};
 }]);

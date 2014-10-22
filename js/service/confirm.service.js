@@ -1,12 +1,6 @@
 angular.module('ng-ratio').config(['$provide', function ($provide) {
-  $provide.factory('confirm', ['$q', '$modal', 'debug', function ($q, $modal, debug) {
+  $provide.factory('confirm', ['$q', '$modal', function ($q, $modal) {
       return function (message) {
-        if (debug) {
-          var defer = $q.defer();
-          defer.resolve (true);
-          return defer.promise;
-        }
-
         var dialog = $modal.open({
           'templateUrl': 'partials/confirm.html',
           'controller': ['$scope', '$modalInstance', function($scope, $modalInstance) {
