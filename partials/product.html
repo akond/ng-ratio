@@ -9,15 +9,17 @@
 	</div>
 
 	<div class="form-group row">
-		<div class="col-md-6">
+		<div class="col-md-8">
 			<label for="title">Калорийная ценность</label>
+			<p>в 100 г продукта</p>
 			<input type="number" id="title" ng-model="Product.calorificValue" ng-required="true" class="form-control" placeholder="Калорий">
 		</div>
 	</div>
 
 	<div class="form-group row">
-		<div class="col-md-6">
+		<div class="col-md-8">
 			<label for="portion">Типичная порция</label>
+			<p>на человека в 2500 калорий</p>
 			<input type="number" id="portion" ng-model="Product.usualPortion" ng-required="true" class="form-control" placeholder="Порция в граммах">
 		</div>
 	</div>
@@ -33,6 +35,9 @@
 		<div class="col-md-12">
 			<label for="keywords">Ключевые слова</label>
 			<input type="text" id="keywords" ng-model="Product.keywords" ng-required="false" class="form-control" placeholder="Ключевые слова">
+			<p>
+				Используются при поиске
+			</p>
 		</div>
 	</div>
 

@@ -9,6 +9,10 @@ Meal.prototype.calories = function (productIndex) {
 	}, 0);
 };
 
+Meal.prototype.getCount = function () {
+	return this.rations.length;
+};
+
 Meal.prototype.weight = function () {
 	return goog.array.reduce (this.rations, function (sum, ration) {
 		return sum + ration.amount;
@@ -42,6 +46,7 @@ Meal.prototype.findSimilarRation = function (ration) {
 	});
 	return similarRation;
 };
+
 Meal.prototype.containsRation = function (ration) {
 	return goog.array.contains (this.rations, ration);
 };

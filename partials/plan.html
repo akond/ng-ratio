@@ -64,8 +64,19 @@
 									<a class="pull-right" ng-click="moveRationToBasket($event, ration)" title="+Ctrl - с настройками; +Shift - не удалять"><glyph name="chevron-right"></glyph></a>
 								</div>
 							</div>
+
 							<div ng-hide="meal.rations.length">
+								<div ng-show="!dayIndex && !mealIndex && layout.isEmpty()">
+									<p>
+										Добавляйте сюда продукты из списка справа нажатием <glyph name="chevron-left"></glyph>.
+									</p>
+									<p>
+										Через Ctrl+<glyph name="chevron-left"></glyph> появится возможность точно указать количество продукта.
+									</p>
+								</div>
+								<div ng-show="dayIndex || mealIndex">
 									Нет продуктов
+								</div>
 							</div>
 						</div>
 					</div>
@@ -85,24 +96,34 @@
 			<input ng-model="search.title" type="text" class="form-control" ng-change="updateProductFilter()">
 		</div>
 		<div id="products" class="ration-maxheight">
-			<div class="row" ng-repeat="product in filteredProducts">
-				<div class="col-md-8 ration-action" ng-click="addRation(product.createRation(), $event)">
-					<a title="+Ctrl - с настройками"><glyph name="chevron-left"></glyph></a>&nbsp;
-					<span title="{{ product.title }}">{{ product.title | limitTo: 33}}</span>
+			<div ng-show="productCount">
+				<div class="row" ng-repeat="product in filteredProducts">
+					<div class="col-md-8 ration-action" ng-click="addRation(product.createRation(), $event)">
+						<a title="+Ctrl - с настройками"><glyph name="chevron-left"></glyph></a>&nbsp;
+						<span title="{{ product.title }}">{{ product.title | limitTo: 33}}</span>
+					</div>
+					<div class="col-md-2 text-right">
+						{{ product.usualPortion | number: 0}} г
+					</div>
+					<div class="col-md-2">
+						<tag name="cal" ng-if="product.calorificValue">{{ product.calorificValue | number: 0}}</tag>
+					</div>
 				</div>
-				<div class="col-md-2 text-right">
-					{{ product.usualPortion | number: 0}} г
-				</div>
-				<div class="col-md-2">
-					<tag name="cal" ng-if="product.calorificValue">{{ product.calorificValue | number: 0}}</tag>
+
+				<div class="row" ng-show="filteredOut != 0 && !displayFilteredOut">
+					<div class="col-md-12">
+					<p>Не показаны ещё {{ filteredOut }} продуктов.
+					<a class="btn btn-sm btn-link" ng-click="displayFilteredOut = 1; updateProductFilter()">Показать</a></p>
+					</div>
 				</div>
 			</div>
-
-			<div class="row" ng-show="filteredOut != 0 && !displayFilteredOut">
-				<div class="col-md-12">
-				<p>Не показаны ещё {{ filteredOut }} продуктов.
-				<a class="btn btn-sm btn-link" ng-click="displayFilteredOut = 1; updateProductFilter()">Показать</a></p>
-				</div>
+			<div ng-hide="productCount" class="ration-warning-area bg-warning">
+				<p>
+					Здесь ничего нет потому что вы ещё не получили список продуктов.
+				</p>
+				<p>
+					Перейдите на <a href="#/product/">страницу продуктов</a> и нажмите &laquo;Синхронизировать&raquo;.
+				</p>
 			</div>
 		</div>
 	</div>
@@ -126,7 +147,7 @@
 			</div>
 		</div>
 
-		<div ng-show="basket.isEmpty()" class="ration-warning-area">
+		<div ng-show="basket.isEmpty()" class="ration-warning-area bg-warning">
 			<p>В корзину попадают продукты, удалённые из раскладки нажатием <glyph name="chevron-right"></glyph>.</p>
 			<p>Используйте корзину для перемещения продуктов между днями.</p>
 		</div>

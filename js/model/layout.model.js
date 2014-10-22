@@ -62,3 +62,12 @@ Layout.prototype.visit = function (visitor) {
 		});
 	});
 };
+
+Layout.prototype.isEmpty = function () {
+	var rationCount = 0;
+	this.visit (function (meal) {
+		rationCount += meal.getCount ();
+	});
+
+	return rationCount === 0;
+};
