@@ -1,9 +1,9 @@
 goog.require('goog.array');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
-PlanController.$inject = ['$scope', '$route', '$q', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter', 'resize', 'productFilter', 'ngDialog'];
+PlanController.$inject = ['$scope', '$route', '$q', 'tripRepository', 'productRepository', 'rationRepository', 'basketRepository', '$location', '$filter', 'resize', 'productFilter', 'ngDialog'];
 
-function PlanController($scope, $route, $q, tripRepository, productRepository, rationRepository, $location, $filter, resize, productFilter, ngDialog) {
+function PlanController($scope, $route, $q, tripRepository, productRepository, rationRepository, basketRepository, $location, $filter, resize, productFilter, ngDialog) {
 	'use strict';
 
 	var tripId = $route.current.params.id;
@@ -43,7 +43,11 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		resize.unregister ();
 	});
 
-	$scope.basket = new Basket ();
+	var basket = new Basket ();
+	goog.object.forEach (basketRepository.findAll (), function (ration) {
+		basket.addRation (ration);
+	})
+	$scope.basket = basket;
 
 	$scope.products = products;
 
@@ -109,6 +113,7 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 			meal.removeRation (ration);
 		}
 		rationRepository.remove (ration, trip.id);
+		basketRepository.add (ration);
 	};
 
 	$scope.addRationFromBasket = function (ration, event) {
@@ -120,6 +125,7 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 			}
 
 			$scope.basket.removeRation (ration);
+			basketRepository.remove (ration);
 		});
 	};
 
