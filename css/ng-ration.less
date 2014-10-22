@@ -45,10 +45,6 @@
 	}
 }
 
-.ration-product {
-	margin-bottom: 3px;
-}
-
 .ration-bordered {
 	border-bottom: 1px solid grey;
 
@@ -96,13 +92,40 @@ a:hover .glyphicon {
 }
 
 .ration-warning-area {
-	padding: 50px 100px;
+	padding: 10% 20%;
 }
 
 .ration-underlined {
 	border-bottom: 1px solid lightgrey;
 }
 
-.basket .row {
-	margin: 4px 0px;
+.debug {
+	border: 1px solid red;
+}
+
+.ration-panel {
+	vertical-align: bottom;
+	margin-bottom: 10px;
+
+	h3, a {
+		display: inline;
+	}
+
+	a {
+		float: right;
+	}
+}
+
+.ration-dict {
+	.row {
+		padding: 3px 0px;
+		margin: 0px;
+
+		&:hover {
+			background-color: lightgrey;
+		}
+		&:nth-child(even) {
+			background-color: #f3f3f3;
+		}
+	}
 }

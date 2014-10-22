@@ -52,7 +52,7 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 
 		var total = $scope.filteredProducts.length;
 		if (!$scope.displayFilteredOut) {
-			$scope.filteredProducts = $filter('limitTo')($scope.filteredProducts, 20);
+			$scope.filteredProducts = $filter('limitTo')($scope.filteredProducts, 25);
 		}
 		$scope.filteredOut = total - $scope.filteredProducts.length;
 	};
@@ -87,9 +87,20 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		$location.path("/product/");
 	};
 
-	$scope.removeRation = function ($event, ration) {
-		if ($event.shiftKey) {
-			$scope.basket.addRation (ration.clone ());
+	$scope.removeRation = function (ration) {
+		var meal = layout.findRationMeal(ration);
+		if (meal) {
+			meal.removeRation (ration);
+		}
+
+		rationRepository.remove (ration, trip.id);
+	};
+
+	$scope.moveRationToBasket = function ($event, ration) {
+		$scope.basket.addRation (ration.clone ());
+
+		var dontDelete = $event.ctrlKey;
+		if (dontDelete) {
 			return;
 		}
 
@@ -97,12 +108,7 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		if (meal) {
 			meal.removeRation (ration);
 		}
-
 		rationRepository.remove (ration, trip.id);
-
-		if ($event.ctrlKey) {
-			$scope.basket.addRation (ration);
-		}
 	};
 
 	$scope.addRationFromBasket = function (ration, event) {

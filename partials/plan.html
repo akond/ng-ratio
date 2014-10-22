@@ -50,7 +50,7 @@
 						<div class="ration-rations col-md-10 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}" ng-click="activateMeal(meal);">
 							<div ng-repeat="ration in meal.rations" class="row ration-ration" ng-class="{'ration-bordered': !$last}">
 								<div class="col-md-1">
-									<a ng-click="removeRation($event, ration)" title="Удалить или (+Alt) переместить в корзину" class="pull-left ration-action" style="margin-right: 10px;margin-top: 2px;"><glyph name="remove"></glyph></a>
+									<a ng-click="removeRation(ration)" title="Удалить или (+Alt) переместить в корзину" class="pull-left ration-action" style="margin-right: 10px;margin-top: 2px;"><glyph name="remove"></glyph></a>
 								</div>
 								<div class="col-md-6">
 									{{ productIndex [ration.product].title | limitTo: 30 }}
@@ -61,6 +61,7 @@
 									<a class="ration-action" ng-click="editRation(ration)"><tag name="sofar">{{ productIndex [ration.product].calories (ration) | number: 0}}</tag></a>
 									</span>
 									<span ng-hide="ration.amount"><glyph name="ok" color="green"></glyph></span>
+									<a class="pull-right" ng-click="moveRationToBasket($event, ration)" title="+Ctrl - с настройками; +Shift - не удалять"><glyph name="chevron-right"></glyph></a>
 								</div>
 							</div>
 							<div ng-hide="meal.rations.length">
@@ -74,16 +75,19 @@
 	</div>
 	<div class="col-md-1">
 	</div>
-	<div class="col-md-5" ng-hide="inBasket">
-		<h3>Продукты <a class="btn btn-default pull-right" ng-click="inBasket = true" title="">Корзина</a></h3>
+	<div class="col-md-5 ration-dict" ng-hide="inBasket">
+		<div class="ration-panel">
+			<a class="btn btn-default btn-sm" ng-click="inBasket = true" ng-class="{'btn-info': !basket.isEmpty()}" title="">Корзина ({{ basket.getCount() }})</a>
+			<h3>Продукты</h3>
+		</div>
 		<div class="input-group ration-filter panel">
 			<div class="input-group-addon ration-filter-reset" ng-class="{'ration-action': search.title.length  }" ng-click="search.title = ''; updateProductFilter()">Поиск</div>
 			<input ng-model="search.title" type="text" class="form-control" ng-change="updateProductFilter()">
 		</div>
 		<div id="products" class="ration-maxheight">
-			<div class="row ration-product" ng-repeat="product in filteredProducts">
-				<div class="col-md-8">
-					<a ng-click="addRation(product.createRation(), $event)" title="+Ctrl - с настройками"><glyph name="chevron-left"></glyph></a>&nbsp;
+			<div class="row" ng-repeat="product in filteredProducts">
+				<div class="col-md-8 ration-action" ng-click="addRation(product.createRation(), $event)">
+					<a title="+Ctrl - с настройками"><glyph name="chevron-left"></glyph></a>&nbsp;
 					<span title="{{ product.title }}">{{ product.title | limitTo: 33}}</span>
 				</div>
 				<div class="col-md-2 text-right">
@@ -102,11 +106,15 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-5 basket" ng-show="inBasket">
-		<h3>Корзина <a class="btn btn-default pull-right" ng-click="inBasket = false" title="">Продукты</a></h3>
-		<div class="row" ng-repeat="ration in basket.rations" ng-show="basket.rations.length">
-			<div class="col-md-8">
-				<a ng-click="addRationFromBasket(ration, $event)" title="+Ctrl - с настройками; +Shift - не удалять"><glyph name="chevron-left"></glyph></a>
+	<div class="col-md-5 ration-dict" ng-show="inBasket">
+		<div class="ration-panel">
+			<a class="btn btn-default btn-sm" ng-click="inBasket = false" title="">Продукты</a>
+			<h3>Корзина</h3>
+		</div>
+
+		<div class="row" ng-repeat="ration in basket.rations" ng-hide="basket.isEmpty()">
+			<div class="col-md-8 ration-action" ng-click="addRationFromBasket(ration, $event)" title="+Ctrl - с настройками; +Shift - не удалять">
+				<a><glyph name="chevron-left"></glyph></a>
 				{{ productIndex [ration.product].title }}
 			</div>
 			<div class="col-md-2">
@@ -117,8 +125,9 @@
 			</div>
 		</div>
 
-		<div ng-hide="basket.rations.length">
-			Нет продуктов.
+		<div ng-show="basket.isEmpty()" class="ration-warning-area">
+			<p>В корзину попадают продукты, удалённые из раскладки с нажатием Ctrl.</p>
+			<p>Используйте корзину для перемещения продуктов между днями.</p>
 		</div>
 	</div>
 </div>
