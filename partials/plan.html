@@ -17,7 +17,7 @@
 
 <div class="row">
 	<div class="col-md-7">
-		<div id="layout" class="ration-maxheight" style="position: relative;">
+		<div id="ration-layout" class="ration-maxheight" style="position: relative;">
 			<h3 id="day-{{ $index }}" ng-repeat-start="day in days" ng-init="dayIndex = $index">{{ day.date | date }}</h3>
 			<div class="row panel">
 				<div class="col-md-10 col-md-offset-1">
@@ -41,13 +41,13 @@
 			</div>
 			<div class="row" ng-repeat-end>
 				<div class="col-md-10 col-md-offset-1">
-					<div ng-repeat="meal in day.meals" class="ration-meal row" ng-init="mealIndex = $index" ng-class="{'ration-active': meal === activeMeal}">
+					<div ng-repeat="meal in day.meals" class="ration-meal row" ng-init="mealIndex = $index" ng-class="{'ration-active': meal === activeMeal}" ng-click="activateMeal(meal);">
 						<div class="col-md-1">
-							<h4 ng-click="activateMeal(meal);">{{ meal.title }}</h4>
+							<h4>{{ meal.title }}</h4>
 							<tag name="percent" ng-show="0 < day.calories(productIndex)">
 							{{ meal.calories(productIndex) / day.calories(productIndex) * 100 | number: 0}}%</tag>
 						</div>
-						<div class="ration-rations col-md-10 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}" ng-click="activateMeal(meal);">
+						<div class="ration-rations col-md-10 col-md-offset-1" ng-class="{'bg-warning': !meal.rations.length, 'bg-info': meal.rations.length}">
 							<div ng-repeat="ration in meal.rations" class="row ration-ration" ng-class="{'ration-bordered': !$last}">
 								<div class="col-md-1">
 									<a ng-click="removeRation(ration)" title="Удалить или (+Alt) переместить в корзину" class="pull-left ration-action" style="margin-right: 10px;margin-top: 2px;"><glyph name="remove"></glyph></a>
@@ -61,7 +61,7 @@
 									<a class="ration-action" ng-click="editRation(ration)"><tag name="sofar">{{ productIndex [ration.product].calories (ration) | number: 0}}</tag></a>
 									</span>
 									<span ng-hide="ration.amount"><glyph name="ok" color="green"></glyph></span>
-									<a class="pull-right" ng-click="moveRationToBasket($event, ration)" title="+Ctrl - с настройками; +Shift - не удалять"><glyph name="chevron-right"></glyph></a>
+									<a class="pull-right" ng-click="moveRationToBasket($event, ration)" title="Переместить в корзину; +Ctrl - Копировать"><glyph name="chevron-right"></glyph></a>
 								</div>
 							</div>
 
@@ -74,7 +74,7 @@
 										Через Ctrl+<glyph name="chevron-left"></glyph> появится возможность точно указать количество продукта.
 									</p>
 								</div>
-								<div ng-show="dayIndex || mealIndex">
+								<div ng-show="dayIndex || mealIndex || !layout.isEmpty()">
 									Нет продуктов
 								</div>
 							</div>
@@ -129,9 +129,22 @@
 	</div>
 	<div class="col-md-5 ration-dict" ng-show="inBasket">
 		<div class="ration-panel">
-			<a class="btn btn-default btn-sm" ng-click="inBasket = false" title="">Продукты</a>
+			<a class="btn btn-default btn-sm" ng-class="{'btn-info': productCount}" ng-click="inBasket = false" title="">Продукты ({{ productCount }})</a>
 			<a class="btn btn-danger btn-sm" ng-click="clearBasket()" ng-hide="basket.isEmpty()" title="">Очистить</a>
 			<h3>Корзина</h3>
+		</div>
+
+		<div class="row bg-warning" ng-if="!basket.isEmpty()">
+			<div class="col-md-8 ration-action" ng-click="addWholeBasket($event)">
+				<a><glyph name="chevron-left"></glyph></a>
+				Все
+			</div>
+			<div class="col-md-2">
+				{{ basket.amount() }} г
+			</div>
+			<div class="col-md-2">
+				<tag name="cal">{{ basket.calories (productIndex) | number: 0}}</tag>
+			</div>
 		</div>
 
 		<div class="row" ng-repeat="ration in basket.rations" ng-hide="basket.isEmpty()">

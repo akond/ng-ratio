@@ -4,6 +4,18 @@ function Basket() {
 	this.rations = [];
 }
 
+Basket.prototype.calories = function (productIndex) {
+	return goog.array.reduce (this.rations, function (sum, ration) {
+		return sum + productIndex[ration.product].calories (ration);
+	}, 0);
+};
+
+Basket.prototype.amount = function () {
+	return goog.array.reduce (this.rations, function (sum, ration) {
+		return sum + ration.amount;
+	}, 0);
+};
+
 Basket.prototype.addRation = function (ration) {
 	goog.array.insert (this.rations, ration);
 };

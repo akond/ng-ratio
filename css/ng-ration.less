@@ -1,3 +1,5 @@
+@import "../bower_components/bootstrap/less/variables.less";
+
 .ration-maxheight {
 	overflow: scroll;
 	overflow-y: auto;
@@ -39,9 +41,9 @@
 	border: 2px solid white;
 
 	&.ration-active {
-		border: 2px solid green;
+		border: 2px solid @brand-success;
 		border-radius: 4px;
-		background-color: LightCyan;
+		background-color: lighten(@brand-success,40%);
 	}
 }
 
@@ -88,7 +90,7 @@ a .glyphicon {
 }
 
 a:hover .glyphicon {
-	color: #428bca;
+	color: @brand-primary;
 }
 
 .ration-warning-area {
@@ -128,5 +130,26 @@ a:hover .glyphicon {
 		&:nth-child(even) {
 			background-color: #f3f3f3;
 		}
+		&.bg-warning {
+			background-color: @brand-info;
+		}
 	}
+}
+
+// Выделение нам только мешает, т.к. у нас есть нажатия через Shift
+* {
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+
+	/*
+	Introduced in IE 10.
+	See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+	*/
+	-ms-user-select: none;
+	user-select: none;
+}
+
+#ration-layout {
+	padding-bottom: 25px;
 }

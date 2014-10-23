@@ -5,7 +5,7 @@ goog.require('goog.date.DateRange.Iterator');
 goog.require('goog.iter');
 
 function Layout(from, to) {
-	var meals = ["Завтрак", "Обед", "Ужин"];
+	this.meals = ["Завтрак", "Обед", "Ужин"];
 
 	var start = goog.date.DateTime.fromRfc822String (from);
 	start = new goog.date.Date (start.getYear(), start.getMonth(), start.getDate ());
@@ -16,11 +16,15 @@ function Layout(from, to) {
 	var daterange = new goog.date.DateRange(start, end);
 
 	this.days = goog.array.map(goog.iter.toArray(daterange.iterator()), function (time) {
-		return new Day (time.date, goog.array.map(meals, function (meal) {
+		return new Day (time.date, goog.array.map(this.meals, function (meal) {
 			return new Meal (meal);
 		}));
-	});
+	}, this);
 }
+
+Layout.prototype.mealCount = function () {
+	return this.meals.length;
+};
 
 Layout.prototype.addDay = function (day) {
 	this.days.push (day);

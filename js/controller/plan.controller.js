@@ -6,6 +6,7 @@ PlanController.$inject = ['$scope', '$route', '$q', 'tripRepository', 'productRe
 function PlanController($scope, $route, $q, tripRepository, productRepository, rationRepository, basketRepository, $location, $filter, resize, productFilter, ngDialog, confirm) {
 	'use strict';
 
+	var layoutElement = $('#ration-layout');
 	var tripId = $route.current.params.id;
 	var trip = $scope.Trip = tripRepository.find (tripId);
 	var rations = rationRepository.findAllBucket (tripId);
@@ -13,18 +14,44 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 
 	var productIndex = $scope.productIndex = productRepository.getIndex ();
 
-	$scope.scrollToDay = function(day){
+	var scrollToTheBottomIfNeeded = function () {
+		var index = $scope.layout.findMealIndex ($scope.activeMeal);
+		var isLastMeal = (index [0] === $scope.days.length - 1) && (index [1] === $scope.days [index [0]].meals.length - 1);
+		if (!isLastMeal) {
+			return;
+		}
+
+		layoutElement.animate({
+			scrollTop: layoutElement.eq(0)[0].scrollHeight
+		}, 400);
+	};
+
+
+	$scope.scrollToDay = function(day) {
 		// сразу выбираем этот день
-		$scope.activateMeal ($scope.days [day].meals [0]);
-		$('#layout').animate({
-			scrollTop: $('#layout').scrollTop () + $('#day-'+day).position().top
+		var index = $scope.layout.findMealIndex ($scope.activeMeal);
+		var activeDay = index [0];
+		var activeMeal = index [1];
+		if (day === activeDay) {
+			// переходим на следующий приём пищи внутри одного дня
+			activeMeal ++;
+			if ($scope.days [day].meals.length <= activeMeal) {
+				activeMeal = 0;
+			}
+			$scope.activateMeal ($scope.days [activeDay].meals [activeMeal]);
+		} else {
+			$scope.activateMeal ($scope.days [day].meals [0]);
+		}
+
+		layoutElement.animate({
+			scrollTop: layoutElement.scrollTop () + $('#day-'+day).position().top
 		}, 400);
 		return false;
 	};
 
 	var resizeLayout = function (screenHeight) {
-		$('#layout').css({
-			height: screenHeight - $('#layout').offset ().top - 5 + 'px'
+		layoutElement.css({
+			height: screenHeight - layoutElement.offset ().top - 5 + 'px'
 		});
 		$('#products').css({
 			height: screenHeight - $('#products').offset ().top - 5 + 'px'
@@ -121,8 +148,17 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		rationRepository.remove (ration, trip.id);
 	};
 
+	$scope.addWholeBasket = function ($event) {
+		// Для нескольких продуктов очень трудно указать количества
+		$event.ctrlKey = false;
+
+		goog.array.forEach ($scope.basket.rations, function (ration) {
+			$scope.addRationFromBasket (ration, $event);
+		}, this);
+	};
+
 	$scope.addRationFromBasket = function (ration, event) {
-		var dontRemove = event.shiftKey;
+		var dontRemove = goog.isDef (event) && event.shiftKey;
 		$scope.addRation (ration.clone(), event, false).then(function () {
 			if (dontRemove) {
 				return;
@@ -133,7 +169,7 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		});
 	};
 
-	var saveRation  = function (ration) {
+	var saveRation = function (ration) {
 		var adjustedRation = $scope.activeMeal.addRation (ration);
 
 		var index = layout.findMealIndex ($scope.activeMeal);
@@ -148,13 +184,14 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		if (multiply) {
 			ration.amount = $scope.Trip.multiplyAmount (ration.amount);
 		}
-		var isEditable = event.ctrlKey;
+		var isEditable = goog.isDef (event) && event.ctrlKey;
 		if (isEditable) {
 			var promise = $scope.editRation (ration);
 			promise.then (function (result) {
 				if (angular.isNumber(result.value)) {
 					// рацион уже записан к этому моменту
 					resultPromise.resolve ();
+					scrollToTheBottomIfNeeded ();
 					return;
 				}
 				resultPromise.reject ();
@@ -167,6 +204,7 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 
 		saveRation (ration);
 		resultPromise.resolve();
+		scrollToTheBottomIfNeeded ();
 
 		return resultPromise.promise;
 	};
