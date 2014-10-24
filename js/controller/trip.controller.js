@@ -53,7 +53,7 @@ function TripController($scope, $route, tripRepository, rationRepository, produc
 	};
 
 	$scope.removeTrip = function (trip) {
-		confirm('Удалить поход?').then (angular.bind($scope, function () {
+		confirm('Удалить поход '+ trip.title + '?').then (angular.bind($scope, function () {
 			tripRepository.remove (trip);
 			this.trips = goog.array.filter (this.trips, function (item) {
 				return item.id !== trip.id;
