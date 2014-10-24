@@ -160,6 +160,11 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		}, this);
 	};
 
+	$scope.removeRationFromBasket = function (ration) {
+		$scope.basket.removeRation (ration);
+		basketRepository.remove (ration);
+	};
+
 	$scope.addRationFromBasket = function (ration, event) {
 		var dontRemove = goog.isDef (event) && event.shiftKey;
 		$scope.addRation (ration.clone(), event, false).then(function () {
@@ -167,8 +172,7 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 				return;
 			}
 
-			$scope.basket.removeRation (ration);
-			basketRepository.remove (ration);
+			$scope.removeRationFromBasket (ration);
 		});
 	};
 

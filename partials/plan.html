@@ -136,7 +136,7 @@
 			<h3>Корзина</h3>
 		</div>
 
-		<div class="row bg-warning" ng-if="!basket.isEmpty()">
+		<div class="row bg-warning" ng-if="1 < basket.getCount()">
 			<div class="col-md-8 ration-action" ng-click="addWholeBasket($event)" title="Добавить всю корзину. +Shift - копировать">
 				<a><glyph name="chevron-left"></glyph></a>
 				Все
@@ -150,16 +150,18 @@
 		</div>
 
 		<div class="row" ng-repeat="ration in basket.rations" ng-hide="basket.isEmpty()">
-			<div class="col-md-8 ration-action" ng-click="addRationFromBasket(ration, $event)" title="+Ctrl - с настройками; +Shift - не удалять">
+			<div class="col-md-7 ration-action" ng-click="addRationFromBasket(ration, $event)" title="+Ctrl - с настройками; +Shift - не удалять">
 				<a><glyph name="chevron-left"></glyph></a>
 				{{ productIndex [ration.product].title }}
 			</div>
 			<div class="col-md-2">
 				{{ ration.amount }} г
 			</div>
-			<div class="col-md-2">
-				<tag name="cal" ng-if="productIndex [ration.product].calorificValue">{{ productIndex [ration.product].calorificValue | number: 0}}</tag>
+			<div class="col-md-3">
+				<tag name="cal" ng-if="productIndex [ration.product].calorificValue">{{ productIndex [ration.product].calories (ration) | number: 0}}</tag>
+				<a class="pull-right" ng-click="removeRationFromBasket(ration)"><glyph name="remove"></glyph></a>
 			</div>
+
 		</div>
 
 		<div ng-show="basket.isEmpty()" class="ration-warning-area bg-warning">
