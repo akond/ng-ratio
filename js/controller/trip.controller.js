@@ -70,7 +70,7 @@ function TripController($scope, $route, tripRepository, rationRepository, produc
 			rationRepository.save (ration.clone (), tripClone.id, index);
 		}, this);
 
-		refreshTripList ();
+		$location.path ('/edit/'+ tripClone.id);
 	};
 
 	$scope.reportTrip = function (trip) {
