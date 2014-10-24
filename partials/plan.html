@@ -1,6 +1,6 @@
 <h1>{{ Trip.title }}
 	<div class="btn-group pull-right hidden-print">
-		<a class="btn btn-default" href="#/report/{{ Trip.id }}">Отчёт закупок</a>
+		<a class="btn btn-default" href="#/report/{{ Trip.id }}" ng-disabled="layout.isEmpty()">Отчёт закупок</a>
 	</div>
 </h1>
 
@@ -71,7 +71,7 @@
 										Добавляйте сюда продукты из списка справа нажатием <glyph name="chevron-left"></glyph>.
 									</p>
 									<p>
-										Через Ctrl+<glyph name="chevron-left"></glyph> появится возможность точно указать количество продукта.
+										Через <kbd>Ctrl</kbd>+<glyph name="chevron-left"></glyph> появится возможность точно указать количество продукта.
 									</p>
 								</div>
 								<div ng-show="dayIndex || mealIndex || !layout.isEmpty()">
@@ -86,6 +86,7 @@
 	</div>
 	<div class="col-md-1">
 	</div>
+
 	<div class="col-md-5 ration-dict" ng-hide="inBasket">
 		<div class="ration-panel">
 			<a class="btn btn-default btn-sm" ng-click="inBasket = true" ng-class="{'btn-info': !basket.isEmpty()}" title="">Корзина ({{ basket.getCount() }})</a>
@@ -103,10 +104,10 @@
 						<span title="{{ product.title }}">{{ product.title | limitTo: 33}}</span>
 					</div>
 					<div class="col-md-2 text-right">
-						{{ product.usualPortion | number: 0}} г
+						{{ product.usualPortion | number: 0}}&nbsp;г
 					</div>
 					<div class="col-md-2">
-						<tag name="cal" ng-if="product.calorificValue">{{ product.calorificValue | number: 0}}</tag>
+						<tag name="cal" ng-if="product.calorificValue">{{ product.calories() | number: 0}}</tag>
 					</div>
 				</div>
 
@@ -127,6 +128,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="col-md-5 ration-dict" ng-show="inBasket">
 		<div class="ration-panel">
 			<a class="btn btn-default btn-sm" ng-class="{'btn-info': productCount}" ng-click="inBasket = false" title="">Продукты ({{ productCount }})</a>
@@ -135,7 +137,7 @@
 		</div>
 
 		<div class="row bg-warning" ng-if="!basket.isEmpty()">
-			<div class="col-md-8 ration-action" ng-click="addWholeBasket($event)">
+			<div class="col-md-8 ration-action" ng-click="addWholeBasket($event)" title="Добавить всю корзину. +Shift - копировать">
 				<a><glyph name="chevron-left"></glyph></a>
 				Все
 			</div>

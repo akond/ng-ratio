@@ -58,15 +58,15 @@
 }
 
 .ration-ok {
-	background-color: green;
+	background-color: @brand-success;
 }
 
 .ration-excess {
-	background-color: OliveDrab;
+	background-color: @brand-success;
 }
 
 .ration-fail {
-	background-color: red;
+	background-color: @brand-danger;
 }
 
 .ration-lack, .ration-cal {
@@ -74,7 +74,7 @@
 }
 
 .ration-sofar {
-	background-color: blue;
+	background-color: @brand-primary;
 }
 
 .ration-percent {
@@ -82,7 +82,8 @@
 }
 
 .ration-weight {
-	background-color: Gray;
+	background-color: darken(grey,15%);
+	background-color: DarkSlateBlue;
 }
 
 a .glyphicon {
@@ -131,7 +132,7 @@ a:hover .glyphicon {
 			background-color: #f3f3f3;
 		}
 		&.bg-warning {
-			background-color: @brand-info;
+			background-color: lighten(@brand-success,40%);
 		}
 	}
 }
