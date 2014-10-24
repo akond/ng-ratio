@@ -39,7 +39,9 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 
 		var setObjectData = function (object, data) {
 			goog.object.forEach (object, function (value, key) {
-				goog.object.set(object, key, data [key]);
+				if (goog.isDef (data [key])) {
+					goog.object.set(object, key, data [key]);
+				}
 			});
 
 			return object;

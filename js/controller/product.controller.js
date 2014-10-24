@@ -3,9 +3,9 @@ goog.require('goog.functions');
 
 angular.module('trips').controller('ProductCtrl', ProductController);
 
-ProductController.$inject = ['$scope', '$http', '$route', '$filter', 'productRepository', '$location', 'confirm', 'productFilter', 'ngDialog'];
+ProductController.$inject = ['$scope', '$http', '$route', '$filter', 'productRepository', 'tripRepository', '$location', 'confirm', 'productFilter', 'ngDialog'];
 
-function ProductController($scope, $http, $route, $filter, productRepository, $location, confirm, productFilter, ngDialog) {
+function ProductController($scope, $http, $route, $filter, productRepository, tripRepository, $location, confirm, productFilter, ngDialog) {
 	'use strict';
 
 	$scope.products = productRepository.getIndex ();
@@ -61,9 +61,17 @@ function ProductController($scope, $http, $route, $filter, productRepository, $l
 		}));
 	};
 
-	$scope.sync = function () {
+	$scope.firstRun = function () {
+		return productRepository.isEmpty() && tripRepository.isEmpty();
+	};
+
+	$scope.sync = function (throwToTrips) {
 		productRepository.sync ().success (function () {
-			$location.path("/product/");
+			if (throwToTrips) {
+				$location.path ("/new");
+				return;
+			}
+			$location.path("/product");
 		});
 	};
 }

@@ -2,10 +2,15 @@ goog.require('goog.array');
 
 angular.module('trips').controller('TripCtrl', TripController);
 
-TripController.$inject = ['$scope', '$route', 'tripRepository', 'rationRepository', '$location', 'confirm', 'storage'];
+TripController.$inject = ['$scope', '$route', 'tripRepository', 'rationRepository', 'productRepository', '$location', 'confirm', 'storage'];
 
-function TripController($scope, $route, tripRepository, rationRepository, $location, confirm, storage) {
+function TripController($scope, $route, tripRepository, rationRepository, productRepository, $location, confirm, storage) {
 	'use strict';
+
+	if (productRepository.isEmpty() && tripRepository.isEmpty()) {
+		$location.path ('/product');
+		return;
+	}
 
 	var refreshTripList = function () {
 		$scope.trips = goog.object.getValues (tripRepository.findAll ());
@@ -70,13 +75,5 @@ function TripController($scope, $route, tripRepository, rationRepository, $locat
 
 	$scope.reportTrip = function (trip) {
 		$location.path ('/report/' + trip.id);
-	};
-
-	$scope.clear = function () {
-		storage.reset ();
-	};
-
-	$scope.firstRun = function () {
-		return storage.isEmpty ();
 	};
 }

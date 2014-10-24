@@ -8,7 +8,7 @@ function Product(id, title, group, calorificValue, usualPortion, keywords) {
 }
 
 Product.prototype.calories = function (ration) {
-	return Math.round(this.calorificValue/100 * ration.amount);
+	return Math.round (this.calorificValue/100 * ration.amount);
 };
 
 Product.prototype.createRation = function () {

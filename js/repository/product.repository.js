@@ -60,7 +60,13 @@ angular.module('ng-ratio').factory('productRepository', ['$http', 'storage', fun
 		});
 	};
 
+	var isEmpty = function () {
+		var keys = storage.filterKeys(PRODUCT);
+		return keys.length === 0;
+	};
+
 	return {
+		isEmpty: isEmpty,
 		find: find,
 		findAll: findAll,
 		getIndex: getIndex,

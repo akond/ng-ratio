@@ -48,7 +48,13 @@ angular.module('ng-ratio').factory('tripRepository', ['storage', 'rationReposito
 		storage.remove ([TRIP, trip.id]);
 	};
 
+	var isEmpty = function () {
+		var keys = storage.filterKeys(TRIP);
+		return keys.length === 0;
+	};
+
 	return {
+		isEmpty: isEmpty,
 		find: find,
 		findAll: findAll,
 		save: saveTrip,
