@@ -1,3 +1,5 @@
+goog.require('goog.array');
+
 angular.module('ng-ratio').config(['$provide', function ($provide) {
 	$provide.factory('storage', ['localStorageService', function (localStorageService) {
 
@@ -7,7 +9,7 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 			}
 
 			return key;
-		}
+		};
 
 		var keys = function () {
 			return localStorageService.keys();
@@ -36,18 +38,14 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 		};
 
 		var setObjectData = function (object, data) {
-			goog.object.forEach (data, function (value, key) {
-				goog.object.set(object, key, value);
+			goog.object.forEach (object, function (value, key) {
+				goog.object.set(object, key, data [key]);
 			});
 
 			return object;
 		};
 
-		var reconstitute = function (factory, prefix) {
-			var values = goog.array.map (filterKeys (prefix), function (key) {
-				return get (key);
-			});
-
+		var recreate = function (values, factory) {
 			return goog.array.toObject(goog.array.map(values, function (item) {
 				var object = factory ();
 				return setObjectData (object, item);
@@ -56,8 +54,20 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 			});
 		};
 
+		var reconstitute = function (factory, prefix) {
+			var values = goog.array.map (filterKeys (prefix), function (key) {
+				return get (key);
+			});
+
+			return recreate (values, factory);
+		};
+
 		var reset = function () {
 			localStorageService.clearAll();
+		};
+
+		var isEmpty = function () {
+			return goog.array.isEmpty(keys ());
 		};
 
 		return {
@@ -68,7 +78,9 @@ angular.module('ng-ratio').config(['$provide', function ($provide) {
 			remove: remove,
 			reset: reset,
 			reconstitute: reconstitute,
-			setObjectData: setObjectData
+			recreate: recreate,
+			setObjectData: setObjectData,
+			isEmpty: isEmpty
 		};
 	}]);
 }]);

@@ -1,7 +1,7 @@
 goog.require('goog.object');
 goog.require('goog.asserts');
 
-angular.module('ng-ratio').factory('productRepository', ['storage', function (storage) {
+angular.module('ng-ratio').factory('productRepository', ['$http', 'storage', function ($http, storage) {
 	"use strict";
 
 	var PRODUCT = 'product';
@@ -20,10 +20,12 @@ angular.module('ng-ratio').factory('productRepository', ['storage', function (st
 		});
 	};
 
+	var productFactory = function () {
+		return new Product ();
+	};
+
 	var restore = function (key) {
-		return storage.reconstitute (function () {
-			return new Product ();
-		}, key);
+		return storage.reconstitute (productFactory, key);
 	};
 
 	var addProduct = function (product) {
@@ -35,11 +37,35 @@ angular.module('ng-ratio').factory('productRepository', ['storage', function (st
 		storage.remove ([PRODUCT, product.id]);
 	};
 
+	var sync = function () {
+		return $http.jsonp('/js/product-list.php?callback=JSON_CALLBACK', {
+			cache: false
+		}).success(function(data, status, headers, config) {
+			if (goog.typeOf (data) === 'array') {
+				var products = goog.array.map (data, function (item) {
+					return goog.object.create ([
+						'id', item [0],
+						'title', item [1],
+						'group', item [2],
+						'calorificValue', item [3],
+						'usualPortion', item [4],
+						'keywords', item [5]
+						]);
+				});
+
+				goog.object.forEach (storage.recreate (products, productFactory), function (product) {
+					addProduct (product);
+				});
+			}
+		});
+	};
+
 	return {
 		find: find,
 		findAll: findAll,
 		getIndex: getIndex,
 		add: addProduct,
-		remove: removeProduct
+		remove: removeProduct,
+		sync: sync
 	};
 }]);

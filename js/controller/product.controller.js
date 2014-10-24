@@ -62,17 +62,8 @@ function ProductController($scope, $http, $route, $filter, productRepository, $l
 	};
 
 	$scope.sync = function () {
-		$http({
-			url: '/js/products.js?' + Math.random(),
-			cache: false
-		}).success(function(data, status, headers, config) {
-				if (goog.typeOf (data) === 'array') {
-					goog.array.forEach (data, function (params) {
-						params.unshift (Product);
-						saveProduct (goog.functions.create.apply (null, params));
-					});
-					$location.path("/product/");
-				}
-			});
+		productRepository.sync ().success (function () {
+			$location.path("/product/");
+		});
 	};
 }
