@@ -1,3 +1,4 @@
+/*jshint maxcomplexity:10*/
 function Product(id, title, group, calorificValue, usualPortion, keywords) {
 	this.id = id || uuid.v4();
 	this.title = title || '';

@@ -35,7 +35,7 @@ css: css/ng-ration.css css/angular-wizard.css
 
 
 validate:
-	jshint $(filter-out js/locale/angular-locale_ru-ru.js, $(shell find js -name '*.js'))
+	jshint -c jshint.conf $(filter-out js/locale/angular-locale_ru-ru.js js/externs.js js/products.js, $(shell find js -name '*.js'))
 
 
 .PHONY: product-id

@@ -1,9 +1,11 @@
 goog.require('goog.array');
 
 angular.module('trips').controller('PlanCtrl', PlanController);
-PlanController.$inject = ['$scope', '$route', '$q', 'tripRepository', 'productRepository', 'rationRepository', 'basketRepository', '$location', '$filter', 'resize', 'productFilter', 'ngDialog', 'confirm'];
-
-function PlanController($scope, $route, $q, tripRepository, productRepository, rationRepository, basketRepository, $location, $filter, resize, productFilter, ngDialog, confirm) {
+PlanController.$inject = ['$scope', '$route', '$q', 'tripRepository', 'productRepository', 'rationRepository',
+'basketRepository', '$location', '$filter', 'resize', 'productFilter', 'ngDialog', 'confirm'];
+/*jshint maxparams:20*/
+function PlanController($scope, $route, $q, tripRepository, productRepository, rationRepository,
+	basketRepository, $location, $filter, resize, productFilter, ngDialog, confirm) {
 	'use strict';
 
 	var layoutElement = $('#ration-layout');
@@ -73,7 +75,8 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 	var basket = new Basket ();
 	goog.object.forEach (basketRepository.findAll (), function (ration) {
 		basket.addRation (ration);
-	})
+	});
+
 	$scope.basket = basket;
 
 	$scope.products = products;

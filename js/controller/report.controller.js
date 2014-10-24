@@ -26,5 +26,5 @@ function ReportController($scope, $route, tripRepository, productRepository, rat
 
 	$scope.isEmpty = function () {
 		return goog.object.getCount ($scope.groups) === 0;
-	}
+	};
 }

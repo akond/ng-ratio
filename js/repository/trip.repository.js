@@ -20,11 +20,11 @@ angular.module('ng-ratio').factory('tripRepository', ['storage', 'rationReposito
 			return new Trip ();
 		}, key);
 
-		 goog.object.forEach (trips, function (trip) {
+		goog.object.forEach (trips, function (trip) {
 			trip.plans = goog.array.map(trip.plans, function (plan) {
 				return storage.setObjectData(new Plan (), plan);
-			})
-		 })
+			});
+		});
 
 		return trips;
 	};

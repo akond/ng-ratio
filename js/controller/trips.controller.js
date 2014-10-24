@@ -14,7 +14,7 @@ function TripController($scope, $route, tripRepository, rationRepository, produc
 
 	var refreshTripList = function () {
 		$scope.trips = goog.object.getValues (tripRepository.findAll ());
-	}
+	};
 
 	refreshTripList ();
 
