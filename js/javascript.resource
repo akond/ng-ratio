@@ -43,7 +43,7 @@ INCLUDE(SETTINGS/application.config.js)
 INCLUDE(SETTINGS/routes.config.js)
 
 -- Контроллеры
-INCLUDE(CONTROLLER/trips.controller.js)
+INCLUDE(CONTROLLER/trip.controller.js)
 INCLUDE(CONTROLLER/product.controller.js)
 INCLUDE(CONTROLLER/plan.controller.js)
 INCLUDE(CONTROLLER/report.controller.js)
