@@ -1,10 +1,10 @@
 <h2>Походы</h2>
 
 <div class="row">
-	<a class="btn btn-success pull-right" href="#/new">Создать новый</a>
+	<a class="btn btn-success pull-right" href="#/new">Создать поход</a>
 </div>
 
-<table class="table table-striped" ng-show="trips">
+<table class="table table-striped" ng-show="tripCount">
 	<thead>
 		<tr>
 			<th></th>
@@ -30,14 +30,14 @@
 		</td>
 		<td>
 			<div class="btn-group" dropdown>
-				<button type="button" class="btn btn-default" ng-click="editTrip(trip)" title="Редактировать параметры похода">Свойства</button>
+				<button type="button" class="btn btn-default" ng-click="planTrip(trip)" title="Редактировать параметры похода">Планировать</button>
 				<button aria-expanded="true" aria-haspopup="true" type="button" class="btn btn-default dropdown-toggle">
 					<span class="caret"></span>
 					<span class="sr-only">Split button!</span>
 				</button>
 				<ul class="dropdown-menu" role="menu">
-					<li><a href="#/plan/{{trip.id}}" title="Режим планирования" class="ration-action">Спланировать</a></li>
 					<li><a ng-click="reportTrip(trip)" title="Отчёт закупок" class="ration-action">Отчёт закупок</a></li>
+                    <li class="divider"></li>
 					<li><a ng-click="editTrip(trip)" title="Редактировать параметры похода" class="ration-action">Редактировать</a></li>
 					<li><a ng-click="cloneTrip(trip)" class="ration-action" title="Сделать копию похода">Сделать копию</a></li>
 					<li class="divider"></li>
@@ -47,9 +47,8 @@
 		</td>
 	</tr>
 </table>
-<div class="row" ng-hide="trips">
+<div class="row" ng-hide="tripCount">
 	<div class="col-md-8 col-md-offset-2 bg-warning ration-warning-area">
-		<p>У вас пока нет походов для планирования</p>
-		<p>Попробуйте добавить один.</p>
+		<p>Создайте поход и приступайте к планированию раскладки.</p>
 	</div>
 </div>

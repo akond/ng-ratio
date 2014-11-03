@@ -1,4 +1,4 @@
-angular.module('ng-ratio').config(['$routeProvider',
+angular.module('ng-ration').config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {

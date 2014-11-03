@@ -1,7 +1,7 @@
 RELEASE = release
-APPLICATION = ng-ratio
+APPLICATION = ng-ration
 EXTERNALJS = /bower% /js/locale/angular-locale_ru-ru.js
-ALREADYINCLUDEDJS = /bower_components/closurelibrary/closure/goog/base.js /bower_components/jquery/dist/jquery.min.js
+ALREADYINCLUDEDJS = /bower_components/closurelibrary/closure/goog/base.js
 TESTJS = /js/controller/test.controller.js
 
 releaseroot = $(subst $(SPACE),$3,$(addprefix $2,$(filter $(EXTERNALJS), $(strip $(shell $(COMP) $1)))))
@@ -34,7 +34,9 @@ compiled-js-config: etc/m4/plovr.m4 $(RESOURCE.JS) $(JSS)
 
 
 $(RELEASE)/combined.js:
-	cat $(addprefix .,$(filter-out $(ALREADYINCLUDEDJS),$(filter $(EXTERNALJS),$(call resources,$(RESOURCE.JS))))) > $@
+#	cat $(addprefix .,$(filter-out $(ALREADYINCLUDEDJS),$(filter $(EXTERNALJS),$(call resources,$(RESOURCE.JS))))) > $@
+	echo -n > $@
+	for i in $(addprefix .,$(filter-out $(ALREADYINCLUDEDJS),$(filter $(EXTERNALJS),$(call resources,$(RESOURCE.JS))))); do cat $$i >> $@; echo >> $@; done
 
 
 $(RELEASE)/$(APPLICATION).css: $(CSSS) css

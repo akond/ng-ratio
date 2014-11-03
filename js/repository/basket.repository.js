@@ -1,7 +1,7 @@
 goog.require('goog.object');
 goog.require('goog.asserts');
 
-angular.module('ng-ratio').factory('basketRepository', ['storage', function (storage) {
+angular.module('ng-ration').factory('basketRepository', ['storage', function (storage) {
 	"use strict";
 
 	var BASKET = 'basket';

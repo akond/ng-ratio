@@ -2,64 +2,108 @@
 
 <wizard on-finish="addTrip()" edit-mode="editMode">
 
-  <wz-step title="Название">
-    <ng-form name="initial">
-      <div class="form-group row">
-        <div class="col-md-10">
-          <label for="title">Название</label>
-          <input id="title" type="text" ng-minlength="3" ng-maxlength="66" ng-model="Trip.title" ng-required="true" class="form-control" placeholder="Название (не меньше трёх символов)">
-        </div>
-      </div>
+	<wz-step title="Название">
+		<ng-form name="initial">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="container">
+                            <div class="form-group row">
+                                <div class="col-md-8">
+                                    <label for="title">Название</label>
+                                    <input name="title" id="title" type="text" ng-minlength="3" ng-maxlength="66" ng-model="Trip.title" ng-required="true" class="form-control"
+                                           placeholder="Введите подходящее название для похода. Например, Крым-2014">
+                                </div>
+                            </div>
 
-      <div class="row">
-        <div class="col-md-4">
-          <label>Первый день похода</label>
-          <datepicker ng-model="Trip.from" min-date="minDate" ng-required="true" show-weeks="true" class="well well-sm"></datepicker>
-        </div>
-        <div class="col-md-4">
-          <label>Последний день похода</label>
-          <datepicker ng-model="Trip.to" min-date="minDate" ng-required="true" show-weeks="true" class="well well-sm"></datepicker>
-        </div>
-      </div>
-    </ng-form>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Первый день похода</label>
+                                    <datepicker name="from" ng-model="Trip.from" min-date="minDate" ng-required="true" show-weeks="true" class="well well-sm"></datepicker>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Последний день похода</label>
+                                    <datepicker name="to" ng-model="Trip.to" min-date="Trip.from" ng-required="true" show-weeks="true" class="well well-sm"></datepicker>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p class="text-right">
+                                        <a class="btn btn-primary" wz-next="" ng-disabled="initial.$invalid">Дальше</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="bg-warning ration-warning-area">
+                            <p ng-show="initial.title.$invalid">Укажите название похода.</p>
+                            <p ng-show="initial.from.$invalid || initial.to.$invalid">Выберите дата первого и последнего дня похода.</p>
+                            <p ng-hide="initial.from.$invalid || initial.to.$invalid">Продолжительность похода
+                                <strong>{{ days() }}</strong>&nbsp;<ng-pluralize
+                                    count="days()"
+                                    when-0="0"
+                                    when-1="день"
+                                    when-one="день"
+                                    when-few="дня"
+                                    when-many="дней"></ng-pluralize>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</ng-form>
+	</wz-step>
 
-    <p class="text-right">
-      <a class="btn btn-primary" wz-next="" ng-disabled="initial.$invalid">Дальше</a>
-    </p>
-  </wz-step>
+	<wz-step title="Калории">
+		<ng-form name="cal">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="row" ng-repeat="plan in Trip.plans">
+                            <h3>План калорийности {{ $index + 1 }}</h3>
+                            <ng-form>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>Расход калорий</label>
+                                        <input type="number" min="1" ng-model="plan.calories" ng-required="true" class="form-control" placeholder="Количество калорий на человека">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Количество человек</label>
+                                        <input type="number" min="1" ng-model="plan.men" ng-required="true" class="form-control" placeholder="Количество человек в этом плане">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label style="visibility: hidden;">Удалить</label>
+                                        <a class="btn btn-danger" style="display: block;" ng-click="removePlan($index)" ng-show="$index">Удалить</a>
+                                    </div>
+                                </div>
+                            </ng-form>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-2">
+                                <label style="visibility: hidden;">Добавить</label>
+                                <a class="btn btn-info" ng-click="addPlan()">Добавить план</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="bg-warning ration-warning-area">
+                            <p>Среднему мужчине нужно около 2500&nbsp;ккал в день. Женщине около 2200.</p>
+                            <p>Если вы не знаете какое количество каллорий нужно именно вам, используйте значение по-умолчанию.</p>
+                            <p>Расчёт каллорий можно игнорировать и приложение превратится в список необходимых продуктов.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-4">
+                        <p class="text-right">
+                            <a class="btn btn-primary" wz-next="" ng-disabled="cal.$invalid">Сохранить</a>
+                        </p>
+                    </div>
 
-  <wz-step title="Калории">
-    <ng-form name="cal">
-      <div class="row" ng-repeat="plan in Trip.plans">
-        <h3>План калорийности {{ $index + 1 }}</h3>
-        <ng-form>
-          <div class="form-group">
-            <div class="col-md-3">
-              <label>Расход калорий</label>
-              <input type="number" min="1" ng-model="plan.calories" ng-required="true" class="form-control" placeholder="Количество калорий на человека">
+                </div>
             </div>
-            <div class="col-md-3">
-              <label>Количество человек</label>
-              <input type="number" min="1" ng-model="plan.men" ng-required="true" class="form-control" placeholder="Количество человек в этом плане">
-            </div>
-            <div class="col-md-2">
-              <label style="visibility: hidden;">Удалить</label>
-              <a class="btn btn-danger" style="display: block;" ng-click="removePlan($index)" ng-show="$index">Удалить</a>
-            </div>
-          </div>
-        </ng-form>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-2">
-          <label style="visibility: hidden;">Добавить</label>
-          <a class="btn btn-info" ng-click="addPlan()">Добавить план</a>
-        </div>
-      </div>
-    <div class="form-group"></div>
-    </ng-form>
-    <p class="text-right">
-      <a class="btn btn-primary" wz-next="" ng-disabled="cal.$invalid">Сохранить</a>
-    </p>
-  </wz-step>
+		</ng-form>
+	</wz-step>
 
 </wizard>

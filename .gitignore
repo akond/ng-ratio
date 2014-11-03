@@ -7,3 +7,7 @@ css/combined.css
 js/products.js
 release
 fonts
+.idea
+.project
+.settings/
+bin

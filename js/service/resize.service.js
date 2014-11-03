@@ -1,6 +1,6 @@
 goog.require('goog.dom.ViewportSizeMonitor');
 
-angular.module('ng-ratio').config(['$provide', function ($provide) {
+angular.module('ng-ration').config(['$provide', function ($provide) {
 	$provide.factory('resize', ['$q', function ($q) {
 		var vsm;
 

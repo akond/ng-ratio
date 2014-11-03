@@ -1,6 +1,6 @@
 goog.require('goog.array');
 
-angular.module('ng-ratio').config(['$provide', function ($provide) {
+angular.module('ng-ration').config(['$provide', function ($provide) {
 	$provide.factory('storage', ['localStorageService', function (localStorageService) {
 
 		var adjustKey = function (key) {

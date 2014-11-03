@@ -14,6 +14,7 @@ function TripController($scope, $route, tripRepository, rationRepository, produc
 
 	var refreshTripList = function () {
 		$scope.trips = goog.object.getValues (tripRepository.findAll ());
+		$scope.tripCount = $scope.trips.length;
 	};
 
 	refreshTripList ();
@@ -37,12 +38,18 @@ function TripController($scope, $route, tripRepository, rationRepository, produc
 			tripRepository.save (goog.object.clone (trip));
 		}
 
-		$location.path("/plan/" + trip.id);
+		$scope.planTrip (trip);
 	};
 
 	$scope.editTrip = function (editableTrip) {
 		$location.path("/edit/" + editableTrip.id);
 	};
+
+
+	$scope.planTrip = function (editableTrip) {
+		$location.path("/plan/" + editableTrip.id);
+	};
+
 
 	$scope.addPlan = function () {
 		$scope.Trip.plans.push (new Plan());
@@ -58,6 +65,7 @@ function TripController($scope, $route, tripRepository, rationRepository, produc
 			this.trips = goog.array.filter (this.trips, function (item) {
 				return item.id !== trip.id;
 			});
+			refreshTripList ();
 		}));
 	};
 
@@ -76,4 +84,17 @@ function TripController($scope, $route, tripRepository, rationRepository, produc
 	$scope.reportTrip = function (trip) {
 		$location.path ('/report/' + trip.id);
 	};
+
+	$scope.days = function () {
+		var from = $scope.Trip.from, to = $scope.Trip.to;
+		if (!goog.isObject(from)) {
+			from = Date.parse (from);
+		}
+
+		if (!goog.isObject(to)) {
+			to = Date.parse (to);
+		}
+
+		return Math.round (Math.abs (from - to)/24/3600/1000 + 1);
+	}
 }

@@ -2,7 +2,7 @@
 	$(LESS) $< > $@
 
 %.css.gz: %.css
-	$(COMPRESS) $<
+	$(COMPRESS) $< > $@
 
 %.js.gz: %.js
-	$(COMPRESS) $<
+	$(COMPRESS) $< > $@

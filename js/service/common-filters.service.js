@@ -1,6 +1,6 @@
 goog.require('goog.string');
 
-angular.module('ng-ratio').config(['$provide', function ($provide) {
+angular.module('ng-ration').config(['$provide', function ($provide) {
 	$provide.factory('productFilter', ['$q', function ($q) {
 		return function (search) {
 			return function (product) {

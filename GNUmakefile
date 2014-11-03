@@ -26,8 +26,8 @@ $(JS)/products.js: etc/products/*.csv $(BIN)/compile-product-list.php
 index.html: $(RESOURCE.JS) $(RESOURCE.CSS) partials/application.html
 	$(PREPROC) \
 	-D TEMPLATES= \
-	-D JAVASCRIPTS="$(call commaseparated,$(call resources,$(RESOURCE.JS)))" \
-	-D STYLES="$(call commaseparated,$(call resources,$(RESOURCE.CSS)))" \
+	-D JAVASCRIPTS="$(call commaseparated,$(addprefix .,$(call resources,$(RESOURCE.JS))))" \
+	-D STYLES="$(call commaseparated,$(addprefix .,$(call resources,$(RESOURCE.CSS))))" \
 	etc/m4/foreach.m4 partials/application.html > $@
 
 

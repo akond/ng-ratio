@@ -1,4 +1,4 @@
-angular.module('ng-ratio').config(['$provide', function ($provide) {
+angular.module('ng-ration').config(['$provide', function ($provide) {
   $provide.factory('confirm', ['$q', '$modal', function ($q, $modal) {
       return function (message) {
         var dialog = $modal.open({

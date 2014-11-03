@@ -2,7 +2,7 @@ goog.require('goog.object');
 goog.require('goog.array');
 goog.require('goog.asserts');
 
-angular.module('ng-ratio').factory('tripRepository', ['storage', 'rationRepository', function (storage, rationRepository) {
+angular.module('ng-ration').factory('tripRepository', ['storage', 'rationRepository', function (storage, rationRepository) {
 	"use strict";
 
 	var TRIP = 'trip';

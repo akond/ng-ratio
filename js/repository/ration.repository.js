@@ -1,7 +1,7 @@
 goog.require('goog.object');
 goog.require('goog.asserts');
 
-angular.module('ng-ratio').factory('rationRepository', ['storage', function (storage) {
+angular.module('ng-ration').factory('rationRepository', ['storage', function (storage) {
 	"use strict";
 
 	var RATION = 'ration';
