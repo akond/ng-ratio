@@ -40,4 +40,4 @@ validate:
 
 .PHONY: product-id
 product-id:
-	for i in `seq 1 1000`; do echo -n ',,,,' >> etc/products/$(NAME).csv; uuidgen -1 >> etc/products/$(NAME).csv; done
+	for i in `seq 1 1000`; do echo -n ',,,,' >> etc/products/$(NAME).csv; uuidgen >> etc/products/$(NAME).csv; done
