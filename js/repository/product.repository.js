@@ -38,7 +38,7 @@ angular.module('ng-ration').factory('productRepository', ['$http', 'storage', fu
 	};
 
 	var sync = function () {
-		return $http.jsonp('js/product-list.php?callback=JSON_CALLBACK', {
+		return $http.jsonp('ng-ration/product-list.php?callback=JSON_CALLBACK', {
 			cache: false
 		}).success(function(data, status, headers, config) {
 			if (goog.typeOf (data) === 'array') {

@@ -58,9 +58,8 @@
 			</p>
 		</div>
 		<div ng-hide="firstRun()">
-			<p>Справочник продуктов пуст.</p>
-			<p>Для добавления списка продуктов нажмите кнопку обновления</p>
-			<p><a class="btn btn-success" ng-click="sync()">Обновить</a></p>
+			<p>Подождите пока обновляется список продуктов.</p>
+			<p ng-hide="true"><a class="btn btn-success" ng-click="sync()">Обновить</a></p>
 		</div>
 	</div>
 </div>

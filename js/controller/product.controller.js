@@ -8,16 +8,20 @@ ProductController.$inject = ['$scope', '$http', '$route', '$filter', 'productRep
 function ProductController($scope, $http, $route, $filter, productRepository, tripRepository, $location, confirm, productFilter, ngDialog) {
 	'use strict';
 
-	$scope.products = productRepository.getIndex ();
-	$scope.productCount = goog.object.getCount ($scope.products);
+	var refreshProductList = function () {
+		$scope.products = productRepository.getIndex ();
+		$scope.productCount = goog.object.getCount ($scope.products);
+		$scope.updateProductFilter ();
+	};
 
 	$scope.updateProductFilter = function () {
 		$scope.filteredProducts = $filter('filter')(goog.object.getValues ($scope.products), productFilter ($scope.search || {title: ""}), false);
 	};
 
-	$scope.updateProductFilter ();
+	refreshProductList();
 
 	$scope.noProducts = $scope.products.length === 0;
+
 	$scope.newProduct = function () {
 			$scope.edit (new Product ());
 	};
@@ -62,7 +66,7 @@ function ProductController($scope, $http, $route, $filter, productRepository, tr
 	};
 
 	$scope.firstRun = function () {
-		return productRepository.isEmpty() && tripRepository.isEmpty();
+		productRepository.isEmpty() && tripRepository.isEmpty();
 	};
 
 	$scope.sync = function (throwToTrips) {
@@ -71,7 +75,12 @@ function ProductController($scope, $http, $route, $filter, productRepository, tr
 				$location.path ("/new");
 				return;
 			}
+			refreshProductList();
 			$location.path("/product");
 		});
 	};
+
+	if ($scope.firstRun) {
+		$scope.sync(true);
+	}
 }
