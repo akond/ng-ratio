@@ -1,30 +1,9 @@
 <!DOCTYPE html>
 <html ng-app="ng-ration">
 <head>
-	foreach(file,(JAVASCRIPTS),<script type="text/javascript" src="file"></script>
-	)
-	foreach(file,(STYLES),<link rel="stylesheet" type="text/css" href="file">
-	)
-	foreach(file,(TEMPLATES),<script type="text/ng-template" id="file">
-	m4_esyscmd`'(cat file)
-</script>
-)
-
+    m4_include(partials/scripts.html)
 </head>
 <body>
-	<nav class="hidden-print" role="navigation">
-		<div class="container">
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li><a href="#/">Походы</a></li>
-					<li><a href="#/product">Продукты</a></li>
-					<li><a href="#/help">Справка</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<div class="container">
-		<ng-view></ng-view>
-	</div>
+    m4_include(partials/body.html)
 </body>
 </html>

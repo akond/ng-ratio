@@ -4,23 +4,21 @@ EXTERNALJS = /bower% /js/locale/angular-locale_ru-ru.js
 ALREADYINCLUDEDJS = /bower_components/closurelibrary/closure/goog/base.js
 TESTJS = /js/controller/test.controller.js
 
+PARTIALS = $(filter-out $(PARTIALS.SPECIAL), $(wildcard partials/*))
+PARTIALS.SPECIAL = $(addprefix partials/,scripts.html body.html test.html application.html)
+
 releaseroot = $(subst $(SPACE),$3,$(addprefix $2,$(filter $(EXTERNALJS), $(strip $(shell $(COMP) $1)))))
 
 
-release: nodebug $(RELEASE)/$(APPLICATION).html
+release: nodebug $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).scripts
 
 
 nodebug:
 	$(eval NODEBUG:=1)
 
 
-$(RELEASE)/$(APPLICATION).html: partials/application.html $(RELEASE)/combined.js.gz $(RELEASE)/$(APPLICATION).js.gz $(RELEASE)/$(APPLICATION).css.gz
-	$(PREPROC) \
-	-D JAVASCRIPTS="$(RELEASE)/combined.js,$(APPLICATION).js" \
-	-D STYLES="$(APPLICATION).css" \
-	-D TEMPLATES="$(call commaseparated,$(filter-out partials/application.html,$(wildcard partials/*)))" \
-	partials/application.html > $@
-
+$(RELEASE)/$(APPLICATION).html: partials/body.html
+	cp $< $@
 
 .DELETE_ON_ERROR: $(RELEASE)/$(APPLICATION).js
 $(RELEASE)/$(APPLICATION).js: compiled-js-config js
@@ -41,3 +39,12 @@ $(RELEASE)/combined.js:
 
 $(RELEASE)/$(APPLICATION).css: $(CSSS) css
 	cat $(CSSS) | $(CSSCOMP) $@
+
+
+$(RELEASE)/$(APPLICATION).scripts: partials/scripts.html $(RELEASE)/combined.js.gz $(RELEASE)/$(APPLICATION).js.gz $(RELEASE)/$(APPLICATION).css.gz
+	$(PREPROC) \
+	-D JAVASCRIPTS="$(APPLICATION)/combined.js,$(APPLICATION)/$(APPLICATION).js" \
+	-D STYLES="$(APPLICATION)/$(APPLICATION).css" \
+	-D TEMPLATES="$(call commaseparated,$(PARTIALS))" \
+	partials/scripts.html > $@
+

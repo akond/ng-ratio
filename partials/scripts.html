@@ -1,0 +1,8 @@
+foreach(file,(JAVASCRIPTS),<script type="text/javascript" src="file"></script>
+)
+foreach(file,(STYLES),<link rel="stylesheet" type="text/css" href="file">
+)
+foreach(file,(TEMPLATES),<script type="text/ng-template" id="file">
+    m4_esyscmd`'(cat file)
+</script>
+)
