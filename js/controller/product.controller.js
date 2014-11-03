@@ -80,7 +80,7 @@ function ProductController($scope, $http, $route, $filter, productRepository, tr
 		});
 	};
 
-	if ($scope.firstRun) {
+	if ($scope.firstRun()) {
 		$scope.sync(true);
 	}
 }
