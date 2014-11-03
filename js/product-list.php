@@ -1,6 +1,6 @@
 <?php
 
-header ('application/javascript');
+//header ('application/javascript');
 
 if (empty ($_REQUEST ['callback']))
 {

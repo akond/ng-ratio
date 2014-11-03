@@ -13,7 +13,7 @@ commaseparated = $(subst $(SPACE),$(COMMA),$1)
 fsroot = $(addprefix .,$(call resources,$1))
 
 CSSS := $(call fsroot,css/css.resource)
-JSS := $(call fsroot,$(JS)/javascript.resource)
+JSS := $(call fsroot,$(RESOURCE.JS))
 
 
 js: $(JS)/products.js

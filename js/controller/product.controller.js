@@ -66,7 +66,7 @@ function ProductController($scope, $http, $route, $filter, productRepository, tr
 	};
 
 	$scope.firstRun = function () {
-		productRepository.isEmpty() && tripRepository.isEmpty();
+		return productRepository.isEmpty() && tripRepository.isEmpty();
 	};
 
 	$scope.sync = function (throwToTrips) {

@@ -10,7 +10,7 @@ PARTIALS.SPECIAL = $(addprefix partials/,scripts.html body.html test.html applic
 releaseroot = $(subst $(SPACE),$3,$(addprefix $2,$(filter $(EXTERNALJS), $(strip $(shell $(COMP) $1)))))
 
 
-release: nodebug $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).scripts
+release: nodebug $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).scripts $(RELEASE)/$(APPLICATION).js
 
 
 nodebug:
@@ -20,8 +20,9 @@ nodebug:
 $(RELEASE)/$(APPLICATION).html: partials/body.html
 	cp $< $@
 
+
 .DELETE_ON_ERROR: $(RELEASE)/$(APPLICATION).js
-$(RELEASE)/$(APPLICATION).js: compiled-js-config js
+$(RELEASE)/$(APPLICATION).js: compiled-js-config $(JSS)
 	$(PLOVR) build compiled-js-config > $(RELEASE)/$(APPLICATION).js
 
 
@@ -31,8 +32,7 @@ compiled-js-config: etc/m4/plovr.m4 $(RESOURCE.JS) $(JSS)
 	$(call test_file_not_blank,$@)
 
 
-$(RELEASE)/combined.js:
-#	cat $(addprefix .,$(filter-out $(ALREADYINCLUDEDJS),$(filter $(EXTERNALJS),$(call resources,$(RESOURCE.JS))))) > $@
+$(RELEASE)/combined.js: $(JSS)
 	echo -n > $@
 	for i in $(addprefix .,$(filter-out $(ALREADYINCLUDEDJS),$(filter $(EXTERNALJS),$(call resources,$(RESOURCE.JS))))); do cat $$i >> $@; echo >> $@; done
 
@@ -41,7 +41,7 @@ $(RELEASE)/$(APPLICATION).css: $(CSSS) css
 	cat $(CSSS) | $(CSSCOMP) $@
 
 
-$(RELEASE)/$(APPLICATION).scripts: partials/scripts.html $(RELEASE)/combined.js.gz $(RELEASE)/$(APPLICATION).js.gz $(RELEASE)/$(APPLICATION).css.gz
+$(RELEASE)/$(APPLICATION).scripts: partials/scripts.html $(RELEASE)/combined.js $(RELEASE)/$(APPLICATION).js $(RELEASE)/$(APPLICATION).css
 	$(PREPROC) \
 	-D JAVASCRIPTS="$(APPLICATION)/combined.js,$(APPLICATION)/$(APPLICATION).js" \
 	-D STYLES="$(APPLICATION)/$(APPLICATION).css" \
