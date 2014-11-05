@@ -66,16 +66,14 @@
 							</div>
 
 							<div ng-hide="meal.rations.length">
-								<div ng-show="!dayIndex && !mealIndex && layout.isEmpty()">
+								<div>
+									<p>
+										Нет продуктов.
+									</p>
 									<p>
 										Добавляйте сюда продукты из списка справа нажатием <glyph name="chevron-left"></glyph>.
-									</p>
-									<p>
 										Через <kbd>Ctrl</kbd>+<glyph name="chevron-left"></glyph> появится возможность точно указать количество продукта.
 									</p>
-								</div>
-								<div ng-show="dayIndex || mealIndex || !layout.isEmpty()">
-									Нет продуктов
 								</div>
 							</div>
 						</div>
