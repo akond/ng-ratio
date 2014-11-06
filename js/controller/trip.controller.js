@@ -99,5 +99,5 @@ function TripController($scope, $route, tripRepository, rationRepository, produc
 		}
 
 		return Math.round (Math.abs (from - to)/24/3600/1000 + 1);
-	}
+	};
 }
