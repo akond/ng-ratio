@@ -99,13 +99,13 @@
 				<div class="row" ng-repeat="product in filteredProducts">
 					<div class="col-md-8 ration-action" ng-click="addRation(product.createRation(), $event)">
 						<a title="+Ctrl - с настройками"><glyph name="chevron-left"></glyph></a>&nbsp;
-						<span title="{{ product.title }}">{{ product.title | limitTo: 33}}</span>
+						<span title="{{ ::product.title }}">{{ ::product.title | limitTo: 33}}</span>
 					</div>
 					<div class="col-md-2 text-right">
-						{{ product.usualPortion | number: 0}}&nbsp;г
+						{{ ::product.usualPortion | number: 0}}&nbsp;г
 					</div>
 					<div class="col-md-2">
-						<tag name="cal" ng-if="product.calorificValue">{{ product.calories() | number: 0}}</tag>
+						<tag name="cal" ng-if="product.calorificValue">{{ ::product.calories() | number: 0}}</tag>
 					</div>
 				</div>
 
