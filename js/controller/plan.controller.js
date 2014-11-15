@@ -4,12 +4,26 @@ angular.module('trips').controller('PlanCtrl', PlanController);
 PlanController.$inject = ['$scope', '$route', '$q', 'tripRepository', 'productRepository', 'rationRepository',
 'basketRepository', '$location', '$filter', 'resize', 'productFilter', 'ngDialog', 'confirm'];
 /*jshint maxparams:20*/
+
+/**
+ * @description Контроллер планирования раскладки
+ * @param {!angular.$scope} $scope
+ * @param {!angular.$route} $route
+ * @param {!angular.$q} $q
+ * @param {!ration.repository.trip} tripRepository
+ * @param {!ration.repository.product} tripRepository
+ * @constructor
+ * @ngInject
+ */
 function PlanController($scope, $route, $q, tripRepository, productRepository, rationRepository,
 	basketRepository, $location, $filter, resize, productFilter, ngDialog, confirm) {
 	'use strict';
 
 	var layoutElement = $('#ration-layout');
 	var tripId = $route.current.params.id;
+	/**
+	 * @expose
+	 */
 	var trip = $scope.Trip = tripRepository.find (tripId);
 	var rations = rationRepository.findAllBucket (tripId);
 	var products = $filter('orderBy')(productRepository.findAll (), 'title');
@@ -29,6 +43,9 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 	};
 
 
+	/**
+	 * @expose
+	 */
 	$scope.scrollToDay = function(day) {
 		// сразу выбираем этот день
 		var index = $scope.layout.findMealIndex ($scope.activeMeal);
@@ -68,6 +85,9 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		}
 	});
 
+	/**
+	 * @expose
+	 */
 	$scope.$on("$destroy", function() {
 		resize.unregister ();
 	});
@@ -77,10 +97,19 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		basket.addRation (ration);
 	});
 
+	/**
+	 * @expose
+	 */
 	$scope.basket = basket;
 
+	/**
+	 * @expose
+	 */
 	$scope.products = products;
 
+	/**
+	 * @expose
+	 */
 	$scope.updateProductFilter = function () {
 		$scope.filteredProducts = $filter('filter')($scope.products, productFilter ($scope.search || {title: ""}), false);
 
@@ -91,14 +120,29 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		$scope.filteredOut = total - $scope.filteredProducts.length;
 	};
 
+	/**
+	 * @expose
+	 */
 	$scope.updateProductFilter ();
+	/**
+	 * @expose
+	 */
 	$scope.productCount = goog.object.getCount ($scope.products);
 
 	var layout = new Layout (trip.from, trip.to);
 
+	/**
+	 * @expose
+	 */
 	$scope.days = layout.days;
+	/**
+	 * @expose
+	 */
 	$scope.layout = layout;
 
+	/**
+	 * @expose
+	 */
 	$scope.activateMeal = function (meal) {
 		$scope.activeMeal = meal;
 	};
@@ -121,10 +165,16 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		});
 	});
 
+	/**
+	 * @expose
+	 */
 	$scope.editProducts = function () {
 		$location.path("/product/");
 	};
 
+	/**
+	 * @expose
+	 */
 	$scope.removeRation = function (ration) {
 		var meal = layout.findRationMeal(ration);
 		if (meal) {
@@ -134,6 +184,9 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		rationRepository.remove (ration, trip.id);
 	};
 
+	/**
+	 * @expose
+	 */
 	$scope.moveRationToBasket = function ($event, ration) {
 		var basketRation = ration.clone ();
 		$scope.basket.addRation (basketRation);
@@ -151,6 +204,9 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		rationRepository.remove (ration, trip.id);
 	};
 
+	/**
+	 * @expose
+	 */
 	$scope.addWholeBasket = function ($event) {
 		// Для нескольких продуктов очень трудно указать количества
 		$event.ctrlKey = false;
@@ -160,11 +216,17 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		}, this);
 	};
 
+	/**
+	 * @expose
+	 */
 	$scope.removeRationFromBasket = function (ration) {
 		$scope.basket.removeRation (ration);
 		basketRepository.remove (ration);
 	};
 
+	/**
+	 * @expose
+	 */
 	$scope.addRationFromBasket = function (ration, event) {
 		var dontRemove = goog.isDef (event) && event.shiftKey;
 		$scope.addRation (ration.clone(), event, false).then(function () {
@@ -183,6 +245,9 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		rationRepository.save (adjustedRation, trip.id, index);
 	};
 
+	/**
+	 * @expose
+	 */
 	$scope.addRation = function (ration, event, multiply) {
 		var resultPromise = $q.defer();
 
@@ -216,6 +281,9 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		return resultPromise.promise;
 	};
 
+	/**
+	 * @expose
+	 */
 	$scope.editRation = function (ration) {
 		var dialog = ngDialog.open({
 			template: 'partials/ration.html',
@@ -259,6 +327,9 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		return dialog.closePromise;
 	};
 
+	/**
+	 * @expose
+	 */
 	$scope.clearBasket = function () {
 		confirm ('Удалить все продукты?').then(function () {
 			$scope.basket.clear ();

@@ -1,3 +1,4 @@
+goog.provide('ration.repository.basket');
 goog.require('goog.object');
 goog.require('goog.asserts');
 

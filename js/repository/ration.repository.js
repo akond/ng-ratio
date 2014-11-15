@@ -1,7 +1,15 @@
+goog.provide('ration.repository.ration');
+goog.require('ration.service.storage');
 goog.require('goog.object');
 goog.require('goog.asserts');
 
-angular.module('ng-ration').factory('rationRepository', ['storage', function (storage) {
+/**
+ * @description Ration repository
+ * @param {!ration.service.storage} storage
+ * @constructor
+ * @ngInject
+ */
+function RepositoryRation (storage) {
 	"use strict";
 
 	var RATION = 'ration';
@@ -98,4 +106,4 @@ angular.module('ng-ration').factory('rationRepository', ['storage', function (st
 		save: saveRation,
 		remove: removeRation
 	};
-}]);
+};

@@ -1,23 +1,30 @@
-angular.module('ng-ration').config(['$provide', function ($provide) {
-  $provide.factory('confirm', ['$q', '$modal', function ($q, $modal) {
-      return function (message) {
-        var dialog = $modal.open({
-          'templateUrl': 'partials/confirm.html',
-          'controller': ['$scope', '$modalInstance', function($scope, $modalInstance) {
+goog.provide('ration.service.confirm');
 
-            $scope.message = message;
+/**
+ * @description Confirm service
+ * @param {!angular.$q} $q
+ * @param {!angular.$modal} $modal
+ * @constructor
+ * @ngInject
+ */
+function ConfirmService($q, $modal) {
+	return function (message) {
+		var dialog = $modal.open({
+			'templateUrl': 'partials/confirm.html',
+			'controller': ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
-            $scope.ok = function(feedback) {
-              $modalInstance.close();
-            };
+				$scope.message = message;
 
-            $scope.cancel = function() {
-              $modalInstance.dismiss('cancel');
-            };
-          }]
-        });
+				$scope.ok = function (feedback) {
+					$modalInstance.close();
+				};
 
-        return dialog.result;
-      };
-  }]);
-}]);
+				$scope.cancel = function () {
+					$modalInstance.dismiss('cancel');
+				};
+			}]
+		});
+
+		return dialog.result;
+	};
+};

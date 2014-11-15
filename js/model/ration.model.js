@@ -1,6 +1,22 @@
+goog.provide('ration.model.ration');
+
+/**
+ * @constructor
+ */
 function Ration(amount) {
+	/**
+	 * @expose
+	 */
 	this.id = uuid.v4();
+
+	/**
+	 * @expose
+	 */
 	this.product = null;
+
+	/**
+	 * @expose
+	 */
 	this.amount = amount || 0;
 }
 

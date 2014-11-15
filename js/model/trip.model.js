@@ -1,16 +1,35 @@
+goog.provide('ration.model.trip');
+
+/**
+ * @param {!string} title
+ * @constructor
+ */
 function Trip(title) {
+	/**
+	 * @expose
+	 */
 	this.id = uuid.v4();
+	/**
+	 * @expose
+	 */
 	this.title = title;
+	/**
+	 * @expose
+	 */
 	this.from = new Date ();
 	this.from.setHours (0);
 	this.from.setMinutes (0);
 	this.from.setSeconds (0);
 
+	/**
+	 * @expose
+	 */
 	this.to = null;
 
 	/**
 	 * a container of Plan objects
 	 * @public {!Array.<Plan>}
+	 * @expose
 	 */
 	this.plans = [];
 

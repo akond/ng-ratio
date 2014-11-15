@@ -1,7 +1,16 @@
+goog.provide('ration.repository.product');
+goog.require('ration.service.storage');
 goog.require('goog.object');
 goog.require('goog.asserts');
 
-angular.module('ng-ration').factory('productRepository', ['$http', 'storage', function ($http, storage) {
+/**
+ * @description Product repository
+ * @param {!angular.$http} $http
+ * @param {!ration.service.storage} storage
+ * @constructor
+ * @ngInject
+ */
+function RepositoryProduct ($http, storage) {
 	"use strict";
 
 	var PRODUCT = 'product';
@@ -74,4 +83,4 @@ angular.module('ng-ration').factory('productRepository', ['$http', 'storage', fu
 		remove: removeProduct,
 		sync: sync
 	};
-}]);
+};

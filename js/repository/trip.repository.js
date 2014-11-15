@@ -1,28 +1,38 @@
+goog.provide('ration.repository.trip');
+goog.require('ration.service.storage');
+goog.require('ration.repository.ration');
 goog.require('goog.object');
 goog.require('goog.array');
 goog.require('goog.asserts');
 
-angular.module('ng-ration').factory('tripRepository', ['storage', 'rationRepository', function (storage, rationRepository) {
+/**
+ * @description Trip repository
+ * @param {!ration.service.storage} storage
+ * @param {!ration.repository.ration} rationRepository
+ * @constructor
+ * @ngInject
+ */
+function RepositoryTrip (storage, rationRepository) {
 	"use strict";
 
 	var TRIP = 'trip';
 
 	var find = function (id) {
-		return restore ([TRIP, id])[id];
+		return restore([TRIP, id])[id];
 	};
 
 	var findAll = function () {
-		return goog.object.getValues(restore (TRIP));
+		return goog.object.getValues(restore(TRIP));
 	};
 
 	var restore = function (key) {
-		var trips = storage.reconstitute (function () {
-			return new Trip ();
+		var trips = storage.reconstitute(function () {
+			return new Trip();
 		}, key);
 
-		goog.object.forEach (trips, function (trip) {
+		goog.object.forEach(trips, function (trip) {
 			trip.plans = goog.array.map(trip.plans, function (plan) {
-				return storage.setObjectData(new Plan (), plan);
+				return storage.setObjectData(new Plan(), plan);
 			});
 		});
 
@@ -30,22 +40,22 @@ angular.module('ng-ration').factory('tripRepository', ['storage', 'rationReposit
 	};
 
 	var saveTrip = function (trip) {
-		goog.asserts.assert (!goog.string.isEmptyString(trip.id));
+		goog.asserts.assert(!goog.string.isEmptyString(trip.id));
 
 		// Рационы сохраняются в другом репозитории
 		trip.rations = [];
 
-		storage.set ([TRIP, trip.id], trip);
+		storage.set([TRIP, trip.id], trip);
 	};
 
 	var removeTrip = function (trip) {
 		// сначала удаляем все связанные рационы
-		goog.array.forEach (rationRepository.findAll (trip.id), function (ration) {
-			rationRepository.remove (ration, trip.id);
+		goog.array.forEach(rationRepository.findAll(trip.id), function (ration) {
+			rationRepository.remove(ration, trip.id);
 		});
 
 		// а в конце и сам поход
-		storage.remove ([TRIP, trip.id]);
+		storage.remove([TRIP, trip.id]);
 	};
 
 	var isEmpty = function () {
@@ -60,4 +70,4 @@ angular.module('ng-ration').factory('tripRepository', ['storage', 'rationReposit
 		save: saveTrip,
 		remove: removeTrip
 	};
-}]);
+}
