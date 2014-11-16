@@ -1,3 +1,4 @@
+goog.provide('ration.model.layout');
 goog.require('goog.date.Date');
 goog.require('goog.date.DateTime');
 goog.require('goog.date.DateRange');

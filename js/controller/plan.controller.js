@@ -1,8 +1,8 @@
+goog.provide('ration.controller.plan')
 goog.require('goog.array');
 
-angular.module('trips').controller('PlanCtrl', PlanController);
-PlanController.$inject = ['$scope', '$route', '$q', 'tripRepository', 'productRepository', 'rationRepository',
-'basketRepository', '$location', '$filter', 'resize', 'productFilter', 'ngDialog', 'confirm'];
+
+
 /*jshint maxparams:20*/
 
 /**

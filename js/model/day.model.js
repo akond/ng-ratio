@@ -1,3 +1,5 @@
+goog.provide('ration.model.day');
+
 function Day(time, meals) {
 	this.date = time;
 	this.meals = meals || [];

@@ -1,4 +1,6 @@
-angular.module('trips').directive ('tag', function () {
+goog.provide('ration.directive.tag');
+
+function TagDirective () {
 	return {
 		restrict: 'E',
 		scope: {
@@ -22,4 +24,4 @@ angular.module('trips').directive ('tag', function () {
 			element.attr ('title', titles [scope.name]);
 		}
 	};
-});
+};

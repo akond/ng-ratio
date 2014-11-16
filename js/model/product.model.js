@@ -1,3 +1,5 @@
+goog.provide('ration.model.product');
+
 /*jshint maxcomplexity:10*/
 function Product(id, title, group, calorificValue, usualPortion, keywords) {
 	this.id = id || uuid.v4();

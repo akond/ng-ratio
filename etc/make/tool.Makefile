@@ -14,3 +14,5 @@ RESCOMP = $(M4) $(if $(NODEBUG),,-D ALLOWDEBUG=1) etc/m4/debug.m4 resource-list/
 
 GC = $(JAR) bin/compiler.jar
 GC.DEP = $(PY) bower_components/closurelibrary/closure/bin/build/closurebuilder.py
+
+JS.DEP = $(PY) bower_components/closurelibrary/closure/bin/calcdeps.py

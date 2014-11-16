@@ -1,3 +1,4 @@
+goog.provide('ration.model.basket');
 goog.require('goog.array');
 
 function Basket() {

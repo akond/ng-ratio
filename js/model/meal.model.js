@@ -1,3 +1,5 @@
+goog.provide('ration.model.meal');
+
 function Meal(title, rations) {
 	this.title = title;
 	this.rations = rations || [];

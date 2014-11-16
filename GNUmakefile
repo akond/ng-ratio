@@ -4,7 +4,7 @@ JS = js
 RESOURCE.JS = $(JS)/javascript.resource
 RESOURCE.CSS = css/css.resource
 
-build: index.html css js
+default: build
 
 include etc/make/*.Makefile
 
@@ -14,25 +14,6 @@ fsroot = $(addprefix .,$(call resources,$1))
 
 CSSS := $(call fsroot,css/css.resource)
 JSS := $(call fsroot,$(RESOURCE.JS))
-
-
-js: $(JS)/products.js
-
-
-$(JS)/products.js: etc/products/*.csv $(BIN)/compile-product-list.php
-	$(PHP) $(BIN)/compile-product-list.php etc/products/*.csv > $@
-
-
-index.html: $(RESOURCE.JS) $(RESOURCE.CSS) partials/application.html
-	$(PREPROC) \
-	-D TEMPLATES= \
-	-D JAVASCRIPTS="$(call commaseparated,$(addprefix .,$(call resources,$(RESOURCE.JS))))" \
-	-D STYLES="$(call commaseparated,$(addprefix .,$(call resources,$(RESOURCE.CSS))))" \
-	etc/m4/foreach.m4 partials/application.html > $@
-
-
-css: css/ng-ration.css css/angular-wizard.css
-
 
 validate:
 	jshint -c jshint.conf $(filter-out js/locale/angular-locale_ru-ru.js js/externs.js js/products.js, $(shell find js -name '*.js'))

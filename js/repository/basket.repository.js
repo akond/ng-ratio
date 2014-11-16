@@ -2,7 +2,11 @@ goog.provide('ration.repository.basket');
 goog.require('goog.object');
 goog.require('goog.asserts');
 
-angular.module('ng-ration').factory('basketRepository', ['storage', function (storage) {
+/**
+ * @constructor
+ * @ngInject
+ */
+function RepositoryBasket (storage) {
 	"use strict";
 
 	var BASKET = 'basket';
@@ -50,4 +54,4 @@ angular.module('ng-ration').factory('basketRepository', ['storage', function (st
 		remove: removeRation,
 		clear: clear
 	};
-}]);
+};

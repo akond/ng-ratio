@@ -11,3 +11,5 @@ fonts
 .project
 .settings/
 bin
+js/deps.js
+*.bak
