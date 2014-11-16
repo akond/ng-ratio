@@ -1,4 +1,6 @@
-angular.module('trips').directive ('glyph', function () {
+goog.provide('ration.directive.glyph');
+
+function GlyphDirective () {
 	return {
 		restrict: 'E',
 		scope: {
@@ -7,4 +9,4 @@ angular.module('trips').directive ('glyph', function () {
 		},
 		template: '<span class="glyphicon glyphicon-{{name}}" style="color: {{color}}"></span>'
 	};
-});
+};

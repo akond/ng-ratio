@@ -1,7 +1,5 @@
+goog.provide('ration.controller.report');
 goog.require('goog.array');
-
-angular.module('trips').controller('ReportCtrl', ReportController);
-ReportController.$inject = ['$scope', '$route', 'tripRepository', 'productRepository', 'rationRepository', '$location', '$filter', 'resize', 'productFilter'];
 
 function ReportController($scope, $route, tripRepository, productRepository, rationRepository, $location, $filter, resize, productFilter) {
 	'use strict';

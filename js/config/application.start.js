@@ -1,9 +1,7 @@
-angular.module('ng-ration').config(RouteConfig)
-	.factory('confirm', ConfirmService);
-
 angular.module('trips', ['LocalStorageModule', 'ui.bootstrap']);
 angular.module('trips')
 	.directive('tag', TagDirective)
+	.directive('glyph', GlyphDirective)
 
 	.factory('storage', LocalStorageService)
 	.factory('resize', ResizeService)
@@ -15,4 +13,10 @@ angular.module('trips')
 	.factory('basketRepository', RepositoryBasket)
 
 	.controller('TripCtrl', TripController)
+	.controller('ReportCtrl', ReportController)
+	.controller('ProductCtrl', ProductController)
 	.controller('PlanCtrl', PlanController);
+
+angular.module('ng-ration', ['ngRoute', 'ui.bootstrap', 'mgo-angular-wizard', 'ngDialog', 'trips']);
+angular.module('ng-ration').config(RouteConfig)
+	.factory('confirm', ConfirmService);

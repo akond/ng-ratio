@@ -9,6 +9,8 @@ goog.require('ration.service.productfilter');
 
 goog.require('ration.controller.trip');
 goog.require('ration.controller.plan');
+goog.require('ration.controller.report');
+goog.require('ration.controller.product');
 
 goog.require('ration.repository.product');
 goog.require('ration.repository.trip');
@@ -24,6 +26,4 @@ goog.require('ration.model.day');
 goog.require('ration.model.meal');
 
 goog.require('ration.directive.tag');
-
-
-angular.module('ng-ration', ['ngRoute', 'ui.bootstrap', 'mgo-angular-wizard', 'ngDialog', 'trips']);
+goog.require('ration.directive.glyph');

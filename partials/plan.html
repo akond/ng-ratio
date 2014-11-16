@@ -130,20 +130,20 @@
 	<div class="col-md-5 ration-dict" ng-show="inBasket">
 		<div class="ration-panel">
 			<a class="btn btn-default btn-sm" ng-class="{'btn-info': productCount}" ng-click="inBasket = false" title="">Продукты ({{ productCount }})</a>
-			<a class="btn btn-danger btn-sm" ng-click="clearBasket()" ng-hide="basket.isEmpty()" title="">Очистить</a>
 			<h3>Корзина</h3>
 		</div>
 
 		<div class="row bg-warning" ng-if="1 < basket.getCount()">
-			<div class="col-md-8 ration-action" ng-click="addWholeBasket($event)" title="Добавить всю корзину. +Shift - копировать">
+			<div class="col-md-7 ration-action" ng-click="addWholeBasket($event)" title="Добавить всю корзину. +Shift - копировать">
 				<a><glyph name="chevron-left"></glyph></a>
 				Все
 			</div>
 			<div class="col-md-2">
-				{{ basket.amount() }} г
+				{{ basket.amount() | number : 0}} г
 			</div>
-			<div class="col-md-2">
+			<div class="col-md-3">
 				<tag name="cal">{{ basket.calories (productIndex) | number: 0}}</tag>
+				<a class="pull-right" ng-click="clearBasket()"><glyph name="remove"></glyph></a>
 			</div>
 		</div>
 
@@ -153,7 +153,7 @@
 				{{ productIndex [ration.product].title }}
 			</div>
 			<div class="col-md-2">
-				{{ ration.amount }} г
+				{{ ration.amount | number: 0}} г
 			</div>
 			<div class="col-md-3">
 				<tag name="cal" ng-if="productIndex [ration.product].calorificValue">{{ productIndex [ration.product].calories (ration) | number: 0}}</tag>

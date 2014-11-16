@@ -1,9 +1,6 @@
+goog.provide('ration.controller.product');
 goog.require('goog.array');
 goog.require('goog.functions');
-
-angular.module('trips').controller('ProductCtrl', ProductController);
-
-ProductController.$inject = ['$scope', '$http', '$route', '$filter', 'productRepository', 'tripRepository', '$location', 'confirm', 'productFilter', 'ngDialog'];
 
 function ProductController($scope, $http, $route, $filter, productRepository, tripRepository, $location, confirm, productFilter, ngDialog) {
 	'use strict';
