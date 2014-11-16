@@ -47,7 +47,7 @@ function RepositoryProduct ($http, storage) {
 	};
 
 	var sync = function () {
-		return $http.jsonp('ng-ration/product-list.php?callback=JSON_CALLBACK', {
+		return $http.jsonp('product-list.php?callback=JSON_CALLBACK', {
 			cache: false
 		}).success(function(data, status, headers, config) {
 			if (goog.typeOf (data) === 'array') {

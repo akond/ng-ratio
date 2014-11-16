@@ -13,12 +13,21 @@ function ConfirmService($q, $modal) {
 			'templateUrl': 'partials/confirm.html',
 			'controller': ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
+				/**
+				 * @expose
+				 */
 				$scope.message = message;
 
+				/**
+				 * @expose
+				 */
 				$scope.ok = function (feedback) {
 					$modalInstance.close();
 				};
 
+				/**
+				 * @expose
+				 */
 				$scope.cancel = function () {
 					$modalInstance.dismiss('cancel');
 				};

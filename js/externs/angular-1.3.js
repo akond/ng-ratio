@@ -120,7 +120,6 @@ angular.fromJson = function(json) {};
  * @return {*}
  */
 angular.identity = function(arg) {};
-
 /**
  * @param {Array.<string|Function>} modules
  * @return {!angular.$injector}

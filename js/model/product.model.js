@@ -1,6 +1,9 @@
+/*jshint maxcomplexity:10*/
 goog.provide('ration.model.product');
 
-/*jshint maxcomplexity:10*/
+/**
+ * @constructor
+ */
 function Product(id, title, group, calorificValue, usualPortion, keywords) {
 	/**
 	 * @expose

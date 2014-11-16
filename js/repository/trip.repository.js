@@ -7,8 +7,8 @@ goog.require('goog.asserts');
 
 /**
  * @description Trip repository
- * @param {!ration.service.storage} storage
- * @param {!ration.repository.ration} rationRepository
+ * @param {!LocalStorageService} storage
+ * @param {!rationRepository} rationRepository
  * @constructor
  * @ngInject
  */

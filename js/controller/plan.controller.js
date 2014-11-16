@@ -10,8 +10,9 @@ goog.require('goog.array');
  * @param {!angular.$scope} $scope
  * @param {!angular.$route} $route
  * @param {!angular.$q} $q
- * @param {!ration.repository.trip} tripRepository
- * @param {!ration.repository.product} tripRepository
+ * @param {!tripRepository} tripRepository
+ * @param {!productRepository} productRepository
+ * @param {!rationRepository} rationRepository
  * @constructor
  * @ngInject
  */

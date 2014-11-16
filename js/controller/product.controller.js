@@ -53,9 +53,15 @@ function ProductController($scope, $http, $route, $filter, productRepository, tr
 	 */
 	$scope.edit = function (product) {
 		var editableProduct = angular.copy (product);
+		/**
+		 * @type {!ngDialog.ngDialogPromise}
+		 */
 		var dialog = ngDialog.open({
 			template: 'partials/product.html',
 			controller: ['$scope', function ($scope) {
+				/**
+				 * @expose
+				 */
 				$scope.Product = editableProduct;
 			}]
 		});

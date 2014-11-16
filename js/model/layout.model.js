@@ -5,7 +5,13 @@ goog.require('goog.date.DateRange');
 goog.require('goog.date.DateRange.Iterator');
 goog.require('goog.iter');
 
+/**
+ * @constructor
+ */
 function Layout(from, to) {
+	/**
+	 * @expose
+	 */
 	this.meals = ["Завтрак", "Обед", "Ужин"];
 
 	var start = goog.date.DateTime.fromRfc822String (from);
@@ -16,6 +22,9 @@ function Layout(from, to) {
 
 	var daterange = new goog.date.DateRange(start, end);
 
+	/**
+	 * @expose
+	 */
 	this.days = goog.array.map(goog.iter.toArray(daterange.iterator()), function (time) {
 		return new Day (time.date, goog.array.map(this.meals, function (meal) {
 			return new Meal (meal);
@@ -23,14 +32,24 @@ function Layout(from, to) {
 	}, this);
 }
 
+/**
+ * @export
+ * @returns {Number}
+ */
 Layout.prototype.mealCount = function () {
 	return this.meals.length;
 };
 
+/**
+ * @export
+ */
 Layout.prototype.addDay = function (day) {
 	this.days.push (day);
 };
 
+/**
+ * @export
+ */
 Layout.prototype.findRationMeal = function (ration) {
 	var result;
 	this.visit (function (meal, dayIndex, mealIndex) {
@@ -41,6 +60,9 @@ Layout.prototype.findRationMeal = function (ration) {
 	return result;
 };
 
+/**
+ * @export
+ */
 Layout.prototype.findMealIndex = function (meal) {
 	var result = [];
 	this.visit (function (a, dayIndex, mealIndex) {
@@ -52,6 +74,9 @@ Layout.prototype.findMealIndex = function (meal) {
 	return result;
 };
 
+/**
+ * @export
+ */
 Layout.prototype.weight = function () {
 	var weight = 0;
 	this.visit (function (meal) {
@@ -60,6 +85,9 @@ Layout.prototype.weight = function () {
 	return weight;
 };
 
+/**
+ * @export
+ */
 Layout.prototype.visit = function (visitor) {
 	goog.array.forEach(this.days, function (day, dayIndex) {
 		goog.array.forEach (day.meals, function (meal, mealIndex) {
@@ -68,6 +96,9 @@ Layout.prototype.visit = function (visitor) {
 	});
 };
 
+/**
+ * @export
+ */
 Layout.prototype.isEmpty = function () {
 	var rationCount = 0;
 	this.visit (function (meal) {

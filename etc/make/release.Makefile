@@ -46,7 +46,11 @@ $(RELEASE)/$(APPLICATION).js: $(EXTERNS) $(DEPS)
 ifeq ($(DEPS),)
 	$(error Could not figure out what the required javascript files are.)
 endif
-	$(GC) --generate_exports --angular_pass $(addprefix --externs ,$(EXTERNS))  --compilation_level ADVANCED --formatting PRETTY_PRINT --closure_entry_point ration.app $(addprefix --js ,$(DEPS)) > $@
+	$(GC) \
+	$(addprefix --js ,$(DEPS)) \
+	$(addprefix --externs ,$(EXTERNS)) \
+	  --generate_exports --angular_pass --compilation_level ADVANCED --formatting PRETTY_PRINT --closure_entry_point ration.app > $@
+#	--jscomp_error checkTypes \
 
 
 $(RELEASE)/combined.js: $(JSS)

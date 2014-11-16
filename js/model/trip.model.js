@@ -36,6 +36,7 @@ function Trip(title) {
 	/**
 	 * each member of the array represents a day
 	 * @public {!Array}
+	 * @expose
 	 */
 	this.rations = [];
 }
@@ -54,22 +55,38 @@ Trip.prototype.menCount = function (title) {
 	}, 0);
 };
 
+/**
+ * @export
+ * @returns {number}
+ */
 Trip.prototype.calorificTarget = function () {
 	return this.plans.reduce (function (sum, plan) {
 		return sum + parseInt(plan.men) * parseInt (plan.calories);
 	}, 0);
 };
 
+/**
+ * @export
+ * @returns {number}
+ */
 Trip.prototype.weight = function () {
 	return this.rations.reduce (this.rations, function (sum, ration) {
 		return sum + ration.amount;
 	}, 0);
 };
 
+/**
+ * @export
+ * @returns {number}
+ */
 Trip.prototype.multiplyAmount = function (amount) {
 	return amount * this.calorificTarget() / 2500;
 };
 
+/**
+ * @export
+ * @returns {number}
+ */
 Trip.prototype.clone = function () {
 	var clone = angular.copy (this);
 	clone.id = uuid.v4();
