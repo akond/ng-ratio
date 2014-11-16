@@ -1,3 +1,5 @@
+goog.provide('ration.app.start');
+
 angular.module('trips', ['LocalStorageModule', 'ui.bootstrap']);
 angular.module('trips')
 	.directive('tag', TagDirective)

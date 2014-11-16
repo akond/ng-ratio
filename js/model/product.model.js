@@ -2,11 +2,29 @@ goog.provide('ration.model.product');
 
 /*jshint maxcomplexity:10*/
 function Product(id, title, group, calorificValue, usualPortion, keywords) {
+	/**
+	 * @expose
+	 */
 	this.id = id || uuid.v4();
+	/**
+	 * @expose
+	 */
 	this.title = title || '';
+	/**
+	 * @expose
+	 */
 	this.group = group || '';
+	/**
+	 * @expose
+	 */
 	this.calorificValue = calorificValue || null;
+	/**
+	 * @expose
+	 */
 	this.usualPortion = usualPortion || null;
+	/**
+	 * @expose
+	 */
 	this.keywords = keywords || '';
 }
 

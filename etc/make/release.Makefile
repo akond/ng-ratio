@@ -12,7 +12,13 @@ releaseroot = $(subst $(SPACE),$3,$(addprefix $2,$(filter $(JS.IMPORTED), $(stri
 DEPS.DIR = bower_components/closurelibrary/closure/goog/ bower_components/closurelibrary/third_party/ js/
 DEPS := $(shell $(GC.DEP) $(addprefix --root=,$(DEPS.DIR)) --namespace="ration.app")
 
-release: info nodebug $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).scripts $(RELEASE)/$(APPLICATION).js $(RELEASE)/index.html
+
+release: info nodebug release-dynamic release-static
+
+release-dynamic: $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).scripts $(RELEASE)/$(APPLICATION).js $(RELEASE)/index.html
+
+release-static: $(RELEASE)/products.js $(RELEASE)/product-list.php fonts
+
 
 .SILENT: info
 info:
@@ -59,6 +65,16 @@ $(RELEASE)/$(APPLICATION).scripts: partials/scripts.html $(RELEASE)/combined.js 
 	-D TEMPLATES="$(call commaseparated,$(PARTIALS))" \
 	partials/scripts.html > $@
 
+
+$(RELEASE)/products.js: $(JS)/products.js
+	cp $< $@
+
+
+$(RELEASE)/product-list.php: $(JS)/product-list.php
+	cp $< $@
+
+fonts: bower_components/bootstrap/fonts
+	ln -s ./bower_components/bootstrap/fonts $@
 
 clean::
 	rm -rf $(RELEASE)/*

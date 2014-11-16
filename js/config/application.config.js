@@ -27,3 +27,5 @@ goog.require('ration.model.meal');
 
 goog.require('ration.directive.tag');
 goog.require('ration.directive.glyph');
+
+goog.require('ration.app.start');
