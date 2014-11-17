@@ -10,27 +10,21 @@ PARTIALS.SPECIAL = $(addprefix partials/,scripts.html body.html test.html applic
 releaseroot = $(subst $(SPACE),$3,$(addprefix $2,$(filter $(JS.IMPORTED), $(strip $(shell $(COMP) $1)))))
 
 DEPS.DIR = bower_components/closurelibrary/closure/goog/ bower_components/closurelibrary/third_party/ js/
-DEPS := $(shell $(GC.DEP) $(addprefix --root=,$(DEPS.DIR)) --namespace="ration.app")
+DEPS = $(shell cat $(JS)/javascript-file-list)
 
 
-release: info nodebug release-dynamic release-static
+release: release-dynamic release-static
 
-release-dynamic: $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).scripts $(RELEASE)/$(APPLICATION).js $(RELEASE)/index.html
+
+release-dynamic: $(JS)/javascript-file-list $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).scripts $(RELEASE)/$(APPLICATION).js $(RELEASE)/index.html
+
 
 release-static: $(RELEASE)/products.js $(RELEASE)/product-list.php fonts
 
 
-.SILENT: info
-info:
-	echo
-	echo Active js files are
-	echo -------------------------------------------------
-	echo $(DEPS) | fold -s
-	echo -------------------------------------------------
+$(JS)/javascript-file-list:
+	$(GC.DEP) $(addprefix --root=,$(DEPS.DIR)) --namespace="ration.app" > $@
 
-
-nodebug:
-	$(eval NODEBUG:=1)
 
 
 $(RELEASE)/$(APPLICATION).html: partials/body.html
@@ -41,16 +35,13 @@ $(RELEASE)/index.html: $(RELEASE)/$(APPLICATION).scripts $(RELEASE)/$(APPLICATIO
 	echo '<html ng-app="ng-ration">' > $@
 	cat $^ | sed s/\"ng-ration\\//\"/ >> $@
 
+
 .DELETE_ON_ERROR: $(RELEASE)/$(APPLICATION).js
 $(RELEASE)/$(APPLICATION).js: $(EXTERNS) $(DEPS)
-ifeq ($(DEPS),)
-	$(error Could not figure out what the required javascript files are.)
-endif
 	$(GC) \
 	$(addprefix --js ,$(DEPS)) \
 	$(addprefix --externs ,$(EXTERNS)) \
 	  --generate_exports --angular_pass --compilation_level ADVANCED --formatting PRETTY_PRINT --closure_entry_point ration.app > $@
-#	--jscomp_error checkTypes \
 
 
 $(RELEASE)/combined.js: $(JSS)
@@ -77,8 +68,10 @@ $(RELEASE)/products.js: $(JS)/products.js
 $(RELEASE)/product-list.php: $(JS)/product-list.php
 	cp $< $@
 
+
 fonts: bower_components/bootstrap/fonts
 	ln -s ./bower_components/bootstrap/fonts $@
+
 
 clean::
 	rm -rf $(RELEASE)/*

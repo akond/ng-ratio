@@ -27,10 +27,17 @@ function TripController($scope, $route, tripRepository, rationRepository, produc
 	}
 
 	var refreshTripList = function () {
+		/**
+		 * @expose
+		 */
 		$scope.trips = goog.object.getValues (tripRepository.findAll ());
 		goog.array.sort ($scope.trips, function (a, b) {
 			return (a.from < b.from);
 		});
+
+		/**
+		 * @expose
+		 */
 		$scope.tripCount = $scope.trips.length;
 	};
 
@@ -38,6 +45,9 @@ function TripController($scope, $route, tripRepository, rationRepository, produc
 
 	if (goog.isDef ($route.current.params.id)) {
 		$scope.Trip = tripRepository.find ($route.current.params.id);
+		/**
+		 * @expose
+		 */
 		$scope.editMode = true;
 	} else {
 		$scope.Trip = new Trip();

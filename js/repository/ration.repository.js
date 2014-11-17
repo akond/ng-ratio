@@ -1,6 +1,7 @@
 goog.provide('ration.repository.ration');
 goog.require('ration.service.storage');
 goog.require('goog.object');
+goog.require('goog.array');
 goog.require('goog.asserts');
 
 /**
@@ -32,29 +33,29 @@ function RepositoryRation (storage) {
 	};
 
 	var restoreBucket = function (key) {
-		var rationData = goog.array.map (storage.filterKeys (key), function (key) {
-			return storage.get (key);
+		var rationData = goog.array.map (storage.filterKeys (key), function (entityKey) {
+			return storage.get (entityKey);
 		});
 
 		var days = goog.array.bucket (rationData, function (data) {
-			return data.day;
+			return data['day'];
 		});
 
 		days = goog.object.map(days, function (day) {
 			return goog.array.bucket (goog.object.getValues (day), function (day) {
-				 return day.meal;
+				 return day['meal'];
 			});
 		});
 
 		goog.object.forEach (days, function (day, dayIndex) {
 			goog.object.forEach (day, function (meal, mealIndex) {
 				day [mealIndex] = goog.array.map (meal, function (data) {
-					var rationData = data.ration;
+					var rationData = data['ration'];
 
 					var ration = new Ration ();
-					ration.id = rationData.id;
-					ration.product = rationData.product;
-					ration.amount = rationData.amount;
+					ration.id = rationData['id'];
+					ration.product = rationData['product'];
+					ration.amount = rationData['amount'];
 					return ration;
 				});
 			});
@@ -69,12 +70,12 @@ function RepositoryRation (storage) {
 		});
 
 		return goog.array.map (rationData, function (data) {
-			var rationData = data.ration;
+			var rationData = data['ration'];
 
 			var ration = new Ration ();
-			ration.id = rationData.id;
-			ration.product = rationData.product;
-			ration.amount = rationData.amount;
+			ration.id = rationData['id'];
+			ration.product = rationData['product'];
+			ration.amount = rationData['amount'];
 			return ration;
 		});
 	};

@@ -5,26 +5,42 @@ function Meal(title, rations) {
 	this.rations = rations || [];
 }
 
+
+/**
+ * @export
+ */
 Meal.prototype.calories = function (productIndex) {
 	return goog.array.reduce (this.rations, function (sum, ration) {
 		return sum + productIndex [ration.product].calories (ration);
 	}, 0);
 };
 
+/**
+ * @export
+ */
 Meal.prototype.getCount = function () {
 	return this.rations.length;
 };
 
+/**
+ * @export
+ */
 Meal.prototype.weight = function () {
 	return goog.array.reduce (this.rations, function (sum, ration) {
 		return sum + ration.amount;
 	}, 0);
 };
 
+/**
+ * @export
+ */
 Meal.prototype.removeRation = function (ration) {
 	goog.array.remove (this.rations, ration);
 };
 
+/**
+ * @export
+ */
 Meal.prototype.addRation = function (ration) {
 	var similarRation = this.findSimilarRation (ration);
 	if (similarRation) {
@@ -49,6 +65,9 @@ Meal.prototype.findSimilarRation = function (ration) {
 	return similarRation;
 };
 
+/**
+ * @export
+ */
 Meal.prototype.containsRation = function (ration) {
 	return goog.array.contains (this.rations, ration);
 };

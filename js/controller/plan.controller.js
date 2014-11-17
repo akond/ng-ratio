@@ -7,12 +7,6 @@ goog.require('goog.array');
 
 /**
  * @description Контроллер планирования раскладки
- * @param {!angular.$scope} $scope
- * @param {!angular.$route} $route
- * @param {!angular.$q} $q
- * @param {!tripRepository} tripRepository
- * @param {!productRepository} productRepository
- * @param {!rationRepository} rationRepository
  * @constructor
  * @ngInject
  */
@@ -25,9 +19,19 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 	/**
 	 * @expose
 	 */
+	$scope.Trip;
+
 	var trip = $scope.Trip = tripRepository.find (tripId);
+	//console.log('trip', trip, trip.calorificTarget());
+
 	var rations = rationRepository.findAllBucket (tripId);
 	var products = $filter('orderBy')(productRepository.findAll (), 'title');
+
+
+	/**
+	 * @expose
+	 */
+	$scope.productIndex;
 
 	var productIndex = $scope.productIndex = productRepository.getIndex ();
 
@@ -112,25 +116,30 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 	 * @expose
 	 */
 	$scope.updateProductFilter = function () {
+		/**
+		 * @expose
+		 */
 		$scope.filteredProducts = $filter('filter')($scope.products, productFilter ($scope.search || {title: ""}), false);
 
 		var total = $scope.filteredProducts.length;
 		if (!$scope.displayFilteredOut) {
 			$scope.filteredProducts = $filter('limitTo')($scope.filteredProducts, 25);
 		}
+		/**
+		 * @expose
+		 */
 		$scope.filteredOut = total - $scope.filteredProducts.length;
 	};
 
-	/**
-	 * @expose
-	 */
 	$scope.updateProductFilter ();
+
 	/**
 	 * @expose
 	 */
 	$scope.productCount = goog.object.getCount ($scope.products);
 
 	var layout = new Layout (trip.from, trip.to);
+	console.log (layout)
 
 	/**
 	 * @expose

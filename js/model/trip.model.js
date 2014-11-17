@@ -49,6 +49,9 @@ Trip.prototype.validate = function () {
 	}
 };
 
+/**
+ * @export
+ */
 Trip.prototype.menCount = function (title) {
 	return this.plans.reduce (function (sum, plan) {
 		return sum + parseInt(plan.men);
@@ -56,8 +59,8 @@ Trip.prototype.menCount = function (title) {
 };
 
 /**
- * @export
  * @returns {number}
+ * @expose
  */
 Trip.prototype.calorificTarget = function () {
 	return this.plans.reduce (function (sum, plan) {
@@ -66,8 +69,8 @@ Trip.prototype.calorificTarget = function () {
 };
 
 /**
- * @export
  * @returns {number}
+ * @export
  */
 Trip.prototype.weight = function () {
 	return this.rations.reduce (this.rations, function (sum, ration) {
