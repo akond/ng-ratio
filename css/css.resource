@@ -14,3 +14,4 @@ INCLUDE(BOWER/ngDialog/css/ngDialog-theme-default.css)
 /------------------------------------------------------------------------------/
 INCLUDE(CSS/angular-wizard.css)
 INCLUDE(CSS/ng-ration.css)
+INCLUDE(CSS/print.css)
