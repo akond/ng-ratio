@@ -10,7 +10,7 @@ PARTIALS.SPECIAL = $(addprefix partials/,scripts.html body.html test.html applic
 releaseroot = $(subst $(SPACE),$3,$(addprefix $2,$(filter $(EXTERNALJS), $(strip $(shell $(COMP) $1)))))
 
 
-release: nodebug $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).scripts $(RELEASE)/$(APPLICATION).js
+release: nodebug $(RELEASE)/$(APPLICATION).html $(RELEASE)/$(APPLICATION).scripts $(RELEASE)/$(APPLICATION).js $(RELEASE)/products.js
 
 
 nodebug:
@@ -41,10 +41,22 @@ $(RELEASE)/$(APPLICATION).css: $(CSSS) css
 	cat $(CSSS) | $(CSSCOMP) $@
 
 
-$(RELEASE)/$(APPLICATION).scripts: partials/scripts.html $(RELEASE)/combined.js $(RELEASE)/$(APPLICATION).js $(RELEASE)/$(APPLICATION).css
+$(RELEASE)/$(APPLICATION).scripts: $(PARTIALS) partials/scripts.html $(RELEASE)/combined.js $(RELEASE)/$(APPLICATION).js $(RELEASE)/$(APPLICATION).css
 	$(PREPROC) \
 	-D JAVASCRIPTS="$(APPLICATION)/combined.js,$(APPLICATION)/$(APPLICATION).js" \
 	-D STYLES="$(APPLICATION)/$(APPLICATION).css" \
 	-D TEMPLATES="$(call commaseparated,$(PARTIALS))" \
 	partials/scripts.html > $@
 
+
+$(RELEASE)/products.js: $(JS)/products.js
+	cp $< $@
+
+
+clean::
+	rm -f $(RELEASE)/products.js
+	rm -f $(RELEASE)/$(APPLICATION).css
+	rm -f $(RELEASE)/$(APPLICATION).html
+	rm -f $(RELEASE)/$(APPLICATION).scripts
+	rm -f $(RELEASE)/$(APPLICATION).js
+	rm -f $(RELEASE)/combined.js

@@ -46,7 +46,7 @@
 							<h4>{{ meal.title }}</h4>
 							<tag name="percent" ng-show="0 < day.calories(productIndex)">
 							{{ meal.calories(productIndex) / day.calories(productIndex) * 100 | number: 0}}%</tag>
-							<tag name="sofar" ng-show="0 < meal.calories(productIndex)">
+							<tag name="sofar" ng-show="0 < meal.calories(productIndex)" fixed="1">
 								{{ meal.calories (productIndex) }}
 							</tag>
 						</div>

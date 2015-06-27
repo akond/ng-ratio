@@ -7,7 +7,7 @@
 	"output-wrapper": "(function() {%output%})();\n",
 	"pretty-print": false,
 	"closure-library": "bower_components/closurelibrary/closure/goog/",
-	"externs": ["//angular.js", "//jquery-1.7.js", "js/externs.js"],
+	"externs": ["//webkit_console.js", "//angular.js", "//jquery-1.7.js", "js/externs.js"],
 	"define": {
 		"goog.DEBUG":false
 	}

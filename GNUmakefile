@@ -1,19 +1,20 @@
 BIN = bin
 JS = js
 
-RESOURCE.JS = $(JS)/javascript.resource
-RESOURCE.CSS = css/css.resource
-
-build: index.html css js
-
-include etc/make/*.Makefile
-
 resources = $(strip $(shell $(RESCOMP) $1))
 commaseparated = $(subst $(SPACE),$(COMMA),$1)
 fsroot = $(addprefix .,$(call resources,$1))
 
-CSSS := $(call fsroot,css/css.resource)
-JSS := $(call fsroot,$(RESOURCE.JS))
+.DEFAULT_GOAL := release
+
+RESOURCE.JS = $(JS)/javascript.resource
+RESOURCE.CSS = css/css.resource
+
+JSS = $(call fsroot,$(RESOURCE.JS))
+CSSS = $(call fsroot,$(RESOURCE.CSS))
+
+
+include etc/make/*.Makefile
 
 
 js: $(JS)/products.js
