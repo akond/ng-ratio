@@ -12,7 +12,7 @@ function generateProducts ($files)
             {
                 $row [] = '';
             }
-            list ($title, $cal, $weight, $flag, $id, $keywords) = $row;
+            list ($title, $cal, $weight, $soldByPiece, $id, $keywords) = $row;
 
             if ('group' == $title)
             {
@@ -27,9 +27,9 @@ function generateProducts ($files)
 
             $cal = (int) $cal;
             $weight = (int) $weight;
-            $flag = (int) $flag;
+            $soldByPiece = (int) $soldByPiece;
 
-            yield ([$id, $title, $group, $cal, $weight, $keywords]);
+            yield ([$id, $title, $group, $cal, $weight, $soldByPiece, $keywords]);
         }
         fclose ($handle);
     }

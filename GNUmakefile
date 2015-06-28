@@ -17,11 +17,6 @@ CSSS = $(call fsroot,$(RESOURCE.CSS))
 include etc/make/*.Makefile
 
 
-js: $(JS)/products.js
-
-
-$(JS)/products.js: etc/products/*.csv $(BIN)/compile-product-list.php
-	$(PHP) $(BIN)/compile-product-list.php etc/products/*.csv > $@
 
 
 index.html: $(RESOURCE.JS) $(RESOURCE.CSS) partials/application.html
@@ -34,9 +29,6 @@ index.html: $(RESOURCE.JS) $(RESOURCE.CSS) partials/application.html
 
 css: css/ng-ration.css css/angular-wizard.css
 
-
-validate:
-	jshint -c jshint.conf $(filter-out js/locale/angular-locale_ru-ru.js js/externs.js js/products.js, $(shell find js -name '*.js'))
 
 
 .PHONY: product-id

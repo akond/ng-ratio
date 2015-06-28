@@ -220,19 +220,29 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 		var dialog = ngDialog.open({
 			template: 'partials/ration.html',
 			controller: ['$scope', function ($scope) {
+				$scope.soldByPiece = productIndex [ration.product].soldByPiece;
 				$scope.amount = ration.amount;
 				$scope.calorificValue = productIndex [ration.product].calorificValue;
+				$scope.usualPortion = productIndex [ration.product].usualPortion;
 				$scope.gramm = Math.round(ration.amount);
+				$scope.times = Math.round(ration.amount / productIndex [ration.product].usualPortion);
 				$scope.cal = Math.round(ration.amount * $scope.calorificValue / 100);
 
 				$scope.recalc = function (mode, value) {
 					if ($scope.mode) {
 						return;
 					}
+
 					$scope.mode = mode;
 					$scope.amount = value;
 					$scope.gramm = Math.round($scope.amount);
+
+					$scope.times = Math.round (value / $scope.usualPortion);
 					$scope.cal = Math.round($scope.amount * $scope.calorificValue / 100);
+
+					if ($scope.soldByPiece) {
+						$scope.amount = $scope.times * $scope.usualPortion;
+					}
 
 					setTimeout(function () {
 						$scope.mode = 0;
@@ -243,7 +253,11 @@ function PlanController($scope, $route, $q, tripRepository, productRepository, r
 
 				$scope.keypress = function ($event) {
 					if ($event.charCode === 13) {
-						dialog.close ($scope.amount);
+						if ($scope.soldByPiece) {
+							dialog.close ($scope.times * $scope.usualPortion);
+						} else {
+							dialog.close ($scope.amount);
+						}
 					}
 				};
 			}]

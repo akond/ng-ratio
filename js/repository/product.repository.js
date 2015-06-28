@@ -49,7 +49,8 @@ angular.module('ng-ration').factory('productRepository', ['$http', 'storage', fu
 						'group', item [2],
 						'calorificValue', item [3],
 						'usualPortion', item [4],
-						'keywords', item [5]
+						'soldByPiece', !!item [5],
+						'keywords', item [6]
 						]);
 				});
 
