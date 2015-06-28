@@ -60,7 +60,9 @@
 								</div>
 								<div class="col-md-5">
 									<span ng-show="ration.amount">
-									<a class="ration-action ration-text" ng-click="editRation(ration)">{{ ration.amount | number:0}} г</a> &#8594;
+									<a class="ration-action ration-text" ng-show="productIndex [ration.product].soldByPiece" ng-click="editRation(ration)">{{ ration.amount / productIndex [ration.product].usualPortion}} &times; {{ productIndex [ration.product].usualPortion | number:0}} г</a>
+									<a class="ration-action ration-text" ng-hide="productIndex [ration.product].soldByPiece" ng-click="editRation(ration)">{{ ration.amount | number:0}} г</a>
+										&#8594;
 									<a class="ration-action" ng-click="editRation(ration)"><tag name="sofar">{{ productIndex [ration.product].calories (ration) | number: 0}}</tag></a>
 									</span>
 									<span ng-hide="ration.amount"><glyph name="ok" color="green"></glyph></span>

@@ -35,8 +35,14 @@
 		<div class="col-md-7 col-xs-7">
 			{{ products [ration.product].title }}
 		</div>
-		<div class="col-md-2 col-xs-2 text-right">
+
+		<div class="col-md-2 col-xs-2 text-right" ng-show="products [ration.product].soldByPiece">
+			{{ ration.amount / products [ration.product].usualPortion}} &times; {{ products [ration.product].usualPortion | number:0}} г
+		</div>
+
+		<div class="col-md-2 col-xs-2 text-right" ng-hide="products [ration.product].soldByPiece">
 			{{ ration.amount | number:0 }} г
 		</div>
+
 	</div>
 </div>

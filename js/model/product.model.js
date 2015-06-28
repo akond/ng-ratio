@@ -1,10 +1,11 @@
 /*jshint maxcomplexity:10*/
-function Product(id, title, group, calorificValue, usualPortion, keywords) {
+function Product(id, title, group, calorificValue, usualPortion, soldByPiece, keywords) {
 	this.id = id || uuid.v4();
 	this.title = title || '';
 	this.group = group || '';
 	this.calorificValue = calorificValue || null;
 	this.usualPortion = usualPortion || null;
+	this.soldByPiece = soldByPiece || false;
 	this.keywords = keywords || '';
 }
 
